@@ -465,6 +465,7 @@ MonoBehaviour:
   - {fileID: 1902742491923462, guid: b3d0e1c692a75b34d96fb84c9b431b64, type: 3}
   landMarks:
   - {fileID: 919132149155446097, guid: a7a14b998b7362e46a887d032f9bafa8, type: 3}
+  terrainMaterial: {fileID: 2100000, guid: 1b20a390d157f314e8b9bb5dcd9a8c00, type: 2}
   heightCurve:
     serializedVersion: 2
     m_Curve:
