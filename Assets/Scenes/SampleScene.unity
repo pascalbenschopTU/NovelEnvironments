@@ -307,7 +307,7 @@ RectTransform:
   m_Children:
   - {fileID: 1496901623}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -386,7 +386,7 @@ Camera:
     y: 0
     width: 0.5
     height: 0.5
-  near clip plane: 450
+  near clip plane: 400
   far clip plane: 500
   field of view: 25
   orthographic: 0
@@ -413,12 +413,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 481062164}
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 100, y: 500, z: 100}
+  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 450, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_Father: {fileID: 1582923930}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1 &524710375
 GameObject:
@@ -465,11 +465,12 @@ MonoBehaviour:
   - {fileID: 1902742491923462, guid: b3d0e1c692a75b34d96fb84c9b431b64, type: 3}
   landMarks:
   - {fileID: 919132149155446097, guid: a7a14b998b7362e46a887d032f9bafa8, type: 3}
+  terrainMaterial: {fileID: 2100000, guid: 1b20a390d157f314e8b9bb5dcd9a8c00, type: 2}
   heightCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0.010967255
+      time: 0.015369415
       value: 0.101135254
       inSlope: 2.0269504
       outSlope: 2.0269504
@@ -755,7 +756,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &963194225
 GameObject:
@@ -1039,6 +1040,7 @@ Transform:
   - {fileID: 963194228}
   - {fileID: 1248111172}
   - {fileID: 132213954}
+  - {fileID: 481062168}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1063,6 +1065,7 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 256
+  minimapCamera: {fileID: 481062168}
 --- !u!1 &2093994011
 GameObject:
   m_ObjectHideFlags: 0

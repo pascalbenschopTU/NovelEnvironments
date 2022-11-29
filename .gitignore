@@ -6,3 +6,8 @@
 /Logs
 /Builds
 /collabignore
+
+.vs
+.vsconfig
+*.csproj
+*.sln
