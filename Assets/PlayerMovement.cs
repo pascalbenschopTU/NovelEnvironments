@@ -18,6 +18,8 @@ public class PlayerMovement : MonoBehaviour
     Vector3 velocity;
     bool isGrounded;
 
+    public Transform minimapCamera;
+
     // Update is called once per frame
     void Update()
     {
@@ -44,5 +46,8 @@ public class PlayerMovement : MonoBehaviour
         velocity.y += gravity * Time.deltaTime;
 
         controller.Move(velocity * Time.deltaTime);
+
+        minimapCamera.transform.rotation = Quaternion.Euler(90.0f, 0.0f, 0.0f);
+        minimapCamera.transform.position = new Vector3(transform.position.x, 450.0f, transform.position.z);
     }
 }

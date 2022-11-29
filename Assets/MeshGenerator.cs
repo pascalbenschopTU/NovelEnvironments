@@ -6,8 +6,6 @@ using UnityEngine;
 [RequireComponent(typeof(MeshCollider))]
 public class MeshGenerator : MonoBehaviour
 {
-    private int total_vertices = 0;
-
     public GameObject[] objects;
     public GameObject[] landMarks;
 
@@ -106,8 +104,7 @@ public class MeshGenerator : MonoBehaviour
         // Need 6 vertices to create a square (2 triangles)
         int[] triangles = new int[xSize * zSize * 6];
 
-        //int vert = 0;
-        int vert = 0; // total_vertices;
+        int vert = 0;
         int tris = 0;
         // Go to next row
         for (int z = 0; z < xSize; z++)
