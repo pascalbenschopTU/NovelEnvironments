@@ -150,17 +150,18 @@ public class MeshGenerator : MonoBehaviour
     // TODO: Replace with better generator
     void createFauna(Vector3[] vertices)
     {
-        for (int i = 0; i < vertices.Length; i++)
+        System.Random prng = new System.Random(seed);
+        for (int i = 0; i < 200; i++)
         {
-            Vector3 vertice = vertices[i];
+            int verticeIndex = prng.Next(0, vertices.Length);
+            Vector3 vertice = vertices[verticeIndex];
             if (vertice.y > 5 && vertice.y < 15)
             {
-                if (Random.Range(1, 20) == 1)
-                {
-                    GameObject objectToSpawn = objects[Random.Range(0, objects.Length)];
-                    objectToSpawn.layer = LayerMask.NameToLayer("Ground");
-                    Instantiate(objectToSpawn, vertice, Quaternion.identity);
-                }
+                
+                GameObject objectToSpawn = objects[prng.Next(0, objects.Length)];
+                objectToSpawn.layer = LayerMask.NameToLayer("Ground");
+                Instantiate(objectToSpawn, vertice, Quaternion.identity);
+                
             }    
         }
     }
@@ -168,11 +169,17 @@ public class MeshGenerator : MonoBehaviour
     // Add landmarks to mesh
     void addLandMarks(Vector3[] vertices)
     {
+        System.Random prng = new System.Random(seed);
         for (int i = 0; i < 1; i++)
         {
-            Vector3 vertice = vertices[Random.Range(0, vertices.Length)];
-            GameObject objectToSpawn = landMarks[Random.Range(0, landMarks.Length)];
+            int verticeIndex = prng.Next(0, vertices.Length);
+            int objectIndex = prng.Next(0, landMarks.Length);
+
+            Vector3 vertice = vertices[verticeIndex];
+            GameObject objectToSpawn = landMarks[objectIndex];
+
             vertice.y += 10;
+
             Instantiate(objectToSpawn, vertice, Quaternion.Euler(new Vector3(-90, 0, 0)));
         }
     }
