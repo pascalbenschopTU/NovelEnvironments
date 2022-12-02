@@ -22,21 +22,32 @@ public class MeshGenerator : MonoBehaviour
 
     public int seed;
 
-    public Gradient gradient;
+    public Gradient gradient_env1;
+    public Gradient gradient_env2;
 
     private float minTerrainHeight;
     private float maxTerrainHeight;
     private float lastNoiseHeight;
+
+    public Mesh[] meshes;
+    private int index = 0;
 
     // Start is called before the first frame update
     void Start()
     {
         SetNullProperties();
 
-        CreateNewMesh(0,0);
-        CreateNewMesh(0, 200);
-        CreateNewMesh(200, 0);
-        CreateNewMesh(200, 200);
+        meshes = new Mesh[8];
+
+        CreateNewMesh(0,0, gradient_env1);
+        CreateNewMesh(0, 200, gradient_env1);
+        CreateNewMesh(200, 0, gradient_env1);
+        CreateNewMesh(200, 200, gradient_env1);
+
+        CreateNewMesh(-400, 0, gradient_env2);
+        CreateNewMesh(-400, 200, gradient_env2);
+        CreateNewMesh(-200, 0, gradient_env2);
+        CreateNewMesh(-200, 200, gradient_env2);
     }
 
     // Assign a value for properties if not set
@@ -50,16 +61,18 @@ public class MeshGenerator : MonoBehaviour
     }
 
     // Create new mesh from point (xStart, zStart) until point (xStart + xSize, zStart + zSize)
-    public void CreateNewMesh(int xStart, int Zstart)
+    public void CreateNewMesh(int xStart, int Zstart, Gradient gradient)
     {
         Mesh mesh = new Mesh();
  
         Vector3[] vertices = CreateMeshShape(xStart, Zstart);
         int[] triangles = CreateTriangles();
-        Color[] colors = ColorMap(vertices);
+        Color[] colors = ColorMap(vertices, gradient);
         UpdateMesh(mesh, vertices, triangles, colors);
         createFauna(vertices);
         addLandMarks(vertices);
+
+        meshes[index++] = mesh;
 
         // Instantiate new GameObject for each mesh
         GameObject go = new GameObject();
@@ -129,7 +142,7 @@ public class MeshGenerator : MonoBehaviour
     }
 
     // Assign a color for each vertex based on height
-    private Color[] ColorMap(Vector3[] vertices)
+    private Color[] ColorMap(Vector3[] vertices, Gradient gradient)
     {
         Color[] colors = new Color[vertices.Length];
 
