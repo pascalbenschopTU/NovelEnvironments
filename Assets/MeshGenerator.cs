@@ -2,80 +2,73 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(MeshFilter))]
-[RequireComponent(typeof(MeshCollider))]
 public class MeshGenerator : MonoBehaviour
 {
-    public GameObject[] objects;
-    public GameObject[] landMarks;
+    private GameObject[] objects;
+    private GameObject[] landMarks;
 
-    public Material terrainMaterial;
+    private Material terrainMaterial;
 
-    [SerializeField] private AnimationCurve heightCurve;
+    private AnimationCurve heightCurve;
 
-    public int xSize;
-    public int zSize;
+    private int xSize;
+    private int zSize;
 
-    public float scale;
-    public int octaves;
-    public float lacunarity;
+    private float scale;
+    private int octaves;
+    private float lacunarity;
 
-    public int seed;
+    private int seed;
 
-    public Gradient gradient_env1;
-    public Gradient gradient_env2;
+    private Gradient gradient;
 
     private float minTerrainHeight;
     private float maxTerrainHeight;
-    private float lastNoiseHeight;
 
-    public Mesh[] meshes;
-    private int index = 0;
 
-    // Start is called before the first frame update
-    void Start()
+    public void Initialize(GameObject[] objects, GameObject[] landMarks, Material terrainMaterial, AnimationCurve heightCurve, float scale, int octaves, float lacunarity, int seed, Gradient gradient)
     {
+        this.objects = objects;
+        this.landMarks = landMarks;
+        this.terrainMaterial = terrainMaterial;
+        this.heightCurve = heightCurve;
+        this.xSize = 200;
+        this.zSize = 200;
+        this.scale = scale;
+        this.octaves = octaves;
+        this.lacunarity = lacunarity;
+        this.seed = seed;
+        this.gradient = gradient;
+
+        this.minTerrainHeight = 0;
+        this.maxTerrainHeight = 30;
+
         SetNullProperties();
-
-        meshes = new Mesh[8];
-
-        CreateNewMesh(0,0, gradient_env1);
-        CreateNewMesh(0, 200, gradient_env1);
-        CreateNewMesh(200, 0, gradient_env1);
-        CreateNewMesh(200, 200, gradient_env1);
-
-        CreateNewMesh(-400, 0, gradient_env2);
-        CreateNewMesh(-400, 200, gradient_env2);
-        CreateNewMesh(-200, 0, gradient_env2);
-        CreateNewMesh(-200, 200, gradient_env2);
     }
+
 
     // Assign a value for properties if not set
     private void SetNullProperties()
     {
-        if (xSize <= 0) xSize = 50;
-        if (zSize <= 0) zSize = 50;
         if (octaves <= 0) octaves = 5;
-        if (lacunarity <= 0) lacunarity = 2;
-        if (scale <= 0) scale = 50;
+        if (lacunarity <= 0) lacunarity = 1;
+        if (scale <= 0) scale = 100;
     }
 
     // Create new mesh from point (xStart, zStart) until point (xStart + xSize, zStart + zSize)
-    public void CreateNewMesh(int xStart, int Zstart, Gradient gradient)
+    public Mesh CreateNewMesh(int xStart, int Zstart)
     {
+        SetNullProperties();
+
         Mesh mesh = new Mesh();
  
         Vector3[] vertices = CreateMeshShape(xStart, Zstart);
         int[] triangles = CreateTriangles();
         Color[] colors = ColorMap(vertices, gradient);
         UpdateMesh(mesh, vertices, triangles, colors);
-        createFauna(vertices);
-        addLandMarks(vertices);
-
-        meshes[index++] = mesh;
 
         // Instantiate new GameObject for each mesh
-        GameObject go = new GameObject();
+        GameObject go = new GameObject("Mesh");
         go.AddComponent<MeshFilter>();
         go.AddComponent<MeshCollider>();
         go.AddComponent<MeshRenderer>();
@@ -85,6 +78,8 @@ public class MeshGenerator : MonoBehaviour
         go.GetComponent<MeshCollider>().enabled = true;
 
         go.layer = LayerMask.NameToLayer("Ground");
+
+        return mesh;
     }
 
     // Create the vertices for the mesh
@@ -102,7 +97,6 @@ public class MeshGenerator : MonoBehaviour
             {
                 // Set height of vertices
                 float noiseHeight = GenerateNoiseHeight(z, x, octaveOffsets);
-                SetMinMaxHeights(noiseHeight);
                 vertices[i] = new Vector3(x, noiseHeight, z);
                 i++;
             }
@@ -159,44 +153,6 @@ public class MeshGenerator : MonoBehaviour
         return colors;
     }
 
-    // Add random objects to mesh
-    // TODO: Replace with better generator
-    void createFauna(Vector3[] vertices)
-    {
-        System.Random prng = new System.Random(seed);
-        for (int i = 0; i < 200; i++)
-        {
-            int verticeIndex = prng.Next(0, vertices.Length);
-            Vector3 vertice = vertices[verticeIndex];
-            if (vertice.y > 5 && vertice.y < 15)
-            {
-                
-                GameObject objectToSpawn = objects[prng.Next(0, objects.Length)];
-                objectToSpawn.layer = LayerMask.NameToLayer("Ground");
-                Instantiate(objectToSpawn, vertice, Quaternion.identity);
-                
-            }    
-        }
-    }
-
-    // Add landmarks to mesh
-    void addLandMarks(Vector3[] vertices)
-    {
-        System.Random prng = new System.Random(seed);
-        for (int i = 0; i < 1; i++)
-        {
-            int verticeIndex = prng.Next(0, vertices.Length);
-            int objectIndex = prng.Next(0, landMarks.Length);
-
-            Vector3 vertice = vertices[verticeIndex];
-            GameObject objectToSpawn = landMarks[objectIndex];
-
-            vertice.y += 10;
-
-            Instantiate(objectToSpawn, vertice, Quaternion.Euler(new Vector3(-90, 0, 0)));
-        }
-    }
-
     // Update each mesh with the data
     void UpdateMesh(Mesh mesh, Vector3[] vertices, int[] triangles, Color[] colors)
     {
@@ -250,15 +206,5 @@ public class MeshGenerator : MonoBehaviour
             amplitude *= persistence;
         }
         return noiseHeight;
-    }
-
-    // Set min and max heights of the map
-    private void SetMinMaxHeights(float noiseHeight)
-    {
-        // Set min and max height of map for color gradient
-        if (noiseHeight > maxTerrainHeight)
-            maxTerrainHeight = noiseHeight;
-        if (noiseHeight < minTerrainHeight)
-            minTerrainHeight = noiseHeight;
     }
 }
