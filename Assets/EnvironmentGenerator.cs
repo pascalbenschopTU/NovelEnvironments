@@ -60,6 +60,7 @@ public class EnvironmentGenerator : MonoBehaviour
         }
 
         pathGenerator.GenerateLandmarks(meshes);
+        pathGenerator.GeneratePaths(meshes);
     }
 
     
