@@ -37,7 +37,7 @@ public class LookDirection : MonoBehaviour
         // Whatever you wanna do
         }
         else {
-            Debug.Log("Looking at the Lighthouse");
+            Debug.Log("Not looking at the Lighthouse");
         }
 
     }
