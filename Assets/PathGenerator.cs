@@ -43,7 +43,7 @@ public class PathGenerator : MonoBehaviour
             Vector3 vertice = envMesh.vertices[verticeIndex];
             GameObject objectToSpawn = landmarks[i];
 
-            vertice.y += 10;
+            vertice.y -= 3;
             landMarkCoords.Add(vertice);
 
             Instantiate(objectToSpawn, vertice, Quaternion.Euler(new Vector3(-90, 0, 0)));
