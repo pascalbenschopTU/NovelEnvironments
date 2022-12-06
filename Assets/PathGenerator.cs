@@ -9,6 +9,7 @@ public class PathGenerator : MonoBehaviour
 
     private GameObject[] landmarks;
     private int seed;
+    Material terrainMaterial;
 
     int vertIndex, triIndex, verticesCount = 0;
     private int pathWidth = 10;
@@ -16,10 +17,11 @@ public class PathGenerator : MonoBehaviour
 
     List<Vector3> landMarkCoords;
 
-    public void Initialize(GameObject[] landmarks, int seed)
+    public void Initialize(GameObject[] landmarks, int seed, Material terrainMaterial)
     {
         this.landmarks = landmarks;
         this.seed = seed;
+        this.terrainMaterial = terrainMaterial;
     }
 
     public void GenerateLandmarks(Mesh[] meshes)
@@ -82,6 +84,17 @@ public class PathGenerator : MonoBehaviour
             mesh.colors[i] = Color.yellow;
         
         UpdateMesh();
+
+        GameObject go = new GameObject("Mesh");
+        go.AddComponent<MeshFilter>();
+        go.AddComponent<MeshCollider>();
+        go.AddComponent<MeshRenderer>();
+        go.GetComponent<MeshRenderer>().material = terrainMaterial;
+        go.GetComponent<MeshFilter>().mesh = mesh;
+        go.GetComponent<MeshCollider>().sharedMesh = mesh;
+        go.GetComponent<MeshCollider>().enabled = true;
+
+        go.layer = LayerMask.NameToLayer("Paths");
     }
 
     int addPathVertices(Vector3 s, Vector3 f)
