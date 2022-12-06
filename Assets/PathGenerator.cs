@@ -11,6 +11,10 @@ public class PathGenerator : MonoBehaviour
     private int seed;
     Material terrainMaterial;
 
+    Vector3[] vertices;
+    int[] triangles;
+    Color[] colors;
+
     int vertIndex, triIndex, verticesCount = 0;
     private int pathWidth = 10;
     private float pathScale = 1.0f;
@@ -65,9 +69,9 @@ public class PathGenerator : MonoBehaviour
             first = second;
         }
 
-        mesh.vertices = new Vector3[(verticesCount+1) * (pathWidth+1)];
-        mesh.colors = new Color[mesh.vertices.Length];
-        mesh.triangles = new int[verticesCount * pathWidth * 6];
+        vertices = new Vector3[(verticesCount+1) * (pathWidth+1)];
+        colors = new Color[vertices.Length];
+        triangles = new int[verticesCount * pathWidth * 6];
 
         first = new Vector3(20, 8, 20);
 
@@ -81,8 +85,8 @@ public class PathGenerator : MonoBehaviour
             first = second;
         }
 
-        for (int i = 0; i < mesh.colors.Length; i++)
-            mesh.colors[i] = Color.yellow;
+        for (int i = 0; i < colors.Length; i++)
+            colors[i] = Color.yellow;
         
         UpdateMesh();
 
@@ -118,9 +122,9 @@ public class PathGenerator : MonoBehaviour
                 Vector3 adjustedV = start + j*perp*pathScale;
                 Vector3 heightV = envMesh.vertices[(int)(adjustedV.x)+201*(int)(adjustedV.z)];
                 Vector3 vertex = new Vector3(adjustedV.x, heightV.y+0.01f, adjustedV.z);
-                mesh.vertices[vertIndex++] = vertex;
+                vertices[vertIndex++] = vertex;
                 System.Console.WriteLine("vertIndex: {7} width: {8} s: {0} f: {1} adjustedV: {2} heightV: {3} dist: {4} pos: {5} vertex: {6}", s, f, adjustedV, heightV, dist, pos, vertex, vertIndex, pathWidth);
-                System.Console.WriteLine("vertsize: {7} trisize: {8} s: {0} f: {1} adjustedV: {2} heightV: {3} dist: {4} pos: {5} vertex: {6}", s, f, adjustedV, heightV, dist, pos, vertex, vertIndex, pathWidth);
+                System.Console.WriteLine("vertsize: {7} trisize: {8} s: {0} f: {1} adjustedV: {2} heightV: {3} dist: {4} pos: {5} vertex: {6}", s, f, adjustedV, heightV, dist, pos, vertex, vertices.Length, triangles.Length);
             }
 
             pos += normDist;
@@ -138,14 +142,15 @@ public class PathGenerator : MonoBehaviour
             // fill row
             for (int x = 0; x < pathWidth; x++)
             {
-                mesh.triangles[triIndex + 0] = vert + 0;
-                mesh.triangles[triIndex + 1] = vert + pathWidth + 1;
-                mesh.triangles[triIndex + 2] = vert + 1;
-                mesh.triangles[triIndex + 3] = vert + 1;
-                mesh.triangles[triIndex + 4] = vert + pathWidth + 1;
-                mesh.triangles[triIndex + 5] = vert + pathWidth + 2;
+                triangles[triIndex + 0] = vert + 0;
+                triangles[triIndex + 1] = vert + pathWidth + 1;
+                triangles[triIndex + 2] = vert + 1;
+                triangles[triIndex + 3] = vert + 1;
+                triangles[triIndex + 4] = vert + pathWidth + 1;
+                triangles[triIndex + 5] = vert + pathWidth + 2;
 
-                //System.Console.WriteLine("first: {0} second: {1} dist {2} normDistx {3} normDistz {4} verticesCount {5}, pathWidth {6}", triangles[triIndex + 0], triangles[triIndex + 1], triangles[triIndex + 2], triangles[triIndex + 3], triangles[triIndex + 4], triangles[triIndex + 5], pathWidth);
+                System.Console.WriteLine("first: {0} second: {1} dist {2} normDistx {3} normDistz {4} verticesCount {5}, pathWidth {6}", triangles[triIndex + 0], triangles[triIndex + 1], triangles[triIndex + 2], triangles[triIndex + 3], triangles[triIndex + 4], triangles[triIndex + 5], pathWidth);
+                System.Console.WriteLine("vert: {0} triIndex: {1} len: {2} vertIndex: {3} pathWidth: {4}", vert, triIndex, len, vertIndex, pathWidth);
                 vert++;
                 triIndex += 6;
             }
@@ -156,6 +161,10 @@ public class PathGenerator : MonoBehaviour
     void UpdateMesh()
     {
         mesh.Clear();
+
+        mesh.vertices = vertices;
+        mesh.triangles = triangles;
+        mesh.colors = colors;
 
         mesh.RecalculateNormals();
         mesh.RecalculateTangents();
