@@ -26,7 +26,7 @@ public class PathGenerator : MonoBehaviour
             Vector3 vertice = mesh.vertices[verticeIndex];
             GameObject objectToSpawn = landmarks[i];
 
-            vertice.y += 10;
+            vertice.y -= 3;
 
             Instantiate(objectToSpawn, vertice, Quaternion.Euler(new Vector3(-90, 0, 0)));
         }
