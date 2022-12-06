@@ -37,7 +37,7 @@ public class EnvironmentGenerator : MonoBehaviour
         meshGenerator = gameObject.AddComponent<MeshGenerator>();
         meshGenerator.Initialize(objects, landmarks, terrainMaterial, heightCurve, scale, octaves, lacunarity, seed, gradient);
         pathGenerator = gameObject.AddComponent<PathGenerator>(); 
-        pathGenerator.Initialize(landmarks, seed);
+        pathGenerator.Initialize(landmarks, seed, terrainMaterial);
         objectGenerator = gameObject.AddComponent<ObjectGenerator>();
         objectGenerator.Initialize(objects, seed, objectAmount);
         
@@ -60,6 +60,7 @@ public class EnvironmentGenerator : MonoBehaviour
         }
 
         pathGenerator.GenerateLandmarks(meshes);
+        pathGenerator.GeneratePaths(meshes);
     }
 
     
