@@ -11,13 +11,13 @@
 .vsconfig
 *.csproj
 *.sln
-/Assets/LowPolyAlienWorld
-/Assets/Low-Poly Style Nature
-/Assets/Viuletti City low poly
+/Assets/LowPolyAlienWorld/*
+/Assets/Low-Poly Style Nature/*
+/Assets/Viuletti City low poly/*
 /Assets/LowPolyAlienWorld.meta
-/Assets/44.1 General Library (Free Sample Pack)
+/Assets/44.1 General Library (Free Sample Pack)/*
 !/Assets/44.1 General Library (Free Sample Pack)/Volume I/Footsteps_Grass_Single_04.wav
 !/Assets/44.1 General Library (Free Sample Pack)/Volume I/Footsteps_Grass_Single_04.wav.meta
-/Assets/Nature Sound FX
+/Assets/Nature Sound FX/*
 !/Assets/Nature Sound FX/Jungle/Jungle (1).wav
 !/Assets/Nature Sound FX/Jungle/Jungle (1).wav.meta
