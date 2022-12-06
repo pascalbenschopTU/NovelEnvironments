@@ -32,10 +32,11 @@ public class PathGenerator : MonoBehaviour
         // TODO depend on path generation
         for (int i = 0; i < landmarks.Length; i++)
         {
-            Mesh mesh = meshes[prng.Next(0, meshes.Length)];
-            int verticeIndex = prng.Next(0, mesh.vertices.Length);
+            //Mesh mesh = meshes[prng.Next(0, meshes.Length)];
+            Mesh envMesh = meshes[0];
+            int verticeIndex = prng.Next(0, envMesh.vertices.Length);
 
-            Vector3 vertice = mesh.vertices[verticeIndex];
+            Vector3 vertice = envMesh.vertices[verticeIndex];
             GameObject objectToSpawn = landmarks[i];
 
             vertice.y += 10;
@@ -94,7 +95,7 @@ public class PathGenerator : MonoBehaviour
         go.GetComponent<MeshCollider>().sharedMesh = mesh;
         go.GetComponent<MeshCollider>().enabled = true;
 
-        go.layer = LayerMask.NameToLayer("Paths");
+        go.layer = LayerMask.NameToLayer("Ground");
     }
 
     int addPathVertices(Vector3 s, Vector3 f)
