@@ -358,7 +358,8 @@ MonoBehaviour:
   - {fileID: 1879388732584624, guid: ba2b67dbc790eb74f8a401c592dd619f, type: 3}
   - {fileID: 1004710975425532, guid: c0aa33e678586aa43a1a9254fdfdfb4d, type: 3}
   landmarks:
-  - {fileID: 919132149155446097, guid: a7a14b998b7362e46a887d032f9bafa8, type: 3}
+  - {fileID: 919132149155446097, guid: 0649b321e494e5c48a13c5a8bdec8a54, type: 3}
+  - {fileID: 3377046667944978610, guid: 10d94be75d500154c8747f2417d28ba0, type: 3}
   objectAmount: 50
   terrainMaterial: {fileID: 2100000, guid: 1b20a390d157f314e8b9bb5dcd9a8c00, type: 2}
   heightCurve:
@@ -1190,9 +1191,10 @@ GameObject:
   - component: {fileID: 1582923929}
   - component: {fileID: 1582923931}
   - component: {fileID: 1582923932}
+  - component: {fileID: 1582923933}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1358,6 +1360,20 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1582923933
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1582923928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f723cc8e78a9e754eb2c6161e6e19ac8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerCamera: {fileID: 963194225}
+  target: {fileID: 0}
 --- !u!1 &1901605668
 GameObject:
   m_ObjectHideFlags: 0
