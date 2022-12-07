@@ -54,13 +54,13 @@ public class EnvironmentGenerator : MonoBehaviour
         meshes[index++] = meshGenerator.CreateNewMesh(xMin + 200, yMin);
         meshes[index++] = meshGenerator.CreateNewMesh(xMin + 200, yMin + 200);
 
+        pathGenerator.GenerateLandmarks(meshes);
+        pathGenerator.GeneratePaths(meshes);
+
         foreach(Mesh mesh in meshes)
         {
             objectGenerator.GenerateObjects(mesh);
         }
-
-        pathGenerator.GenerateLandmarks(meshes);
-        pathGenerator.GeneratePaths(meshes);
     }
 
     
