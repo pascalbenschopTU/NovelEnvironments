@@ -387,7 +387,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   xMin: 0
-  yMin: 0
+  zMin: 0
   scale: 100
   octaves: 5
   lacunarity: 2
@@ -855,7 +855,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1117622804}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -36.963165, y: -80.083435, z: 108.78888}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -902,7 +902,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   xMin: -400
-  yMin: -400
+  zMin: -400
   scale: 100
   octaves: 5
   lacunarity: 1
@@ -1060,7 +1060,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   xMin: -400
-  yMin: 0
+  zMin: 0
   scale: 100
   octaves: 5
   lacunarity: 1
@@ -1102,7 +1102,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1355761736}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3646.3948, y: 1170.2715, z: -520.3921}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1560,7 +1560,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   xMin: 0
-  yMin: -400
+  zMin: -400
   scale: 100
   octaves: 5
   lacunarity: 1
@@ -1602,7 +1602,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1939442652}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -128.87311, y: -85.966156, z: 162.65256}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
