@@ -54,9 +54,12 @@ public class EnvironmentGenerator : MonoBehaviour
         meshes[index++] = meshGenerator.CreateNewMesh(xMin + 200, yMin);
         meshes[index++] = meshGenerator.CreateNewMesh(xMin + 200, yMin + 200);
 
+        GameObject temp = new GameObject("EnvironmentObjects");
+        temp.transform.parent = transform;
+
         foreach(Mesh mesh in meshes)
         {
-            objectGenerator.GenerateObjects(mesh);
+            objectGenerator.GenerateObjects(mesh, temp);
         }
 
         pathGenerator.GenerateLandmarks(meshes);

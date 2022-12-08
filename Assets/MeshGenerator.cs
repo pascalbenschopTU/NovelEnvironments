@@ -79,6 +79,8 @@ public class MeshGenerator : MonoBehaviour
 
         go.layer = LayerMask.NameToLayer("Ground");
 
+        go.transform.parent = transform;
+
         return mesh;
     }
 

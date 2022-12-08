@@ -15,7 +15,7 @@ public class ObjectGenerator : MonoBehaviour
         this.amount = amount;
     }
 
-    public void GenerateObjects(Mesh mesh)
+    public void GenerateObjects(Mesh mesh, GameObject temp)
     {
         System.Random prng = new System.Random(seed);
         for (int i = 0; i < objects.Length; i++)
@@ -28,10 +28,10 @@ public class ObjectGenerator : MonoBehaviour
                 // TODO This range should be set in environment generation settings.
                 if (vertice.y > 5 && vertice.y < 15)
                 {
-                    GameObject objectToSpawn = objects[i];
-                    objectToSpawn.layer = LayerMask.NameToLayer("Ground");
-                    Instantiate(objectToSpawn, vertice, Quaternion.identity);
-
+                    GameObject prefab = objects[i];
+                    prefab.layer = LayerMask.NameToLayer("Ground");
+                    GameObject objectToSpawn = Instantiate(prefab, vertice, Quaternion.identity);
+                    objectToSpawn.transform.parent = temp.transform;
                 }
             }
         }
