@@ -26,13 +26,13 @@ public class ObjectGenerator : MonoBehaviour
                 int verticeIndex = prng.Next(0, mesh.vertices.Length);
                 Vector3 vertice = mesh.vertices[verticeIndex];
                 // TODO This range should be set in environment generation settings.
-                if (vertice.y > 5 && vertice.y < 15)
-                {
+//                if (vertice.y > 5 && vertice.y < 15)
+//                {
                     GameObject objectToSpawn = objects[i];
                     objectToSpawn.layer = LayerMask.NameToLayer("Ground");
                     Instantiate(objectToSpawn, vertice, Quaternion.identity);
 
-                }
+//                }
             }
         }
     }
