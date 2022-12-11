@@ -58,13 +58,13 @@ public class EnvironmentGenerator : MonoBehaviour
 
         createBorders();
 
+        pathGenerator.GenerateLandmarks(meshes);
+        pathGenerator.GeneratePaths(meshes);
+
         foreach(Mesh mesh in meshes)
         {
             objectGenerator.GenerateObjects(mesh);
         }
-
-        pathGenerator.GenerateLandmarks(meshes);
-        pathGenerator.GeneratePaths(meshes);
     }
 
     private void createBorders()
