@@ -40,7 +40,7 @@ public class PathGenerator : MonoBehaviour
         //for (int i = 0; i < meshes.Length; i++)
         int i = 0;
         {    
-            for (int j = 0; j < landmarks.Length*4; j++)
+            for (int j = 0; j < landmarks.Length; j++)
             {
                 //Mesh mesh = meshes[prng.Next(0, meshes.Length)];
                 Mesh landMesh = meshes[i];
@@ -48,7 +48,7 @@ public class PathGenerator : MonoBehaviour
                 //int verticeIndex = Random.Range(0, landMesh.vertices.Length);
 
                 Vector3 vertice = landMesh.vertices[verticeIndex];
-                GameObject objectToSpawn = landmarks[0];
+                GameObject objectToSpawn = landmarks[j];
 
                 vertice.y -= 3;
                 landMarkCoords[i].Add(vertice);
