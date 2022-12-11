@@ -50,6 +50,7 @@ public class PathGenerator : MonoBehaviour
                 Vector3 vertice = landMesh.vertices[verticeIndex];
                 GameObject objectToSpawn = landmarks[j];
 
+
                 vertice.y -= 3;
                 landMarkCoords[i].Add(vertice);
                 System.Console.WriteLine("verticeIndex: {0} vertice: {1} i {2} landMesh.vertices.Length {3}", verticeIndex, vertice, i, landMesh.vertices.Length);
