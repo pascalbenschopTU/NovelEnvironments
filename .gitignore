@@ -9,6 +9,7 @@
 
 .vs
 .vsconfig
+.idea
 *.csproj
 *.sln
 /Assets/Low-Poly Style Nature
