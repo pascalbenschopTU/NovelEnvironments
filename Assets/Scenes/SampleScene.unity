@@ -447,7 +447,7 @@ GameObject:
   - component: {fileID: 361438522}
   - component: {fileID: 361438521}
   m_Layer: 0
-  m_Name: StartingHall
+  m_Name: StartingPosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -466,7 +466,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   environment: 1
-  player: {fileID: 1582923928}
 --- !u!4 &361438522
 Transform:
   m_ObjectHideFlags: 0

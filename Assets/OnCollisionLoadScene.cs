@@ -4,14 +4,14 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Events;
 
-
 public class OnCollisionLoadScene : MonoBehaviour
 {
-	void OnTriggerEnter(Collider other) {
+    void OnTriggerEnter(Collider other) {
 		if(other.gameObject.CompareTag("Player")) {
 			Debug.Log("Entered Area Scene");
-            SceneManager.LoadSceneAsync ("SampleScene");
+			SceneManager.LoadScene("SampleScene");
 
+			Settings.environment = 3;
 		}
 	}
 }
