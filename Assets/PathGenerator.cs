@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PathGenerator : MonoBehaviour
 {
+    private string layer;
+
     Mesh mesh;
     Mesh envMesh;
 
@@ -22,8 +24,9 @@ public class PathGenerator : MonoBehaviour
     List<Vector3>[] landMarkCoords;
     Material mat;
 
-    public void Initialize(GameObject[] landmarks, int seed, Material mat)
+    public void Initialize(string layer, GameObject[] landmarks, int seed, Material mat)
     {
+        this.layer = layer;
         this.landmarks = landmarks;
         this.seed = seed;
         this.landMarkCoords = new List<Vector3>[4];
@@ -49,6 +52,7 @@ public class PathGenerator : MonoBehaviour
 
                 Vector3 vertice = landMesh.vertices[verticeIndex];
                 GameObject objectToSpawn = landmarks[j];
+                objectToSpawn.layer = LayerMask.NameToLayer(layer);
 
 
                 vertice.y -= 3;
@@ -235,6 +239,6 @@ public class PathGenerator : MonoBehaviour
         go.GetComponent<MeshCollider>().sharedMesh = mesh;
         go.GetComponent<MeshCollider>().enabled = true;
 
-        go.layer = LayerMask.NameToLayer("Ground");
+        go.layer = LayerMask.NameToLayer(layer);
     }
 }

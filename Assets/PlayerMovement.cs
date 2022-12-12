@@ -17,11 +17,11 @@ public class PlayerMovement : MonoBehaviour
     private float footStepTimer = 0;
 
     public Transform groundCheck;
-    public float groundDistance = 0.4f;
+    private float groundDistance = 0.4f;
     public LayerMask groundMask;
 
-    Vector3 velocity;
-    bool isGrounded;
+    private Vector3 velocity;
+    private bool isGrounded;
 
     public Transform minimapCamera;
     public Camera playerCamera;
