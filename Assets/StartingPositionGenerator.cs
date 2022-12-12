@@ -64,7 +64,7 @@ public class StartingPositionGenerator : MonoBehaviour
 
     private void getStartingPosition()
     {
-        startingPosition = script.getMeshStartingVertex() + new Vector3(0.0f, 1.0f, 0.0f);
+        startingPosition = script.getMeshStartingVertex() + new Vector3(0.0f, 0.5f, 0.0f);
     }
 
     private void TeleportPlayer()
