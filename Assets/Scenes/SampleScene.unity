@@ -387,7 +387,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   xMin: 0
-  yMin: 0
+  zMin: 0
   scale: 100
   octaves: 5
   lacunarity: 2
@@ -421,6 +421,7 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 5
     m_NumAlphaKeys: 2
+  size: 400
 --- !u!4 &355603886
 Transform:
   m_ObjectHideFlags: 0
@@ -900,7 +901,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1117622804}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -36.963165, y: -80.083435, z: 108.78888}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -918,9 +919,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63b174bc2b79dbc49a1434ad2a9856f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objects: []
+  objects:
+  - {fileID: 1000011914158716, guid: 78af3a7aad589fa49b8fb946c9e57362, type: 3}
+  - {fileID: 1000011147454354, guid: 01d2dd5255c308a4db25dbb77d9f65ea, type: 3}
+  - {fileID: 1000012936420096, guid: a6dbabfd6d3c8cb47b7243b0b8723af2, type: 3}
+  - {fileID: 1086353713108280, guid: 10dcade9ef34ab642846c4b889ac76e7, type: 3}
+  - {fileID: 1983694637467298, guid: be44d0243648ece459799ac0d5d4a2a6, type: 3}
+  - {fileID: 1879388732584624, guid: ba2b67dbc790eb74f8a401c592dd619f, type: 3}
+  - {fileID: 1004710975425532, guid: c0aa33e678586aa43a1a9254fdfdfb4d, type: 3}
   landmarks: []
-  objectAmount: 0
+  objectAmount: 20
   terrainMaterial: {fileID: 2100000, guid: 1b20a390d157f314e8b9bb5dcd9a8c00, type: 2}
   heightCurve:
     serializedVersion: 2
@@ -947,14 +955,14 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   xMin: -400
-  yMin: -400
+  zMin: -400
   scale: 100
   octaves: 5
   lacunarity: 1
   seed: 450
   gradient:
     serializedVersion: 2
-    key0: {r: 0.9528302, g: 0, b: 0.849584, a: 1}
+    key0: {r: 1, g: 1, b: 1, a: 1}
     key1: {r: 1, g: 1, b: 1, a: 1}
     key2: {r: 0, g: 0, b: 0, a: 0}
     key3: {r: 0, g: 0, b: 0, a: 0}
@@ -981,6 +989,7 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
+  size: 400
 --- !u!1 &1198149909
 GameObject:
   m_ObjectHideFlags: 0
@@ -1072,11 +1081,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objects:
-  - {fileID: 1630287520782172, guid: 3b703535d10b66844a909b8cd4b12fc5, type: 3}
-  - {fileID: 1879388732584624, guid: ba2b67dbc790eb74f8a401c592dd619f, type: 3}
-  - {fileID: 1983694637467298, guid: be44d0243648ece459799ac0d5d4a2a6, type: 3}
-  - {fileID: 1296198054963878, guid: f76595434879f634c8b88f3cc4f08b2c, type: 3}
-  - {fileID: 1902742491923462, guid: b3d0e1c692a75b34d96fb84c9b431b64, type: 3}
+  - {fileID: 1986308318195784, guid: f6045a15e1065124680c92c504c8d7ea, type: 3}
+  - {fileID: 1175661577396104, guid: 9b2afb2de81f7fa4bb4c6c9533ff3e7f, type: 3}
+  - {fileID: 1187100871979764, guid: b8ca6433e7a78e346904aef72892f856, type: 3}
+  - {fileID: 1649925079310092, guid: 736e50b5fd21b1240b02444bc774d83e, type: 3}
+  - {fileID: 1092110070509382, guid: 7f370a51edc99c440819f87ec0f00e2c, type: 3}
+  - {fileID: 1891266665448334, guid: 67a0360629c18d741ac237d5197935cd, type: 3}
+  - {fileID: 1203660441109236, guid: 07aab42f1eca6ef4887a7fa93ad8282b, type: 3}
+  - {fileID: 1866083037941774, guid: 7fe8fb23b001d994f92ccc500f281cf8, type: 3}
+  - {fileID: 1209769021331456, guid: 715b325acd44dfd42a1b236411075c6f, type: 3}
+  - {fileID: 1786732080692216, guid: 46aa8b6d013691a43a624b2200d4519a, type: 3}
+  - {fileID: 1721112587459618, guid: 2ed80e4af24778742a16837f6b64d172, type: 3}
+  - {fileID: 1065655044243356, guid: 20f64b4081161ef43b320aa975519fdc, type: 3}
   landmarks: []
   objectAmount: 10
   terrainMaterial: {fileID: 2100000, guid: 1b20a390d157f314e8b9bb5dcd9a8c00, type: 2}
@@ -1105,7 +1121,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   xMin: -400
-  yMin: 0
+  zMin: 0
   scale: 100
   octaves: 5
   lacunarity: 1
@@ -1139,6 +1155,7 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 5
     m_NumAlphaKeys: 2
+  size: 400
 --- !u!4 &1355761738
 Transform:
   m_ObjectHideFlags: 0
@@ -1147,7 +1164,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1355761736}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3646.3948, y: 1170.2715, z: -520.3921}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1576,9 +1593,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objects:
-  - {fileID: 1086353713108280, guid: 10dcade9ef34ab642846c4b889ac76e7, type: 3}
+  - {fileID: 1056816346895226, guid: fce1307539b865c4d942dfa642eab7ec, type: 3}
+  - {fileID: 1153027382682948, guid: 7d227c3a7fa9cf54a8d07c8a5e34b64a, type: 3}
+  - {fileID: 1131628691654494, guid: 5c6ccde0684f68f4f9de1e388495c480, type: 3}
+  - {fileID: 1143307919750216, guid: 3dff328fdba649c44a1d608ec75217d7, type: 3}
+  - {fileID: 1763038635241144, guid: b6adf14e248ee014597da88e5b5cb4b8, type: 3}
+  - {fileID: 1817203163705728, guid: 030c083b63658d2409864330589d7c2e, type: 3}
+  - {fileID: 1977470886905136, guid: 31d5af46872794c47831f7a6da72a909, type: 3}
+  - {fileID: 1026519327573510, guid: df93f3d6378363547a6e517b28966afd, type: 3}
+  - {fileID: 1448558995247362, guid: de4ee8b58db0a0f4d96175ffd1f29120, type: 3}
+  - {fileID: 1977470886905136, guid: 31d5af46872794c47831f7a6da72a909, type: 3}
+  - {fileID: 1017275491852100, guid: cbb2baf7f26aed649a2393144227a562, type: 3}
+  - {fileID: 1575919079451628, guid: 89f0268b869809841b9a32b72053e107, type: 3}
+  - {fileID: 1697415565114782, guid: ab28e8006e210aa4480fe64bd6fa7208, type: 3}
+  - {fileID: 1237205094868938, guid: 2909343e8fc65984b82bff9fab8cf5d1, type: 3}
+  - {fileID: 1273699440398734, guid: 3959f9b79ac88ac4d8690e7e6c7e3ded, type: 3}
   landmarks: []
-  objectAmount: 1
+  objectAmount: 5
   terrainMaterial: {fileID: 2100000, guid: 1b20a390d157f314e8b9bb5dcd9a8c00, type: 2}
   heightCurve:
     serializedVersion: 2
@@ -1605,14 +1636,14 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   xMin: 0
-  yMin: -400
+  zMin: -400
   scale: 100
   octaves: 5
   lacunarity: 1
   seed: 450
   gradient:
     serializedVersion: 2
-    key0: {r: 0, g: 0.047753334, b: 1, a: 1}
+    key0: {r: 0.5058824, g: 0.49411765, b: 0.4745098, a: 1}
     key1: {r: 0.027272727, g: 0.073723696, b: 1, a: 1}
     key2: {r: 1, g: 1, b: 1, a: 0}
     key3: {r: 0, g: 0, b: 0, a: 0}
@@ -1620,7 +1651,7 @@ MonoBehaviour:
     key5: {r: 0, g: 0, b: 0, a: 0}
     key6: {r: 0, g: 0, b: 0, a: 0}
     key7: {r: 0, g: 0, b: 0, a: 0}
-    ctime0: 0
+    ctime0: 65535
     ctime1: 65535
     ctime2: 65535
     ctime3: 0
@@ -1636,9 +1667,10 @@ MonoBehaviour:
     atime5: 0
     atime6: 0
     atime7: 0
-    m_Mode: 0
+    m_Mode: 1
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
+  size: 400
 --- !u!4 &1939442654
 Transform:
   m_ObjectHideFlags: 0
@@ -1647,7 +1679,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1939442652}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -128.87311, y: -85.966156, z: 162.65256}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

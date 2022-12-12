@@ -18,7 +18,7 @@ public class EnvironmentGenerator : MonoBehaviour
     [SerializeField] private AnimationCurve heightCurve;
 
     public int xMin;
-    public int yMin;
+    public int zMin;
 
     public float scale;
     public int octaves;
@@ -27,6 +27,8 @@ public class EnvironmentGenerator : MonoBehaviour
     public int seed;
 
     public Gradient gradient;
+
+    public int size = 400;
 
     private Mesh[] meshes;
     private int index = 0;
@@ -49,10 +51,15 @@ public class EnvironmentGenerator : MonoBehaviour
 
     private void createNewEnvironment()
     {
-        meshes[index++] = meshGenerator.CreateNewMesh(xMin, yMin);
-        meshes[index++] = meshGenerator.CreateNewMesh(xMin, yMin + 200);
-        meshes[index++] = meshGenerator.CreateNewMesh(xMin + 200, yMin);
-        meshes[index++] = meshGenerator.CreateNewMesh(xMin + 200, yMin + 200);
+        meshes[index++] = meshGenerator.CreateNewMesh(xMin, zMin);
+        meshes[index++] = meshGenerator.CreateNewMesh(xMin, zMin + size / 2);
+        meshes[index++] = meshGenerator.CreateNewMesh(xMin + size / 2, zMin);
+        meshes[index++] = meshGenerator.CreateNewMesh(xMin + size / 2, zMin + size / 2);
+
+        createBorders();
+
+        pathGenerator.GenerateLandmarks(meshes);
+        pathGenerator.GeneratePaths(meshes);
 
         GameObject temp = new GameObject("EnvironmentObjects");
         temp.transform.parent = transform;
@@ -61,10 +68,50 @@ public class EnvironmentGenerator : MonoBehaviour
         {
             objectGenerator.GenerateObjects(mesh, temp);
         }
-
-        pathGenerator.GenerateLandmarks(meshes);
-        pathGenerator.GeneratePaths(meshes);
     }
 
-    
+    private void createBorders()
+    {
+        int offSetFromOutside = 30;
+        int halfOffSetFromOutside = offSetFromOutside / 2;
+
+        // Create width borders
+        float xOffset = size / 2;
+        float zOffset = size;
+        for (int i = 0; i < 2; i++)
+        {
+            GameObject border = GameObject.CreatePrimitive(PrimitiveType.Cube);
+
+            border.transform.localScale = new Vector3(size - offSetFromOutside, size - offSetFromOutside, 1);
+
+            if (i == 0)
+                border.transform.position = new Vector3(xMin + xOffset, 0, zMin + halfOffSetFromOutside);
+            if (i == 1)
+                border.transform.position = new Vector3(xMin + xOffset, 0, zMin + zOffset - halfOffSetFromOutside);
+
+            border.GetComponent<MeshRenderer>().enabled = false;
+            border.transform.name = "Width border " + (i + 1);
+            border.transform.parent = transform;
+        }
+
+        // Create length borders
+        xOffset = size;
+        zOffset = size / 2;
+
+        for (int i = 0; i < 2; i++)
+        {
+            GameObject border = GameObject.CreatePrimitive(PrimitiveType.Cube);
+
+            border.transform.localScale = new Vector3(1, size - offSetFromOutside, size - offSetFromOutside);
+
+            if (i == 0)
+                border.transform.position = new Vector3(xMin + halfOffSetFromOutside, 0, zMin + zOffset);
+            if (i == 1)
+                border.transform.position = new Vector3(xMin + xOffset - halfOffSetFromOutside, 0, zMin + zOffset);
+
+            border.GetComponent<MeshRenderer>().enabled = false;
+            border.transform.name = "Length border " + (i + 1);
+            border.transform.parent = transform;
+        }
+    }
 }
