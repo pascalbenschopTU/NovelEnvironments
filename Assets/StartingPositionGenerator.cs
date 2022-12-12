@@ -23,18 +23,21 @@ public class StartingPositionGenerator : MonoBehaviour
     void Start()
     {
         environment = Settings.environment;
-        
+
+        if (environment == 0)
+        {
+            Debug.LogError("Synchronization error, environment not correctly forwarded");
+            environment = 1;
+        }
+
         InitializeEnvironments();
         InitializePlayer();
 
-        if (environment != 0)
-        {
-            selectNextEnvironment();
-            getStartingPosition();
+        selectNextEnvironment();
+        getStartingPosition();
 
-            TeleportPlayer();
-            StartTimer();
-        }
+        TeleportPlayer();
+        StartTimer();
 
         Settings.environment = environment + 1;
     }
