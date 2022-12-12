@@ -343,6 +343,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63b174bc2b79dbc49a1434ad2a9856f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  layer: Ground
   objects:
   - {fileID: 1250690161900600, guid: e6f343cc46467004f811ce2ba3a3841b, type: 3}
   - {fileID: 1983694637467298, guid: be44d0243648ece459799ac0d5d4a2a6, type: 3}
@@ -466,6 +467,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   environment: 1
+  time: 10
 --- !u!4 &361438522
 Transform:
   m_ObjectHideFlags: 0
@@ -560,7 +562,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 311
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 8400000, guid: b64c87154c01a054da8871d653d47e82, type: 2}
   m_TargetDisplay: 0
@@ -918,6 +920,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63b174bc2b79dbc49a1434ad2a9856f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  layer: Ground
   objects:
   - {fileID: 1000011914158716, guid: 78af3a7aad589fa49b8fb946c9e57362, type: 3}
   - {fileID: 1000011147454354, guid: 01d2dd5255c308a4db25dbb77d9f65ea, type: 3}
@@ -1079,6 +1082,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63b174bc2b79dbc49a1434ad2a9856f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  layer: Ground
   objects:
   - {fileID: 1986308318195784, guid: f6045a15e1065124680c92c504c8d7ea, type: 3}
   - {fileID: 1175661577396104, guid: 9b2afb2de81f7fa4bb4c6c9533ff3e7f, type: 3}
@@ -1591,6 +1595,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63b174bc2b79dbc49a1434ad2a9856f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  layer: Ground
   objects:
   - {fileID: 1056816346895226, guid: fce1307539b865c4d942dfa642eab7ec, type: 3}
   - {fileID: 1153027382682948, guid: 7d227c3a7fa9cf54a8d07c8a5e34b64a, type: 3}

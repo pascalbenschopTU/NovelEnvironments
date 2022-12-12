@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class StartingPositionGenerator : MonoBehaviour
 {
     public int environment;
+    public int time;
 
     private GameObject chosenEnvironment;
 
@@ -29,6 +31,7 @@ public class StartingPositionGenerator : MonoBehaviour
             getStartingPosition();
 
             TeleportPlayer();
+            StartTimer();
         }
     }
 
@@ -71,5 +74,17 @@ public class StartingPositionGenerator : MonoBehaviour
     private void TeleportPlayer()
     {
         player.transform.position = startingPosition;
+    }
+
+    private void StartTimer()
+    {
+        StartCoroutine(countDown());
+    }
+
+    private IEnumerator countDown()
+    {
+        yield return new WaitForSeconds(time);
+        Debug.Log("Time has run out!");
+        SceneManager.LoadScene("DefaultScene");
     }
 }
