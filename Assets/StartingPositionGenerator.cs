@@ -16,6 +16,8 @@ public class StartingPositionGenerator : MonoBehaviour
 
     private Vector3 startingPosition;
 
+    private EnvironmentGenerator script;
+
 
     // Start is called before the first frame update
     void Start()
@@ -33,6 +35,8 @@ public class StartingPositionGenerator : MonoBehaviour
             TeleportPlayer();
             StartTimer();
         }
+
+        Settings.environment = environment + 1;
     }
 
     private void InitializeEnvironments()
@@ -53,22 +57,14 @@ public class StartingPositionGenerator : MonoBehaviour
     private void selectNextEnvironment()
     {
         chosenEnvironment = environments[environment - 1];
-        
-        for (int i = 1; i <= environments.Length; i++)
-        {
-            if (i != environment)
-            {
-                EnvironmentGenerator script = environments[i - 1].GetComponent<EnvironmentGenerator>();
-                script.layer = "Invisible";
-            }
-        }
+
+        script = chosenEnvironment.GetComponent<EnvironmentGenerator>();
+        script.createNewEnvironment();
     }
 
     private void getStartingPosition()
     {
-        EnvironmentGenerator script = chosenEnvironment.GetComponent<EnvironmentGenerator>();
-
-        startingPosition = new Vector3(script.xMin + 200, 50, script.zMin + 200);
+        startingPosition = script.getMeshStartingVertex() + new Vector3(0.0f, 1.0f, 0.0f);
     }
 
     private void TeleportPlayer()

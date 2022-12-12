@@ -562,7 +562,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 311
+    m_Bits: 4294967295
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 8400000, guid: b64c87154c01a054da8871d653d47e82, type: 2}
   m_TargetDisplay: 0
@@ -1323,7 +1323,6 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 797da453001930d4abbf0f9db27b28b3, type: 3}
   pathSounds: []
   groundCheck: {fileID: 1248111172}
-  groundDistance: 0.4
   groundMask:
     serializedVersion: 2
     m_Bits: 256
