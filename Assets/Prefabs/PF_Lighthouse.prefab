@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1521543241618313251}
   - component: {fileID: 8691796902323656037}
   - component: {fileID: 1434939890002666693}
+  - component: {fileID: 5695345529218884902}
   m_Layer: 0
   m_Name: PF_Lighthouse
   m_TagString: Untagged
@@ -122,3 +123,17 @@ MonoBehaviour:
       m_Calls: []
   destroy: 0
   lookDirection: {fileID: 0}
+--- !u!64 &5695345529218884902
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3377046667944978610}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 2534964839176971238, guid: 0649b321e494e5c48a13c5a8bdec8a54, type: 3}
