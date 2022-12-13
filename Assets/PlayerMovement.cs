@@ -13,7 +13,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private bool useFootsteps = true;
     [SerializeField] private AudioSource footStepsAudioSrc = default;
     [SerializeField] private AudioClip[] grassSounds = default;
-    [SerializeField] private AudioClip[] pathSounds = default;
+    // [SerializeField] private AudioClip[] pathSounds = default;
     private float footStepTimer = 0;
 
     public Transform groundCheck;

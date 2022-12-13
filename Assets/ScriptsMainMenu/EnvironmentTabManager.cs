@@ -9,21 +9,21 @@ public enum ConfigType
 {
     Null=-1,
     Low=0,
-    Mid=1,
-    High=2
+    High=1
 }
 
 public enum EnvironmentType
 {
     Null=-1,
     Forest,
-    Desert,
-    Sea
+    Alien,
+    City,
+    Snow
 }
 
 public class EnvironmentConfiguration
 {
-    public ConfigType TextureConfig { get; set; }
+    public ConfigType NumberObjectsConfig { get; set; }
     public ConfigType MovingObjectConfig { get; set; }
     public ConfigType InteractionConfig { get; set; }
     public ConfigType FOVConfig { get; set; }
@@ -34,15 +34,43 @@ public class EnvironmentConfiguration
     public bool PickupTask { get; set; }
     public bool CameraTask { get; set; }
 
+    public int GetNumberObjectsConfigValue()
+    {
+        return NumberObjectsConfig switch
+        {
+            ConfigType.Low => 10,
+            ConfigType.High => 50,
+            _ => 0
+        };
+    }
+    public int GetMovingObjectsConfigValue()
+    {
+        return MovingObjectConfig switch
+        {
+            ConfigType.Low => 10,
+            ConfigType.High => 50,
+            _ => 0
+        };
+    }
+    public int GetFOVConfigValue()
+    {
+        return FOVConfig switch
+        {
+            ConfigType.Low => 10,
+            ConfigType.High => 50,
+            _ => 0
+        };
+    }
+
     public EnvironmentConfiguration()
     {
         ExperimentId = 0;
         Index = 0;
-        TextureConfig = ConfigType.Mid;
-        MovingObjectConfig = ConfigType.Mid;
-        InteractionConfig = ConfigType.Mid;
-        FOVConfig = ConfigType.Mid;
-        MapConfig = ConfigType.Mid;
+        NumberObjectsConfig = ConfigType.Low;
+        MovingObjectConfig = ConfigType.Low;
+        InteractionConfig = ConfigType.Low;
+        FOVConfig = ConfigType.Low;
+        MapConfig = ConfigType.Low;
         EnvironmentType = EnvironmentType.Forest;
         PickupTask = false;
         CameraTask = false;
@@ -53,7 +81,7 @@ public class EnvironmentConfiguration
         return $"ExperimentId: {ExperimentId}\n" +
                $"Index: {Index}\n" +
                $"Type config: {EnvironmentType}\n" +
-               $"Texture config: {TextureConfig}\n" +
+               $"Texture config: {NumberObjectsConfig}\n" +
                $"MovingObject config: {MovingObjectConfig}\n" +
                $"Interaction config: {InteractionConfig}\n" +
                $"FOV config: {FOVConfig}\n" +
@@ -64,7 +92,7 @@ public class EnvironmentConfiguration
 
     public string ToCsv()
     {
-        return $"{ExperimentId};{Index};{EnvironmentType};{TextureConfig};{MovingObjectConfig};{InteractionConfig};{FOVConfig};{MapConfig};{CameraTask};{PickupTask}";
+        return $"{ExperimentId};{Index};{EnvironmentType};{NumberObjectsConfig};{MovingObjectConfig};{InteractionConfig};{FOVConfig};{MapConfig};{CameraTask};{PickupTask}";
     }
 
     public static EnvironmentConfiguration FromCsv(string[] csvColumns)
@@ -74,7 +102,7 @@ public class EnvironmentConfiguration
             ExperimentId = int.Parse(csvColumns[0]),
             Index = int.Parse(csvColumns[1]),
             EnvironmentType = StringToEnvironment(csvColumns[2]),
-            TextureConfig = StringToConfig(csvColumns[3]),
+            NumberObjectsConfig = StringToConfig(csvColumns[3]),
             MovingObjectConfig = StringToConfig(csvColumns[4]),
             InteractionConfig = StringToConfig(csvColumns[5]),
             FOVConfig = StringToConfig(csvColumns[6]),
@@ -90,8 +118,9 @@ public class EnvironmentConfiguration
         return input switch
         {
             "forest" => EnvironmentType.Forest,
-            "desert" => EnvironmentType.Desert,
-            "sea" => EnvironmentType.Sea,
+            "alien" => EnvironmentType.Alien,
+            "city" => EnvironmentType.City,
+            "snow" => EnvironmentType.Snow,
             _ => EnvironmentType.Null
         };
     }
@@ -102,7 +131,6 @@ public class EnvironmentConfiguration
         return input switch
         {
             "low" => ConfigType.Low,
-            "mid" => ConfigType.Mid,
             "high" => ConfigType.High,
             _ => ConfigType.Null
         };
@@ -132,7 +160,7 @@ public class EnvironmentTabManager : MonoBehaviour
         // update ui elements
         UpdateID(configuration.Index);
         EnvironmentTypeDropdown.value = (int)_environmentConfiguration.EnvironmentType;
-        UpdateToggleGroup(TextureToggleGroup, _environmentConfiguration.TextureConfig);
+        UpdateToggleGroup(TextureToggleGroup, _environmentConfiguration.NumberObjectsConfig);
         UpdateToggleGroup(MovingObjectsToggleGroup, _environmentConfiguration.MovingObjectConfig);
         UpdateToggleGroup(InteractionToggleGroup, _environmentConfiguration.InteractionConfig);
         UpdateToggleGroup(FOVRangeToggleGroup, _environmentConfiguration.FOVConfig);
@@ -161,10 +189,10 @@ public class EnvironmentTabManager : MonoBehaviour
         // Debug.Log($"Updated Env type to {type}");
         _environmentConfiguration.EnvironmentType = (EnvironmentType)type;
     }
-    public void UpdateTextureConfig(ConfigType config)
+    public void UpdateNumberObjectConfig(ConfigType config)
     {
-        // Debug.Log($"Updated Texture config to {config}");
-        _environmentConfiguration.TextureConfig = config;
+        // Debug.Log($"Updated Number Object config to {config} in Experiment {_environmentConfiguration.Index}");
+        _environmentConfiguration.NumberObjectsConfig = config;
     }
     public void UpdateMovingObjectsConfig(ConfigType config)
     {
@@ -201,7 +229,7 @@ public class EnvironmentTabManager : MonoBehaviour
         };
         _toggleCallbacks = new List<Action<ConfigType>>
         {
-            (config) => UpdateTextureConfig(config),
+            (config) => UpdateNumberObjectConfig(config),
             (config) => UpdateMovingObjectsConfig(config),
             (config) => UpdateInteractionConfig(config),
             (config) => UpdateFOVConfig(config),
@@ -218,7 +246,7 @@ public class EnvironmentTabManager : MonoBehaviour
                 {
                     if (value)
                     {
-                        // Debug.Log(grp.GetFirstOnIndex());
+                        func((ConfigType)grp.GetFirstOnIndex());
                         func((ConfigType)grp.GetFirstOnIndex());
                     }
                 });
