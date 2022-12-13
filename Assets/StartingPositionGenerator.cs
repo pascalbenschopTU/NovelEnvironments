@@ -22,6 +22,12 @@ public class StartingPositionGenerator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (Settings.index >= Settings.environments.Count)
+        {
+            Debug.Log("Experiment finished");
+            SceneManager.LoadScene("MainMenu");
+            return;
+        }
         environmentConfiguration = Settings.environments[Settings.index];
 
         if (environmentConfiguration == null)
