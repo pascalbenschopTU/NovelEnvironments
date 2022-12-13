@@ -27,7 +27,12 @@ public class PlayerMovement : MonoBehaviour
     public Camera playerCamera;
     private Vector2 currentInput;
 
+    private Recorder recorder;
 
+    private void Awake()
+    {
+        recorder = GetComponent<Recorder>();
+    }
 
     private void HandleFootSteps()
     {
@@ -88,5 +93,11 @@ public class PlayerMovement : MonoBehaviour
         if(useFootsteps) {
             HandleFootSteps();
         }
+    }
+
+    private void LateUpdate()
+    {
+        ReplayData data = new ReplayData(this.transform.position);
+        recorder.recordReplayFrame(data);
     }
 }
