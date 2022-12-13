@@ -1,14 +1,18 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 using TMPro;
+using UnityEngine.UI;
 
 public class SettingsMenu : MonoBehaviour
 {
     public TextMeshProUGUI VolumeText;
     public AudioMixer AudioMixer;
     public TMP_InputField ModuloInput;
+    public Toggle ModuloToggle;
     public TMP_Dropdown ResolutionDropdown;
+    public Toggle FullscreenToggle;
     private Resolution[] _screenResolutions;
     public void UpdateVolume(float value)
     {
@@ -25,12 +29,6 @@ public class SettingsMenu : MonoBehaviour
         Debug.Log($"Updated Resolution to {res.ToString()}");
     }
     
-    public void SetFullscreen(bool value)
-    {
-        Screen.fullScreen = value;
-        Debug.Log($"Set fullscreen to {value}");
-    }
-
     // Start is called before the first frame update
     void Awake()
     {
@@ -51,11 +49,28 @@ public class SettingsMenu : MonoBehaviour
         ResolutionDropdown.AddOptions(resolutions);
         ResolutionDropdown.value = index;
 
-        ModuloInput.text = "10";
-        AudioMixer.GetFloat("VolumeParam", out var outVal);
-        UpdateVolume(outVal);
+        FullscreenToggle.isOn = Convert.ToBoolean(PlayerPrefs.GetInt("FullScreenSetting"));
+        ModuloToggle.isOn = Convert.ToBoolean(PlayerPrefs.GetInt("ModuloActiveSetting"));
+        ModuloInput.text = $"{PlayerPrefs.GetInt("ModuloSetting")}";
+        UpdateVolume(PlayerPrefs.GetFloat("VolumeSetting"));
     }
-
+    public void ToggleFullscreen(bool value)
+    {
+        Screen.fullScreen = value;
+        Debug.Log($"Set fullscreen to {value}");
+        PlayerPrefs.SetInt("FullScreenSetting", Convert.ToInt32(value));
+    }
+    public void ToggleModuloActive(bool active)
+    {
+        PlayerPrefs.SetInt("ModuloActiveSetting", Convert.ToInt32(active));
+        PlayerPrefs.Save();
+    }
+    public void SetModuloValue(int value)
+    {
+        PlayerPrefs.SetInt("ModuloSetting", value);
+        PlayerPrefs.Save();
+    }
+    
     private int RemapIntValue(int src, int srcFrom, int srcTo, int targetFrom, int targetTo)
     {
         return targetFrom + (src - srcFrom) * (targetTo - targetFrom) / (srcTo - srcFrom);

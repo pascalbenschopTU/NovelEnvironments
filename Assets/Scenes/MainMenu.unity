@@ -9377,7 +9377,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 563926013}
         m_TargetAssemblyTypeName: SettingsMenu, Assembly-CSharp
-        m_MethodName: SetFullscreen
+        m_MethodName: ToggleFullscreen
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
