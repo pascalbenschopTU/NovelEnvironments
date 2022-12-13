@@ -26,18 +26,18 @@ public class LookDirection : MonoBehaviour
 
     public void CheckDirection(GameObject _target, GameObject camera) {
         if (_target== false) {
-            Debug.Log("Not close to any Landmark");
+            // Debug.Log("Not close to any Landmark");
             return;
         }
 
         Vector3 directionToMe = _target.transform.position - camera.transform.position;
         if (Vector3.Angle(camera.transform.forward, directionToMe) < 45.0f)
         {
-            Debug.Log("In view!");
+            // Debug.Log("In view!");
         // Whatever you wanna do
         }
         else {
-            Debug.Log("Not looking at the Lighthouse");
+            // Debug.Log("Not looking at the Lighthouse");
         }
 
     }

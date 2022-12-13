@@ -6,13 +6,13 @@
 /Logs
 /Builds
 /collabignore
+/UserSettings
 
 .vs
 .vsconfig
+.idea
 *.csproj
 *.sln
-/Assets/LowPolyAlienWorld
 /Assets/Low-Poly Style Nature
-/Assets/Viuletti City low poly
 /Assets/44.1 General Library (Free Sample Pack)
 /Assets/Nature Sound FX/
