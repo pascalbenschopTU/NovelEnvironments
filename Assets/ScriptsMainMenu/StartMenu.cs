@@ -1,13 +1,9 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using SimpleFileBrowser;
 using TMPro;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.UI;
-using Button = UnityEngine.UIElements.Button;
+using UnityEngine.SceneManagement;
 
 public class StartMenu : MonoBehaviour
 {
@@ -104,10 +100,15 @@ public class StartMenu : MonoBehaviour
 
     public void StartGame()
     {
-        if (_fileSelected && _participantNumber >= 0)
-        {
-            // start game
-        }
-        
+        // if (_fileSelected && _participantNumber >= 0)
+        // {
+        //     // start game
+        //     Debug.Log($"Starting game with number: {_participantNumber}");
+        // }
+        // else
+        // {
+        //     Debug.Log($"Can't start the game due to missing info!");
+        // }
+        SceneManager.LoadScene();
     }
 }
