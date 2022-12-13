@@ -343,6 +343,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63b174bc2b79dbc49a1434ad2a9856f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  layer: Ground
   objects:
   - {fileID: 1250690161900600, guid: e6f343cc46467004f811ce2ba3a3841b, type: 3}
   - {fileID: 1983694637467298, guid: be44d0243648ece459799ac0d5d4a2a6, type: 3}
@@ -435,6 +436,51 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &361438520
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 361438522}
+  - component: {fileID: 361438521}
+  m_Layer: 0
+  m_Name: StartingPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &361438521
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 361438520}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0467ec0ee33170743a940f72499c5921, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  environment: 0
+  time: 10
+--- !u!4 &361438522
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 361438520}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &481062164
 GameObject:
@@ -874,6 +920,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63b174bc2b79dbc49a1434ad2a9856f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  layer: Ground
   objects:
   - {fileID: 1000011914158716, guid: 78af3a7aad589fa49b8fb946c9e57362, type: 3}
   - {fileID: 1000011147454354, guid: 01d2dd5255c308a4db25dbb77d9f65ea, type: 3}
@@ -1035,6 +1082,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63b174bc2b79dbc49a1434ad2a9856f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  layer: Ground
   objects:
   - {fileID: 1986308318195784, guid: f6045a15e1065124680c92c504c8d7ea, type: 3}
   - {fileID: 1175661577396104, guid: 9b2afb2de81f7fa4bb4c6c9533ff3e7f, type: 3}
@@ -1275,7 +1323,6 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 797da453001930d4abbf0f9db27b28b3, type: 3}
   pathSounds: []
   groundCheck: {fileID: 1248111172}
-  groundDistance: 0.4
   groundMask:
     serializedVersion: 2
     m_Bits: 256
@@ -1547,6 +1594,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63b174bc2b79dbc49a1434ad2a9856f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  layer: Ground
   objects:
   - {fileID: 1056816346895226, guid: fce1307539b865c4d942dfa642eab7ec, type: 3}
   - {fileID: 1153027382682948, guid: 7d227c3a7fa9cf54a8d07c8a5e34b64a, type: 3}
@@ -1563,6 +1611,7 @@ MonoBehaviour:
   - {fileID: 1697415565114782, guid: ab28e8006e210aa4480fe64bd6fa7208, type: 3}
   - {fileID: 1237205094868938, guid: 2909343e8fc65984b82bff9fab8cf5d1, type: 3}
   - {fileID: 1273699440398734, guid: 3959f9b79ac88ac4d8690e7e6c7e3ded, type: 3}
+  - {fileID: 1844933204605362, guid: 16784d6fbb71942438b159522cd5d5c3, type: 3}
   landmarks: []
   objectAmount: 5
   terrainMaterial: {fileID: 2100000, guid: 1b20a390d157f314e8b9bb5dcd9a8c00, type: 2}

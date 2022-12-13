@@ -8,6 +8,8 @@ public class EnvironmentGenerator : MonoBehaviour
     private PathGenerator pathGenerator;
     private ObjectGenerator objectGenerator;
 
+    public string layer = "Ground";
+
     public GameObject[] objects;
     public GameObject[] landmarks;
 
@@ -33,24 +35,23 @@ public class EnvironmentGenerator : MonoBehaviour
     private Mesh[] meshes;
     private int index = 0;
 
-    // Start is called before the first frame update
-    void Start()
+    public void Initialize()
     {
         meshGenerator = gameObject.AddComponent<MeshGenerator>();
-        meshGenerator.Initialize(objects, landmarks, terrainMaterial, heightCurve, scale, octaves, lacunarity, seed, gradient);
-        pathGenerator = gameObject.AddComponent<PathGenerator>(); 
-        pathGenerator.Initialize(landmarks, seed, terrainMaterial);
+        meshGenerator.Initialize(layer, objects, landmarks, terrainMaterial, heightCurve, scale, octaves, lacunarity, seed, gradient);
+        pathGenerator = gameObject.AddComponent<PathGenerator>();
+        pathGenerator.Initialize(layer, landmarks, seed, terrainMaterial);
         objectGenerator = gameObject.AddComponent<ObjectGenerator>();
-        objectGenerator.Initialize(objects, seed, objectAmount);
-        
-        
-        meshes = new Mesh[4];
+        objectGenerator.Initialize(layer, objects, seed, objectAmount);
 
-        createNewEnvironment();
+
+        meshes = new Mesh[4];
     }
 
-    private void createNewEnvironment()
+    public void createNewEnvironment()
     {
+        Initialize();
+
         meshes[index++] = meshGenerator.CreateNewMesh(xMin, zMin);
         meshes[index++] = meshGenerator.CreateNewMesh(xMin, zMin + size / 2);
         meshes[index++] = meshGenerator.CreateNewMesh(xMin + size / 2, zMin);
@@ -61,10 +62,21 @@ public class EnvironmentGenerator : MonoBehaviour
         pathGenerator.GenerateLandmarks(meshes);
         pathGenerator.GeneratePaths(meshes);
 
+        GameObject temp = new GameObject("EnvironmentObjects");
+        temp.transform.parent = transform;
+
         foreach(Mesh mesh in meshes)
         {
-            objectGenerator.GenerateObjects(mesh);
+            objectGenerator.GenerateObjects(mesh, temp);
         }
+    }
+
+    public Vector3 getMeshStartingVertex()
+    {
+        Mesh mesh = meshes[3];
+        Vector3 vector3 = mesh.vertices[0];
+
+        return vector3;
     }
 
     private void createBorders()
