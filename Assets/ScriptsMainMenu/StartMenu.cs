@@ -45,6 +45,7 @@ public class StartMenu : MonoBehaviour
     public void SetModuloValue(string value)
     {
         _moduloValue = int.TryParse(value, out var outVal) ? outVal: -1;
+        _participantNumber = _moduloValue;
     }
 
     public void ChangeParticipantNumber(string input)
@@ -104,6 +105,10 @@ public class StartMenu : MonoBehaviour
         {
             // start game
             Debug.Log($"Starting game with number: {_participantNumber}");
+
+            List<EnvironmentConfiguration> list = _environmentConfigurations[0];
+            Settings.environments = list;
+
             SceneManager.LoadScene(1);
         }
         else

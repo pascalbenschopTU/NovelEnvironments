@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class StartingPositionGenerator : MonoBehaviour
 {
-    public int environment;
+    public EnvironmentConfiguration environmentConfiguration;
     public int time;
 
     private GameObject chosenEnvironment;
@@ -22,12 +22,12 @@ public class StartingPositionGenerator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        environment = Settings.environment;
+        environmentConfiguration = Settings.environments[Settings.index];
 
-        if (environment == 0)
+        if (environmentConfiguration == null)
         {
-            Debug.LogError("Synchronization error, environment not correctly forwarded");
-            environment = 1;
+            Debug.LogError("Synchronization error, environment not correctly configured.");
+            return;
         }
 
         InitializeEnvironments();
@@ -39,7 +39,7 @@ public class StartingPositionGenerator : MonoBehaviour
         TeleportPlayer();
         StartTimer();
 
-        Settings.environment = environment + 1;
+        Settings.index += 1;
     }
 
     private void InitializeEnvironments()
@@ -59,7 +59,7 @@ public class StartingPositionGenerator : MonoBehaviour
 
     private void selectNextEnvironment()
     {
-        chosenEnvironment = environments[environment - 1];
+        chosenEnvironment = environments[(int)environmentConfiguration.EnvironmentType];
 
         script = chosenEnvironment.GetComponent<EnvironmentGenerator>();
         script.createNewEnvironment();

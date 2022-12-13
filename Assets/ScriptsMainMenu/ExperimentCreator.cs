@@ -49,7 +49,7 @@ public class ExperimentCreator : MonoBehaviour
         
         Debug.Log("Creation Tab enabled on New Experiment");
         CreationTab.SetActive(true);
-        CreationTab.transform.position = new Vector3(350 + _environmentTabs[_experimentId].Count*700 - _scrollOffset,630,0);
+        CreationTab.transform.position = new Vector3(350 + _environmentTabs[_experimentId].Count*700 - _scrollOffset,300,0);
     }
 
     public void DeleteExperiment()
@@ -231,7 +231,7 @@ public class ExperimentCreator : MonoBehaviour
         {
             Debug.Log("Creation Tab enabled!");
             CreationTab.SetActive(true);
-            CreationTab.transform.position = new Vector3(350 + _environmentTabs[_experimentId].Count*700 - _scrollOffset,630,0);
+            CreationTab.transform.position = new Vector3(350 + _environmentTabs[_experimentId].Count*700 - _scrollOffset, 300, 0);
         }
     }
 
@@ -249,7 +249,7 @@ public class ExperimentCreator : MonoBehaviour
     {
         if (_environmentTabs[_experimentId].Count < _maxTabs)
         {
-            var obj = Instantiate(EnvironmentTabTemplate, new Vector3(350 + _environmentTabs[_experimentId].Count * 700 - _scrollOffset, 630, 0), Quaternion.identity,
+            var obj = Instantiate(EnvironmentTabTemplate, new Vector3(350 + _environmentTabs[_experimentId].Count * 700 - _scrollOffset, 300, 0), Quaternion.identity,
                 TabList.transform);
             
             var btn = obj.transform.GetChild(1).GetComponent<Button>();
