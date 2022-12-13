@@ -109,6 +109,6 @@ public class StartMenu : MonoBehaviour
         // {
         //     Debug.Log($"Can't start the game due to missing info!");
         // }
-        SceneManager.LoadScene();
+        SceneManager.LoadScene(1);
     }
 }
