@@ -122,13 +122,13 @@ public class StartMenu : MonoBehaviour
         if (_fileSelected && _participantNumber >= 0)
         {
             // start game
-            Debug.Log($"Starting game with number: {_participantNumber}");
+            // Debug.Log($"Starting game with number: {_participantNumber}");
             SceneManager.LoadScene(1);
         }
         else
         {
-            Debug.Log($"Can't start the game due to missing info!");
-            ErrorText.text = "Please enter positive Participant number and select a file!";
+            // Debug.Log($"Can't start the game due to missing info!");
+            ErrorText.text = "Please enter a positive Participant Number and select an Experiment File!";
             _errorEndTime = Time.time + ErrorTextTimeout;
             _errorOccured = true;
         }
