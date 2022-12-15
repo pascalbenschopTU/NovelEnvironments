@@ -10,6 +10,7 @@ public class SettingsMenu : MonoBehaviour
     public TextMeshProUGUI VolumeText;
     public AudioMixer AudioMixer;
     public TMP_InputField ModuloInput;
+    public TMP_InputField TimeInput;
     public Toggle ModuloToggle;
     public TMP_Dropdown ResolutionDropdown;
     public Toggle FullscreenToggle;
@@ -28,6 +29,12 @@ public class SettingsMenu : MonoBehaviour
         var res = _screenResolutions[index];
         Screen.SetResolution(res.width, res.height, Screen.fullScreen, res.refreshRate);
         Debug.Log($"Updated Resolution to {res.ToString()}");
+    }
+
+    public void UpdateGameTime(string time)
+    {
+        Settings.time = int.TryParse(time, out var outVal) ? outVal : 10;
+        Debug.Log($"Updated Time to {Settings.time}");
     }
     
     // Start is called before the first frame update
@@ -54,10 +61,12 @@ public class SettingsMenu : MonoBehaviour
         if(!PlayerPrefs.HasKey("ModuloActiveSetting")) PlayerPrefs.SetInt("ModuloActiveSetting",Convert.ToInt32(true));
         if(!PlayerPrefs.HasKey("ModuloSetting")) PlayerPrefs.SetInt("ModuloSetting",10);
         if(!PlayerPrefs.HasKey("VolumeSetting")) PlayerPrefs.SetInt("VolumeSetting",100);
-        
+        if(!PlayerPrefs.HasKey("TimeSetting")) PlayerPrefs.SetInt("TimeSetting", 20);
+
         FullscreenToggle.isOn = Convert.ToBoolean(PlayerPrefs.GetInt("FullScreenSetting"));
         ModuloToggle.isOn = Convert.ToBoolean(PlayerPrefs.GetInt("ModuloActiveSetting"));
         ModuloInput.text = $"{PlayerPrefs.GetInt("ModuloSetting")}";
+        TimeInput.text = $"{PlayerPrefs.GetInt("TimeSetting")}";
         UpdateVolume(PlayerPrefs.GetFloat("VolumeSetting"));
     }
     public void ToggleFullscreen(bool value)

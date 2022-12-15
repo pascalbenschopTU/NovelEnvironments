@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 public class StartingPositionGenerator : MonoBehaviour
 {
     public EnvironmentConfiguration environmentConfiguration;
-    public int time;
 
     private GameObject chosenEnvironment;
 
@@ -18,16 +17,18 @@ public class StartingPositionGenerator : MonoBehaviour
 
     private EnvironmentGenerator script;
 
-
     // Start is called before the first frame update
-    void Start()
+    void OnEnable()
     {
         if (Settings.index >= Settings.environments.Count)
         {
             Debug.Log("Experiment finished");
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
             SceneManager.LoadScene("MainMenu");
             return;
         }
+
         environmentConfiguration = Settings.environments[Settings.index];
 
         if (environmentConfiguration == null)
@@ -36,13 +37,10 @@ public class StartingPositionGenerator : MonoBehaviour
             return;
         }
 
-        InitializeEnvironments();
         InitializePlayer();
-
+        InitializeEnvironments();
+        
         selectNextEnvironment();
-        getStartingPosition();
-
-        TeleportPlayer();
         StartTimer();
 
         Settings.index += 1;
@@ -113,26 +111,23 @@ public class StartingPositionGenerator : MonoBehaviour
         script = chosenEnvironment.GetComponent<EnvironmentGenerator>();
         script.objectAmount = environmentConfiguration.GetNumberObjectsConfigValue();
         script.createNewEnvironment();
-    }
 
-    private void getStartingPosition()
-    {
         startingPosition = script.getMeshStartingVertex() + new Vector3(0.0f, 1.0f, 0.0f);
-    }
 
-    private void TeleportPlayer()
-    {
-        player.transform.position = startingPosition;
+        CharacterController cc = player.GetComponent<CharacterController>();
+        cc.enabled = false;
+        player.transform.SetPositionAndRotation(startingPosition, Quaternion.identity);
+        cc.enabled = true;
     }
 
     private void StartTimer()
     {
-        StartCoroutine(countDown());
+        StartCoroutine(CountDown());
     }
 
-    private IEnumerator countDown()
+    private IEnumerator CountDown()
     {
-        yield return new WaitForSeconds(time);
+        yield return new WaitForSeconds(Settings.time);
         Debug.Log("Time has run out!");
         SceneManager.LoadScene("DefaultScene");
     }
