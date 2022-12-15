@@ -16,6 +16,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private AudioClip[] concreteSounds = default;
     [SerializeField] private AudioClip[] snowSounds = default;
     [SerializeField] private AudioClip[] sandSounds = default;
+
     private float footStepTimer = 0;
 
     public Transform groundCheck;
