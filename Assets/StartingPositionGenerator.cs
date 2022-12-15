@@ -61,6 +61,49 @@ public class StartingPositionGenerator : MonoBehaviour
     private void InitializePlayer()
     {
         player = GameObject.Find("Player");
+        setPlayerMiniMap();
+        setPlayerFOV();
+    }
+
+    private void setPlayerMiniMap()
+    {
+        if (player.transform.Find("Canvas") != null)
+        {
+            GameObject canvas = player.transform.Find("Canvas").gameObject;
+            if (environmentConfiguration.MapConfig == ConfigType.Low)
+            {
+                canvas.SetActive(false);
+            }
+            else
+            {
+                canvas.SetActive(true);
+            }
+        }
+        else
+        {
+            Debug.LogWarning("No canvas attached to player?");
+        }
+    }
+
+    private void setPlayerFOV()
+    {
+        if (player.transform.Find("Main Camera") != null)
+        {
+            GameObject camera = player.transform.Find("Main Camera").gameObject;
+            Camera c = camera.GetComponent<Camera>();
+            if (environmentConfiguration.FOVConfig == ConfigType.Low)
+            {
+                c.fieldOfView = environmentConfiguration.GetFOVConfigValue();
+            }
+            else
+            {
+                c.fieldOfView = environmentConfiguration.GetFOVConfigValue();
+            }
+        }
+        else
+        {
+            Debug.LogWarning("No camera attached to player?");
+        }
     }
 
     private void selectNextEnvironment()
@@ -68,12 +111,13 @@ public class StartingPositionGenerator : MonoBehaviour
         chosenEnvironment = environments[(int)environmentConfiguration.EnvironmentType];
 
         script = chosenEnvironment.GetComponent<EnvironmentGenerator>();
+        script.objectAmount = environmentConfiguration.GetNumberObjectsConfigValue();
         script.createNewEnvironment();
     }
 
     private void getStartingPosition()
     {
-        startingPosition = script.getMeshStartingVertex() + new Vector3(0.0f, 0.5f, 0.0f);
+        startingPosition = script.getMeshStartingVertex() + new Vector3(0.0f, 1.0f, 0.0f);
     }
 
     private void TeleportPlayer()

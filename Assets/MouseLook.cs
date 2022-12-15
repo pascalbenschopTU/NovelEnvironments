@@ -5,7 +5,7 @@ using UnityEngine;
 public class MouseLook : MonoBehaviour
 {
 
-    public float mouseSenstivity = 1000f;
+    public float mouseSenstivity = 300.0f;
 
     public Transform playerBody;
 
@@ -15,6 +15,7 @@ public class MouseLook : MonoBehaviour
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
+        mouseSenstivity = 1000.0f;
     }
 
     // Update is called once per frame

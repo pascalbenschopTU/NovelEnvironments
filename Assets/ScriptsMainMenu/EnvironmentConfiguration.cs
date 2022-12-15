@@ -34,7 +34,7 @@ public class EnvironmentConfiguration
     {
         return NumberObjectsConfig switch
         {
-            ConfigType.Low => 10,
+            ConfigType.Low => 20,
             ConfigType.High => 50,
             _ => 0
         };
@@ -52,8 +52,8 @@ public class EnvironmentConfiguration
     {
         return FOVConfig switch
         {
-            ConfigType.Low => 10,
-            ConfigType.High => 50,
+            ConfigType.Low => 50,
+            ConfigType.High => 90,
             _ => 0
         };
     }
