@@ -28,8 +28,13 @@ public class Recorder : MonoBehaviour
         // using var writer = new StreamWriter(path);
         using (StreamWriter writer = new StreamWriter(path))
         {
+            if(Settings.environment != null)
+            {
+                int environment_id = Settings.environment;
+                writer.WriteLine(environment_id);
+            }
+            // EnvironmentGenerator env_generator = environment.GetComponent<EnvironmentGenerator>();
 
-            
             foreach (ReplayData data in recordingQueue)
             {
                 writer.WriteLine(data);

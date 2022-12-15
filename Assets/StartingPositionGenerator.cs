@@ -91,4 +91,8 @@ public class StartingPositionGenerator : MonoBehaviour
         Debug.Log("Time has run out!");
         SceneManager.LoadScene("DefaultScene");
     }
+
+    public GameObject getChosenEnv() {
+        return this.chosenEnvironment;
+    }
 }

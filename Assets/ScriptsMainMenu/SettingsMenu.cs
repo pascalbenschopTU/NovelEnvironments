@@ -1,20 +1,25 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 using TMPro;
+using UnityEngine.UI;
 
 public class SettingsMenu : MonoBehaviour
 {
     public TextMeshProUGUI VolumeText;
     public AudioMixer AudioMixer;
     public TMP_InputField ModuloInput;
+    public Toggle ModuloToggle;
     public TMP_Dropdown ResolutionDropdown;
+    public Toggle FullscreenToggle;
     private Resolution[] _screenResolutions;
     public void UpdateVolume(float value)
     {
-        
-        VolumeText.text = string.Format("{0}", RemapIntValue(Mathf.RoundToInt(value), -80, 0 , 0 , 100));
-        AudioMixer.SetFloat("VolumeParam", value);
+        var val = RemapIntValue(Mathf.RoundToInt(value), -80, 0, 0, 100);
+        VolumeText.text = $"{val}";
+        PlayerPrefs.SetFloat("VolumeParam", val);
+
         Debug.Log($"Updated Volume to {value}");
     }
 
@@ -25,12 +30,6 @@ public class SettingsMenu : MonoBehaviour
         Debug.Log($"Updated Resolution to {res.ToString()}");
     }
     
-    public void SetFullscreen(bool value)
-    {
-        Screen.fullScreen = value;
-        Debug.Log($"Set fullscreen to {value}");
-    }
-
     // Start is called before the first frame update
     void Awake()
     {
@@ -50,12 +49,40 @@ public class SettingsMenu : MonoBehaviour
         }
         ResolutionDropdown.AddOptions(resolutions);
         ResolutionDropdown.value = index;
-
-        ModuloInput.text = "10";
-        AudioMixer.GetFloat("VolumeParam", out var outVal);
-        UpdateVolume(outVal);
+    
+        if(!PlayerPrefs.HasKey("FullScreenSetting")) PlayerPrefs.SetInt("FullScreenSetting",Convert.ToInt32(true));
+        if(!PlayerPrefs.HasKey("ModuloActiveSetting")) PlayerPrefs.SetInt("ModuloActiveSetting",Convert.ToInt32(true));
+        if(!PlayerPrefs.HasKey("ModuloSetting")) PlayerPrefs.SetInt("ModuloSetting",10);
+        if(!PlayerPrefs.HasKey("VolumeSetting")) PlayerPrefs.SetInt("VolumeSetting",100);
+        
+        FullscreenToggle.isOn = Convert.ToBoolean(PlayerPrefs.GetInt("FullScreenSetting"));
+        ModuloToggle.isOn = Convert.ToBoolean(PlayerPrefs.GetInt("ModuloActiveSetting"));
+        ModuloInput.text = $"{PlayerPrefs.GetInt("ModuloSetting")}";
+        UpdateVolume(PlayerPrefs.GetFloat("VolumeSetting"));
+    }
+    public void ToggleFullscreen(bool value)
+    {
+        Screen.fullScreen = value;
+        Debug.Log($"Set fullscreen to {value}");
+        PlayerPrefs.SetInt("FullScreenSetting", Convert.ToInt32(value));
+    }
+    public void ToggleModuloActive(bool active)
+    {
+        PlayerPrefs.SetInt("ModuloActiveSetting", Convert.ToInt32(active));
+    }
+    public void SaveModuloValue(string value)
+    {
+        if (int.TryParse(value, out var val))
+        {
+            PlayerPrefs.SetInt("ModuloSetting", val);
+        }
     }
 
+    public void SaveConfigs()
+    {
+        PlayerPrefs.Save();
+    }
+    
     private int RemapIntValue(int src, int srcFrom, int srcTo, int targetFrom, int targetTo)
     {
         return targetFrom + (src - srcFrom) * (targetTo - targetFrom) / (srcTo - srcFrom);
