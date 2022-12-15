@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 
 public class StartingPositionGenerator : MonoBehaviour
 {
@@ -18,6 +19,7 @@ public class StartingPositionGenerator : MonoBehaviour
 
     private EnvironmentGenerator script;
 
+    UnityEvent endEnvironmentEvent = new UnityEvent();
 
     // Start is called before the first frame update
     void Start()
@@ -40,6 +42,8 @@ public class StartingPositionGenerator : MonoBehaviour
         StartTimer();
 
         Settings.environment = environment + 1;
+
+        endEnvironmentEvent.AddListener(player.GetComponent<Recorder>().storeRecording);
     }
 
     private void InitializeEnvironments()
@@ -83,6 +87,7 @@ public class StartingPositionGenerator : MonoBehaviour
     private IEnumerator countDown()
     {
         yield return new WaitForSeconds(time);
+        endEnvironmentEvent.Invoke();
         Debug.Log("Time has run out!");
         SceneManager.LoadScene("DefaultScene");
     }

@@ -97,7 +97,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void LateUpdate()
     {
-        ReplayData data = new ReplayData(this.transform.position);
-        recorder.recordReplayFrame(data);
+        ReplayData data = new ReplayData(this.transform.position, this.transform.rotation);
+        if(recorder != null) 
+        {
+            recorder.recordReplayFrame(data);
+        }
     }
 }

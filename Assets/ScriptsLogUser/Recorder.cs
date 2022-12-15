@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+using System.IO;
 
 public class Recorder : MonoBehaviour
 {
@@ -14,6 +16,24 @@ public class Recorder : MonoBehaviour
     public void recordReplayFrame(ReplayData data)
     {
         recordingQueue.Enqueue(data);
-        Debug.Log("Recording data: " + data.position);
+        Debug.Log("Recording data: " + data.position + " Rotation: " + data.rotation);
+    }
+
+    public void storeRecording()
+    {
+        Debug.Log("End Recording");
+        string path = "./recording.csv";
+        // FileStream stream = new FileStream(path, FileMode.Create, FileAccess.Write);
+
+        // using var writer = new StreamWriter(path);
+        using (StreamWriter writer = new StreamWriter(path))
+        {
+
+            
+            foreach (ReplayData data in recordingQueue)
+            {
+                writer.WriteLine(data);
+            }
+        }
     }
 }

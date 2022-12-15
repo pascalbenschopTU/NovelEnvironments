@@ -475,7 +475,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   environment: 0
-  time: 50
+  time: 10
 --- !u!4 &361438522
 Transform:
   m_ObjectHideFlags: 0
@@ -1303,6 +1303,7 @@ GameObject:
   - component: {fileID: 1582923931}
   - component: {fileID: 1582923932}
   - component: {fileID: 1582923933}
+  - component: {fileID: 1582923934}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1485,6 +1486,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerCamera: {fileID: 963194225}
   target: {fileID: 0}
+--- !u!114 &1582923934
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1582923928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fff70c34eebec534583e7f5ba982fe31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1901605668
 GameObject:
   m_ObjectHideFlags: 0
