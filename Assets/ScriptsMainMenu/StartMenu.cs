@@ -122,6 +122,9 @@ public class StartMenu : MonoBehaviour
         if (_fileSelected && _participantNumber >= 0)
         {
             // start game
+            List<EnvironmentConfiguration> list = _environmentConfigurations[0];
+            Settings.environments = list;
+
             // Debug.Log($"Starting game with number: {_participantNumber}");
             SceneManager.LoadScene(1);
         }
