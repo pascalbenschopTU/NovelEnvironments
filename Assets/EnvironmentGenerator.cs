@@ -13,6 +13,8 @@ public class EnvironmentGenerator : MonoBehaviour
     public GameObject[] objects;
     public GameObject[] landmarks;
 
+    public string meshTag;
+
     public int objectAmount;
 
     public Material terrainMaterial;
@@ -25,24 +27,53 @@ public class EnvironmentGenerator : MonoBehaviour
     public float scale;
     public int octaves;
     public float lacunarity;
-
+ 
     public int seed;
 
     public Gradient gradient;
 
     public int size = 400;
+    
 
     private Mesh[] meshes;
     private int index = 0;
 
+    [SerializeField] private AudioSource AudioSrc = default;
+    [SerializeField] private AudioClip Environment1 = default;
+    [SerializeField] private AudioClip Environment2 = default;
+    [SerializeField] private AudioClip Environment3 = default;
+    [SerializeField] private AudioClip Environment4 = default;
+
     public void Initialize()
     {
+
         meshGenerator = gameObject.AddComponent<MeshGenerator>();
         meshGenerator.Initialize(layer, objects, landmarks, terrainMaterial, heightCurve, scale, octaves, lacunarity, seed, gradient);
         pathGenerator = gameObject.AddComponent<PathGenerator>();
         pathGenerator.Initialize(layer, landmarks, seed, terrainMaterial);
         objectGenerator = gameObject.AddComponent<ObjectGenerator>();
         objectGenerator.Initialize(layer, objects, seed, objectAmount);
+        Debug.Log(gameObject.tag);
+
+        switch(gameObject.tag)
+                {
+                    case "Environment1":
+                        AudioSrc.PlayOneShot(Environment1);
+                        break;
+                    case "Environment2":
+                        AudioSrc.PlayOneShot(Environment2);
+                        break;
+                    case "Environment3":
+                        AudioSrc.PlayOneShot(Environment3);
+                        break;
+                    case "Environment4":
+                        AudioSrc.PlayOneShot(Environment4);
+                        break;
+                    // default:
+                    //     AudioSrc.PlayOneShot(Environment4);
+                    //     break;
+
+                }
 
 
         meshes = new Mesh[4];
@@ -52,15 +83,16 @@ public class EnvironmentGenerator : MonoBehaviour
     {
         Initialize();
 
-        meshes[index++] = meshGenerator.CreateNewMesh(xMin, zMin);
-        meshes[index++] = meshGenerator.CreateNewMesh(xMin, zMin + size / 2);
-        meshes[index++] = meshGenerator.CreateNewMesh(xMin + size / 2, zMin);
-        meshes[index++] = meshGenerator.CreateNewMesh(xMin + size / 2, zMin + size / 2);
+        meshes[index++] = meshGenerator.CreateNewMesh(xMin, zMin, meshTag);
+        meshes[index++] = meshGenerator.CreateNewMesh(xMin, zMin + size / 2, meshTag);
+        meshes[index++] = meshGenerator.CreateNewMesh(xMin + size / 2, zMin, meshTag);
+        meshes[index++] = meshGenerator.CreateNewMesh(xMin + size / 2, zMin + size / 2, meshTag);
 
         createBorders();
 
-        pathGenerator.GenerateLandmarks(meshes);
+        pathGenerator.GenerateLandmarkCoords(meshes);
         pathGenerator.GeneratePaths(meshes);
+        pathGenerator.GenerateLandmarks(meshes);
 
         GameObject temp = new GameObject("EnvironmentObjects");
         temp.transform.parent = transform;

@@ -35,29 +35,43 @@ public class PathGenerator : MonoBehaviour
             landMarkCoords[i] = new List<Vector3>();
     }
 
-    public void GenerateLandmarks(Mesh[] meshes)
-    {
-        System.Random prng = new System.Random(seed);
+    public void GenerateLandmarkCoords(Mesh[] meshes) {
+         System.Random prng = new System.Random(seed);
         // Generate landmarks spread over the map 
         // TODO depend on path generation
         //for (int i = 0; i < meshes.Length; i++)
         int i = 0;
         {    
+            Mesh landMesh = meshes[i];
+
+            for (int j = 0; j < landmarks.Length; j++){
+                int verticeIndex = prng.Next(0, landMesh.vertices.Length);
+                //int verticeIndex = Random.Range(0, landMesh.vertices.Length);
+                Vector3 vertice = landMesh.vertices[verticeIndex];
+                landMarkCoords[i].Add(vertice);
+            }
+        }
+    }
+
+    public void GenerateLandmarks(Mesh[] meshes)
+    {
+        // Generate landmarks spread over the map 
+        // TODO depend on path generation
+        //for (int i = 0; i < meshes.Length; i++)
+        int i = 0;
+        {    
+            Mesh landMesh = meshes[i];
             for (int j = 0; j < landmarks.Length; j++)
             {
                 //Mesh mesh = meshes[prng.Next(0, meshes.Length)];
-                Mesh landMesh = meshes[i];
-                int verticeIndex = prng.Next(0, landMesh.vertices.Length);
-                //int verticeIndex = Random.Range(0, landMesh.vertices.Length);
 
-                Vector3 vertice = landMesh.vertices[verticeIndex];
+                Vector3 vertice = landMarkCoords[i][j];
                 GameObject objectToSpawn = landmarks[j];
                 objectToSpawn.layer = LayerMask.NameToLayer(layer);
 
 
                 vertice.y -= 3;
-                landMarkCoords[i].Add(vertice);
-                System.Console.WriteLine("verticeIndex: {0} vertice: {1} i {2} landMesh.vertices.Length {3}", verticeIndex, vertice, i, landMesh.vertices.Length);
+                System.Console.WriteLine("vertice: {0} i {1} landMesh.vertices.Length {2}", vertice, i, landMesh.vertices.Length);
 
                 Instantiate(objectToSpawn, vertice, Quaternion.Euler(new Vector3(-90, 0, 0)));
             }
@@ -158,9 +172,11 @@ public class PathGenerator : MonoBehaviour
                 Vector3 adjustedV = start + j*perp*pathScale + Vector3.up*30;
 
                 if (Physics.Linecast(adjustedV, adjustedV + Vector3.down*50, out hit, layerMask)) {
-                    heightV = hit.point;
-                    //Debug.DrawRay(adjustedV, Vector3.down*hit.distance, Color.green, 5000f);
-                    //System.Console.WriteLine("hit: {0} adjustedV + Vector3.down: {1} start + j*perp*pathScale: {2}", hit.point, adjustedV + Vector3.down*50, start + j*perp*pathScale);
+                    heightV = hit.point;/*
+                    if (j==0)
+                    {Debug.DrawRay(adjustedV, Vector3.down*hit.distance, Color.green, 5000f);
+                    System.Console.WriteLine("hit: {0} collider {3} adjustedV + Vector3.down: {1} start + j*perp*pathScale: {2}", hit.point, adjustedV + Vector3.down*50, start + j*perp*pathScale, hit.collider);
+                }*/
                 } else {
                     heightV = envMesh.vertices[(int)(adjustedV.x)+201*(int)(adjustedV.z)];
                     System.Console.WriteLine("did not hit: {0} adjustedV + Vector3.down: {1} start + j*perp*pathScale: {2}", hit.point, adjustedV + Vector3.down*50, start + j*perp*pathScale);
@@ -172,8 +188,8 @@ public class PathGenerator : MonoBehaviour
                 //System.Console.WriteLine("i: {0} j: {1} s: {2} f: {3} dist: {4} vertex: {5} pos: {6} vertIndex: {7} ", i, j, s, f, dist, vertex, pos, vertIndex);
                 //System.Console.WriteLine("vertsize: {0} trisize: {1} len: {2} verticesCount: {3} normDist {4} normDist.x {5} normDist.z {5} dist.normalized {6}", vertices.Length, triangles.Length, len, verticesCount, normDist, normDist.x, normDist.z, dist.normalized.x);
             }
-            System.Console.WriteLine("i: {0} s: {1} f: {2} dist: {3} pos: {4} vertIndex: {5} ", i, s, f, dist, pos, vertIndex);
-            System.Console.WriteLine("vertsize: {0} trisize: {1} len: {2} verticesCount: {3} normDist {4}", vertices.Length, triangles.Length, len, verticesCount, normDist);
+            //System.Console.WriteLine("i: {0} s: {1} f: {2} dist: {3} pos: {4} vertIndex: {5} ", i, s, f, dist, pos, vertIndex);
+            //System.Console.WriteLine("vertsize: {0} trisize: {1} len: {2} verticesCount: {3} normDist {4}", vertices.Length, triangles.Length, len, verticesCount, normDist);
 
             pos += normDist;
         }
@@ -197,9 +213,9 @@ public class PathGenerator : MonoBehaviour
                 triangles[triIndex + 4] = triVertIndex + pathWidth + 1;
                 triangles[triIndex + 5] = triVertIndex + pathWidth + 2;
 
-                System.Console.WriteLine("triIndex + 0: {0} triIndex + 1: {1} triIndex + 2 {2} triIndex + 3 {3} triIndex + 4 {4} triIndex + 5 {5}, pathWidth {6}", triangles[triIndex + 0], triangles[triIndex + 1], triangles[triIndex + 2], triangles[triIndex + 3], triangles[triIndex + 4], triangles[triIndex + 5], pathWidth);
-                System.Console.WriteLine("vert: {0} triIndex: {1} len: {2} vertIndex: {3} pathWidth: {4} vertsize: {5} trisize: {6} vert count {7}", triVertIndex, triIndex, len, vertIndex, pathWidth, vertices.Length, triangles.Length, verticesCount);
-                System.Console.WriteLine("vert + pathWidth + 1: {0} vert + 1: {1} vert + pathWidth + 2: {2} vert: {3}", vertices[triVertIndex + pathWidth + 1], vertices[triVertIndex + 1], vertices[triVertIndex + pathWidth + 2], vertices[triVertIndex]);
+                //System.Console.WriteLine("triIndex + 0: {0} triIndex + 1: {1} triIndex + 2 {2} triIndex + 3 {3} triIndex + 4 {4} triIndex + 5 {5}, pathWidth {6}", triangles[triIndex + 0], triangles[triIndex + 1], triangles[triIndex + 2], triangles[triIndex + 3], triangles[triIndex + 4], triangles[triIndex + 5], pathWidth);
+                //System.Console.WriteLine("vert: {0} triIndex: {1} len: {2} vertIndex: {3} pathWidth: {4} vertsize: {5} trisize: {6} vert count {7}", triVertIndex, triIndex, len, vertIndex, pathWidth, vertices.Length, triangles.Length, verticesCount);
+                //System.Console.WriteLine("vert + pathWidth + 1: {0} vert + 1: {1} vert + pathWidth + 2: {2} vert: {3}", vertices[triVertIndex + pathWidth + 1], vertices[triVertIndex + 1], vertices[triVertIndex + pathWidth + 2], vertices[triVertIndex]);
                 triVertIndex++;
                 triIndex += 6;
             }
