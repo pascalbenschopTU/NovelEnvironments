@@ -16,9 +16,10 @@ public class SettingsMenu : MonoBehaviour
     private Resolution[] _screenResolutions;
     public void UpdateVolume(float value)
     {
-        
-        VolumeText.text = string.Format("{0}", RemapIntValue(Mathf.RoundToInt(value), -80, 0 , 0 , 100));
-        AudioMixer.SetFloat("VolumeParam", value);
+        var val = RemapIntValue(Mathf.RoundToInt(value), -80, 0, 0, 100);
+        VolumeText.text = $"{val}";
+        PlayerPrefs.SetFloat("VolumeParam", val);
+
         Debug.Log($"Updated Volume to {value}");
     }
 
@@ -48,7 +49,12 @@ public class SettingsMenu : MonoBehaviour
         }
         ResolutionDropdown.AddOptions(resolutions);
         ResolutionDropdown.value = index;
-
+    
+        if(!PlayerPrefs.HasKey("FullScreenSetting")) PlayerPrefs.SetInt("FullScreenSetting",Convert.ToInt32(true));
+        if(!PlayerPrefs.HasKey("ModuloActiveSetting")) PlayerPrefs.SetInt("ModuloActiveSetting",Convert.ToInt32(true));
+        if(!PlayerPrefs.HasKey("ModuloSetting")) PlayerPrefs.SetInt("ModuloSetting",10);
+        if(!PlayerPrefs.HasKey("VolumeSetting")) PlayerPrefs.SetInt("VolumeSetting",100);
+        
         FullscreenToggle.isOn = Convert.ToBoolean(PlayerPrefs.GetInt("FullScreenSetting"));
         ModuloToggle.isOn = Convert.ToBoolean(PlayerPrefs.GetInt("ModuloActiveSetting"));
         ModuloInput.text = $"{PlayerPrefs.GetInt("ModuloSetting")}";
@@ -63,11 +69,17 @@ public class SettingsMenu : MonoBehaviour
     public void ToggleModuloActive(bool active)
     {
         PlayerPrefs.SetInt("ModuloActiveSetting", Convert.ToInt32(active));
-        PlayerPrefs.Save();
     }
-    public void SetModuloValue(int value)
+    public void SaveModuloValue(string value)
     {
-        PlayerPrefs.SetInt("ModuloSetting", value);
+        if (int.TryParse(value, out var val))
+        {
+            PlayerPrefs.SetInt("ModuloSetting", val);
+        }
+    }
+
+    public void SaveConfigs()
+    {
         PlayerPrefs.Save();
     }
     
