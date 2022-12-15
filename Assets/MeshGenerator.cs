@@ -59,7 +59,7 @@ public class MeshGenerator : MonoBehaviour
     }
 
     // Create new mesh from point (xStart, zStart) until point (xStart + xSize, zStart + zSize)
-    public Mesh CreateNewMesh(int xStart, int Zstart)
+    public Mesh CreateNewMesh(int xStart, int Zstart, string meshTag)
     {
         SetNullProperties();
 
@@ -83,6 +83,7 @@ public class MeshGenerator : MonoBehaviour
         go.layer = LayerMask.NameToLayer(layer);
 
         go.transform.parent = transform;
+        go.tag = meshTag;
 
         return mesh;
     }
