@@ -306,7 +306,7 @@ public class ExperimentCreator : MonoBehaviour
             for (var i = index; i < _environmentTabs[_experimentId].Count; i++)
             {
                 _environmentTabs[_experimentId][i].gameObject.transform.localPosition -= new Vector3(700, 0, 0);
-                _environmentTabs[_experimentId][i].UpdateID(_environmentTabs[_experimentId][i].GetEnvironmentConfig().Index);
+                _environmentTabs[_experimentId][i].UpdateID(_environmentTabs[_experimentId][i].GetEnvironmentConfig().Index-1);
             }
             CreationTab.transform.localPosition = new Vector3(-1400 + _environmentTabs[_experimentId].Count*700,0,0);
             Debug.Log("Creation Tab enabled on Delete tab");
