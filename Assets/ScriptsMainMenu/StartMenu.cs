@@ -122,7 +122,10 @@ public class StartMenu : MonoBehaviour
         if (_fileSelected && _participantNumber >= 0)
         {
             // start game
-            // Debug.Log($"Starting game with number: {_participantNumber}");
+            List<EnvironmentConfiguration> list = _environmentConfigurations[0];
+            Settings.environments = list;
+
+            Cursor.lockState = CursorLockMode.Locked;
             SceneManager.LoadScene(1);
         }
         else
@@ -150,5 +153,10 @@ public class StartMenu : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 }
