@@ -124,6 +124,8 @@ public class StartMenu : MonoBehaviour
             // start game
             List<EnvironmentConfiguration> list = _environmentConfigurations[0];
             Settings.environments = list;
+            // Change to appropriate location
+            Settings.seed = 100;
 
             Cursor.lockState = CursorLockMode.Locked;
             SceneManager.LoadScene(1);
