@@ -102,12 +102,9 @@ public class EnvironmentGenerator : MonoBehaviour
         }
     }
 
-    public Vector3 getMeshStartingVertex()
+    public Vector3 getSpawnPoint()
     {
-        Mesh mesh = meshes[3];
-        Vector3 vector3 = mesh.vertices[0];
-
-        return vector3;
+        return pathGenerator.getSpawn();
     }
 
     private void createBorders()
