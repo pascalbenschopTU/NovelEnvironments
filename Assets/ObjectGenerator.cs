@@ -28,9 +28,12 @@ public class ObjectGenerator : MonoBehaviour
                 int verticeIndex = prng.Next(0, mesh.vertices.Length);
                 Vector3 vertice = mesh.vertices[verticeIndex];
 
-                GameObject objectToSpawn = objects[i];
-                objectToSpawn.layer = LayerMask.NameToLayer(layer);
-                Instantiate(objectToSpawn, vertice, Quaternion.identity);
+                if ((vertice.x > 5 || vertice.x < -5) && (vertice.z > 5 || vertice.z < -5))
+                {
+                    GameObject objectToSpawn = objects[i];
+                    objectToSpawn.layer = LayerMask.NameToLayer(layer);
+                    Instantiate(objectToSpawn, vertice, Quaternion.identity);
+                }
             }
         }
     }

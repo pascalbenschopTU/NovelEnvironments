@@ -5,8 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class StartingPositionGenerator : MonoBehaviour
 {
-    public int environment;
-    public int time;
+    public EnvironmentConfiguration environmentConfiguration;
 
     private GameObject chosenEnvironment;
 
@@ -18,28 +17,33 @@ public class StartingPositionGenerator : MonoBehaviour
 
     private EnvironmentGenerator script;
 
-
     // Start is called before the first frame update
-    void Start()
+    void OnEnable()
     {
-        environment = Settings.environment;
-
-        if (environment == 0)
+        if (Settings.index >= Settings.environments.Count)
         {
-            Debug.LogError("Synchronization error, environment not correctly forwarded");
-            environment = 1;
+            Debug.Log("Experiment finished");
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            SceneManager.LoadScene("MainMenu");
+            return;
         }
 
-        InitializeEnvironments();
+        environmentConfiguration = Settings.environments[Settings.index];
+
+        if (environmentConfiguration == null)
+        {
+            Debug.LogError("Synchronization error, environment not correctly configured.");
+            return;
+        }
+
         InitializePlayer();
-
+        InitializeEnvironments();
+        
         selectNextEnvironment();
-        getStartingPosition();
-
-        TeleportPlayer();
         StartTimer();
 
-        Settings.environment = environment + 1;
+        Settings.index += 1;
     }
 
     private void InitializeEnvironments()
@@ -55,34 +59,75 @@ public class StartingPositionGenerator : MonoBehaviour
     private void InitializePlayer()
     {
         player = GameObject.Find("Player");
+        setPlayerMiniMap();
+        setPlayerFOV();
+    }
+
+    private void setPlayerMiniMap()
+    {
+        if (player.transform.Find("Canvas") != null)
+        {
+            GameObject canvas = player.transform.Find("Canvas").gameObject;
+            if (environmentConfiguration.MapConfig == ConfigType.Low)
+            {
+                canvas.SetActive(false);
+            }
+            else
+            {
+                canvas.SetActive(true);
+            }
+        }
+        else
+        {
+            Debug.LogWarning("No canvas attached to player?");
+        }
+    }
+
+    private void setPlayerFOV()
+    {
+        if (player.transform.Find("Main Camera") != null)
+        {
+            GameObject camera = player.transform.Find("Main Camera").gameObject;
+            Camera c = camera.GetComponent<Camera>();
+            if (environmentConfiguration.FOVConfig == ConfigType.Low)
+            {
+                c.fieldOfView = environmentConfiguration.GetFOVConfigValue();
+            }
+            else
+            {
+                c.fieldOfView = environmentConfiguration.GetFOVConfigValue();
+            }
+        }
+        else
+        {
+            Debug.LogWarning("No camera attached to player?");
+        }
     }
 
     private void selectNextEnvironment()
     {
-        chosenEnvironment = environments[environment - 1];
+        chosenEnvironment = environments[(int)environmentConfiguration.EnvironmentType];
 
         script = chosenEnvironment.GetComponent<EnvironmentGenerator>();
+        script.objectAmount = environmentConfiguration.GetNumberObjectsConfigValue();
         script.createNewEnvironment();
-    }
 
-    private void getStartingPosition()
-    {
-        startingPosition = script.getMeshStartingVertex() + new Vector3(0.0f, 0.5f, 0.0f);
-    }
+        startingPosition = script.getMeshStartingVertex() + new Vector3(0.0f, 1.0f, 0.0f);
 
-    private void TeleportPlayer()
-    {
-        player.transform.position = startingPosition;
+        CharacterController cc = player.GetComponent<CharacterController>();
+        cc.enabled = false;
+        player.transform.SetPositionAndRotation(startingPosition, Quaternion.identity);
+        cc.enabled = true;
     }
 
     private void StartTimer()
     {
-        StartCoroutine(countDown());
+        StartCoroutine(CountDown());
     }
 
-    private IEnumerator countDown()
+    private IEnumerator CountDown()
     {
-        yield return new WaitForSeconds(time);
+        yield return new WaitForSeconds(Settings.time);
         Debug.Log("Time has run out!");
         SceneManager.LoadScene("DefaultScene");
     }

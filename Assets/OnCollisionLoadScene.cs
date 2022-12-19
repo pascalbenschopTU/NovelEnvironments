@@ -11,7 +11,6 @@ public class OnCollisionLoadScene : MonoBehaviour
     void OnTriggerEnter(Collider other) {
 		if(other.gameObject.CompareTag("Player")) {
 			Debug.Log("Entered Area Scene");
-			Settings.environment = Settings.environment > 0 ? Settings.environment : startingEnvironment;
 			SceneManager.LoadScene("EnvironmentScene");
 		}
 	}

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8691796902323656037}
   - component: {fileID: 1434939890002666693}
   - component: {fileID: 5695345529218884902}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PF_Lighthouse
   m_TagString: Untagged
   m_Icon: {fileID: 0}
