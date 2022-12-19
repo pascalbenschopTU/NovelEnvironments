@@ -13,7 +13,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private bool useFootsteps = true;
     [SerializeField] private AudioSource footStepsAudioSrc = default;
     [SerializeField] private AudioClip[] grassSounds = default;
-    [SerializeField] private AudioClip[] pathSounds = default;
+    [SerializeField] private AudioClip[] concreteSounds = default;
+    [SerializeField] private AudioClip[] snowSounds = default;
+    [SerializeField] private AudioClip[] sandSounds = default;
+
     private float footStepTimer = 0;
 
     public Transform groundCheck;
@@ -28,7 +31,6 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 currentInput;
 
 
-
     private void HandleFootSteps()
     {
         currentInput = new Vector2(Input.GetAxis("Vertical"), Input.GetAxis("Horizontal") ); 
@@ -37,21 +39,34 @@ public class PlayerMovement : MonoBehaviour
         if(currentInput == Vector2.zero) return;
         footStepTimer -= Time.deltaTime;
 
+        RaycastHit hit;
+        Ray landingRay = new Ray(transform.position, Vector3.down);
+
+
         if(footStepTimer <= 0) {
-            if(Physics.Raycast(playerCamera.transform.position, Vector3.down, out RaycastHit hit, 3))
+            if(Physics.Raycast(landingRay, out hit, 3))
             {
                 switch(hit.collider.tag)
                 {
                     case "GrassFloor":
-                        footStepsAudioSrc.PlayOneShot(grassSounds[0]);
+                        footStepsAudioSrc.PlayOneShot(grassSounds[Random.Range(0, grassSounds.Length -1 )]);
+                        break;
+                    case "ConcreteFloor":
+                        footStepsAudioSrc.PlayOneShot(concreteSounds[Random.Range(0, concreteSounds.Length -1 )]);
+                        break;
+                    case "SandFloor":
+                        footStepsAudioSrc.PlayOneShot(sandSounds[Random.Range(0, sandSounds.Length -1 )]);
+                        break;
+                    case "SnowFloor":
+                        footStepsAudioSrc.PlayOneShot(snowSounds[Random.Range(0, snowSounds.Length -1 )]);
                         break;
                     default:
-                        footStepsAudioSrc.PlayOneShot(grassSounds[0]);
+                        footStepsAudioSrc.PlayOneShot(concreteSounds[Random.Range(0, concreteSounds.Length -1 )]);
                         break;
 
                 }
             }
-            footStepTimer = 0.7f;
+            footStepTimer = 0.5f;
         }
     }
 
