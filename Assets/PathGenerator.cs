@@ -30,7 +30,7 @@ public class PathGenerator : MonoBehaviour
     private int pathWidth = 8;
     private float pathScale = 0.4f;
     int vertIndex = 0, triVertIndex = 0, triIndex = 0, verticesCount = 0;
-    Vector3 spawn = new Vector3(20, 8, 20);
+    Vector3 spawn;
 
     List<Vector3> landMarkCoords;
     Material mat;
@@ -62,6 +62,11 @@ public class PathGenerator : MonoBehaviour
 
         landMarkCoords.Add(height);
         System.Console.WriteLine("vertex: {0} move: {1} height: {2} a {3} ai {4} fullAng {5}", vertex, move, height, a, ai, fullAng);
+    }
+
+    public Vector3 getSpawn()
+    {
+        return spawn;
     }
 
     private void GeneratePolygon(Vector3 start, Vector3 end, int startAngle, int totalEdges, int edgesToDraw) 
@@ -176,7 +181,9 @@ public class PathGenerator : MonoBehaviour
 
     public void GenerateLandmarkCoords(Mesh[] meshes, int centerx, int centerz) 
     {
-        Vector3 start = meshes[3].vertices[0] + new Vector3(30, 0, -20);
+        this.spawn = getHeigthVertex(new Vector3(30, 0, -20)) + Vector3.up*1.5f;
+        System.Console.WriteLine("spawn: {0}", spawn);
+        Vector3 start = spawn;
 
         int totalEdges = 6;
     
@@ -208,7 +215,6 @@ public class PathGenerator : MonoBehaviour
 
     public void GeneratePaths(Mesh[] meshes)
     {
-
         foreach ((Vector3 first, Vector3 second) in paths) 
             verticesCount += getStepAndLength(first, second).len;
 
