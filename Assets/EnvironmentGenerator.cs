@@ -89,7 +89,7 @@ public class EnvironmentGenerator : MonoBehaviour
 
         createBorders();
 
-        pathGenerator.GenerateLandmarkCoords(meshes);
+        pathGenerator.GenerateLandmarkCoords(meshes, xMin + size / 2, zMin + size / 2);
         pathGenerator.GeneratePaths(meshes);
         pathGenerator.GenerateLandmarks(meshes);
 
