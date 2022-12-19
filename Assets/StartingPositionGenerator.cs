@@ -46,7 +46,7 @@ public class StartingPositionGenerator : MonoBehaviour
         selectNextEnvironment();
         StartTimer();
 
-        endEnvironmentEvent.AddListener(player.GetComponent<Recorder>().storeRecording);
+        // endEnvironmentEvent.AddListener(player.GetComponent<Recorder>().storeRecording);
         Settings.index += 1;
     }
 
@@ -132,7 +132,11 @@ public class StartingPositionGenerator : MonoBehaviour
     private IEnumerator CountDown()
     {
         yield return new WaitForSeconds(Settings.time);
+        Debug.Log("Ending Environment");
         endEnvironmentEvent.Invoke();
+        Queue<ReplayData> rq = player.GetComponent<Recorder>().recordingQueue;
+        Debug.Log("Recording Queue Size: " + rq.Count);
+        player.GetComponent<Sqlite_test>().storeUserPositions(11, 11, rq);
         Debug.Log("Time has run out!");
         SceneManager.LoadScene("DefaultScene");
     }

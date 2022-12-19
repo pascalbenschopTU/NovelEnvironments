@@ -15,8 +15,10 @@ public class Recorder : MonoBehaviour
 
     public void recordReplayFrame(ReplayData data)
     {
-        recordingQueue.Enqueue(data);
-        Debug.Log("Recording data: " + data.position + " Rotation: " + data.rotation);
+        if (recordingQueue != null) {
+            recordingQueue.Enqueue(data);
+        }
+        // Debug.Log("Recording data: " + data.position + " Rotation: " + data.rotation);
     }
 
     public void storeRecording()
@@ -28,10 +30,14 @@ public class Recorder : MonoBehaviour
         // using var writer = new StreamWriter(path);
         using (StreamWriter writer = new StreamWriter(path))
         {
-            if(Settings.environment != null)
+            if(Settings.index != null)
             {
-                int environment_id = Settings.environment;
-                writer.WriteLine(environment_id);
+                int index = Settings.index;
+                List<EnvironmentConfiguration> environments = Settings.environments;
+                if (environments.Count > 0) {
+                    EnvironmentConfiguration environment_config = environments[index];
+                    writer.WriteLine(environment_config.ToString());
+                }
             }
             // EnvironmentGenerator env_generator = environment.GetComponent<EnvironmentGenerator>();
 
