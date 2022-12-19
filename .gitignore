@@ -6,6 +6,7 @@
 /Logs
 /Builds
 /collabignore
+/UserSettings
 
 .vs
 .vsconfig
