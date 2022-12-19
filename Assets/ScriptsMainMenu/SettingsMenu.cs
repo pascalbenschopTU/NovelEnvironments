@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using SimpleFileBrowser;
 using UnityEngine;
 using UnityEngine.Audio;
 using TMPro;
@@ -15,6 +17,10 @@ public class SettingsMenu : MonoBehaviour
     public TMP_Dropdown ResolutionDropdown;
     public Toggle FullscreenToggle;
     private Resolution[] _screenResolutions;
+    
+    public GameObject ButtonChooseFile;
+    public GameObject ButtonChangeFile;
+    public TextMeshProUGUI TextFilename;
     public void UpdateVolume(float value)
     {
         var val = RemapIntValue(Mathf.RoundToInt(value), -80, 0, 0, 100);
@@ -30,11 +36,42 @@ public class SettingsMenu : MonoBehaviour
         Screen.SetResolution(res.width, res.height, Screen.fullScreen, res.refreshRate);
         Debug.Log($"Updated Resolution to {res.ToString()}");
     }
+    
+    public void ChooseExperimentFileButtonCallback()
+    {
+        var a = FileBrowser.ShowLoadDialog(paths =>
+        {
+            ChooseExperimentFile(paths[0]);
+        }, () => {}, FileBrowser.PickMode.Files);
+    }
+
+    private void ChooseExperimentFile(string path)
+    {
+        ButtonChangeFile.SetActive(true);
+        ButtonChooseFile.SetActive(false);
+        TextFilename.gameObject.SetActive(true);
+        List<string> parts;
+        if (path.Contains("/"))
+        {
+            parts = path.Split("/").ToList();
+        }else if (path.Contains("\\"))
+        {
+            parts = path.Split("\\").ToList();
+        }
+        else
+        {
+            return;
+        }
+
+        TextFilename.text = parts[^1];
+        PlayerPrefs.SetString("SelectedFile", path);
+    }
 
     public void UpdateGameTime(string time)
     {
-        Settings.time = int.TryParse(time, out var outVal) ? outVal : 10;
-        Debug.Log($"Updated Time to {Settings.time}");
+        ExperimentMetaData.TimeInEnvironment = int.TryParse(time, out var outVal) ? outVal : 20;
+        PlayerPrefs.SetInt("TimeSetting", ExperimentMetaData.TimeInEnvironment);
+        Debug.Log($"Updated Time to {ExperimentMetaData.TimeInEnvironment}");
     }
     
     // Start is called before the first frame update
@@ -62,6 +99,12 @@ public class SettingsMenu : MonoBehaviour
         if(!PlayerPrefs.HasKey("ModuloSetting")) PlayerPrefs.SetInt("ModuloSetting",10);
         if(!PlayerPrefs.HasKey("VolumeSetting")) PlayerPrefs.SetInt("VolumeSetting",100);
         if(!PlayerPrefs.HasKey("TimeSetting")) PlayerPrefs.SetInt("TimeSetting", 20);
+        if (!PlayerPrefs.HasKey("SelectedFile"))
+        {
+            ButtonChooseFile.SetActive(true);
+            ButtonChangeFile.SetActive(false);
+            TextFilename.text = "";
+        }
 
         FullscreenToggle.isOn = Convert.ToBoolean(PlayerPrefs.GetInt("FullScreenSetting"));
         ModuloToggle.isOn = Convert.ToBoolean(PlayerPrefs.GetInt("ModuloActiveSetting"));
