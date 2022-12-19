@@ -103,7 +103,11 @@ public class SettingsMenu : MonoBehaviour
         {
             ButtonChooseFile.SetActive(true);
             ButtonChangeFile.SetActive(false);
+            TextFilename.gameObject.SetActive(false);
             TextFilename.text = "";
+        }else
+        {
+            ChooseExperimentFile(PlayerPrefs.GetString("SelectedFile"));
         }
 
         FullscreenToggle.isOn = Convert.ToBoolean(PlayerPrefs.GetInt("FullScreenSetting"));
