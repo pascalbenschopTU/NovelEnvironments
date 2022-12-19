@@ -27,8 +27,6 @@ public class EnvironmentGenerator : MonoBehaviour
     public float scale;
     public int octaves;
     public float lacunarity;
- 
-    public int seed;
 
     public Gradient gradient;
 
@@ -46,6 +44,7 @@ public class EnvironmentGenerator : MonoBehaviour
 
     public void Initialize()
     {
+        int seed = Settings.seed;
 
         meshGenerator = gameObject.AddComponent<MeshGenerator>();
         meshGenerator.Initialize(layer, objects, landmarks, terrainMaterial, heightCurve, scale, octaves, lacunarity, seed, gradient);

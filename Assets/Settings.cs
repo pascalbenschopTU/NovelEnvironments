@@ -9,4 +9,6 @@ public class Settings : MonoBehaviour
     public static List<EnvironmentConfiguration> environments;
 
     public static int time = 20;
+
+    public static int seed = 100;
 }
