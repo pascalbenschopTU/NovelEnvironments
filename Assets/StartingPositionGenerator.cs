@@ -20,7 +20,7 @@ public class StartingPositionGenerator : MonoBehaviour
     // Start is called before the first frame update
     void OnEnable()
     {
-        if (ExperimentMetaData.Index >= ExperimentMetaData.Environments.Count)
+        if (Settings.index >= Settings.environments.Count)
         {
             Debug.Log("Experiment finished");
             Cursor.lockState = CursorLockMode.None;
@@ -29,7 +29,7 @@ public class StartingPositionGenerator : MonoBehaviour
             return;
         }
 
-        environmentConfiguration = ExperimentMetaData.Environments[ExperimentMetaData.Index];
+        environmentConfiguration = Settings.environments[Settings.index];
 
         if (environmentConfiguration == null)
         {
@@ -43,7 +43,7 @@ public class StartingPositionGenerator : MonoBehaviour
         selectNextEnvironment();
         StartTimer();
 
-        ExperimentMetaData.Index += 1;
+        Settings.index += 1;
     }
 
     private void InitializeEnvironments()
@@ -112,7 +112,8 @@ public class StartingPositionGenerator : MonoBehaviour
         script.objectAmount = environmentConfiguration.GetNumberObjectsConfigValue();
         script.createNewEnvironment();
 
-        startingPosition = script.getMeshStartingVertex() + new Vector3(0.0f, 1.0f, 0.0f);
+        startingPosition = script.getSpawnPoint();
+        System.Console.WriteLine("startingPosition: {0}", startingPosition);
 
         CharacterController cc = player.GetComponent<CharacterController>();
         cc.enabled = false;
@@ -127,7 +128,7 @@ public class StartingPositionGenerator : MonoBehaviour
 
     private IEnumerator CountDown()
     {
-        yield return new WaitForSeconds(ExperimentMetaData.TimeInEnvironment);
+        yield return new WaitForSeconds(Settings.time);
         Debug.Log("Time has run out!");
         SceneManager.LoadScene("DefaultScene");
     }

@@ -44,7 +44,7 @@ public class EnvironmentGenerator : MonoBehaviour
 
     public void Initialize()
     {
-        int seed = ExperimentMetaData.Seed;
+        int seed = Settings.seed;
 
         meshGenerator = gameObject.AddComponent<MeshGenerator>();
         meshGenerator.Initialize(layer, objects, landmarks, terrainMaterial, heightCurve, scale, octaves, lacunarity, seed, gradient);
@@ -89,7 +89,7 @@ public class EnvironmentGenerator : MonoBehaviour
 
         createBorders();
 
-        pathGenerator.GenerateLandmarkCoords(meshes);
+        pathGenerator.GenerateLandmarkCoords(meshes, xMin + size / 2, zMin + size / 2);
         pathGenerator.GeneratePaths(meshes);
         pathGenerator.GenerateLandmarks(meshes);
 
@@ -102,12 +102,9 @@ public class EnvironmentGenerator : MonoBehaviour
         }
     }
 
-    public Vector3 getMeshStartingVertex()
+    public Vector3 getSpawnPoint()
     {
-        Mesh mesh = meshes[3];
-        Vector3 vector3 = mesh.vertices[0];
-
-        return vector3;
+        return pathGenerator.getSpawn();
     }
 
     private void createBorders()
