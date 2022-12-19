@@ -44,7 +44,7 @@ public class EnvironmentGenerator : MonoBehaviour
 
     public void Initialize()
     {
-        int seed = ExperimentMetaData.Seed;
+        int seed = Settings.seed;
 
         meshGenerator = gameObject.AddComponent<MeshGenerator>();
         meshGenerator.Initialize(layer, objects, landmarks, terrainMaterial, heightCurve, scale, octaves, lacunarity, seed, gradient);
