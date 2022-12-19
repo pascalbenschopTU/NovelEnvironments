@@ -6,5 +6,7 @@ public class Settings : MonoBehaviour
 {
     public static int index = 0;
 
-    public static List<EnvironmentConfiguration> environments; 
+    public static List<EnvironmentConfiguration> environments;
+
+    public static int time = 20;
 }
