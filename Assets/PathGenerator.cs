@@ -285,7 +285,7 @@ public class PathGenerator : MonoBehaviour
             {
                 heightV = getHeigthVertex(start + j*perp);
 
-                if (j % pathWidth == 0){
+                if (j % pathWidth == 0 || i % len == 0){
                     heightV += Vector3.up*0.02f;
                     colors[vertIndex] = brown;
                 } else {
