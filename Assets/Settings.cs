@@ -10,5 +10,7 @@ public class Settings : MonoBehaviour
 
     public static int time = 20;
 
+    public static int seed = 100;
+
     public static string experiment_data_path = "./";
 }
