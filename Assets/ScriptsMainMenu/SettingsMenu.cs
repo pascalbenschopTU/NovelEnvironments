@@ -62,17 +62,6 @@ public class SettingsMenu : MonoBehaviour
         if(!PlayerPrefs.HasKey("ModuloSetting")) PlayerPrefs.SetInt("ModuloSetting",10);
         if(!PlayerPrefs.HasKey("VolumeSetting")) PlayerPrefs.SetInt("VolumeSetting",100);
         if(!PlayerPrefs.HasKey("TimeSetting")) PlayerPrefs.SetInt("TimeSetting", 20);
-        if (!PlayerPrefs.HasKey("SelectedFile"))
-        {
-            ButtonChooseFile.SetActive(true);
-            ButtonChangeFile.SetActive(false);
-            TextFilename.gameObject.SetActive(false);
-            TextFilename.text = "";
-        }else
-        {
-            ChooseExperimentFile(PlayerPrefs.GetString("SelectedFile"));
-        }
-
 
         FullscreenToggle.isOn = Convert.ToBoolean(PlayerPrefs.GetInt("FullScreenSetting"));
         ModuloToggle.isOn = Convert.ToBoolean(PlayerPrefs.GetInt("ModuloActiveSetting"));
