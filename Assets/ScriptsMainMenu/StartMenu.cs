@@ -8,15 +8,15 @@ using UnityEngine.SceneManagement;
 
 public class StartMenu : MonoBehaviour
 {
-    public TMP_Dropdown Dropdown;
     public TMP_InputField InputParticipantNumber;
     public TextMeshProUGUI ErrorText;
+    public SettingsMenu SettingsMenu;
 
     public float ErrorTextTimeout;
     private int _participantNumber;
     private int _experimentId;
-    private int _moduloValue;
     private bool _fileSelected;
+    private int _moduloValue;
     private bool _moduloActive;
     private int _vanishingRate;
     private float _errorEndTime;
@@ -37,35 +37,6 @@ public class StartMenu : MonoBehaviour
         _vanishingRate = 10;
     }
 
-    public void ToggleModulo(bool value)
-    {
-        _moduloActive = value;
-        ChangeParticipantNumber(_participantNumber.ToString());
-    }
-
-    public void SetModuloValue(string value)
-    {
-        _moduloValue = int.TryParse(value, out var outVal) ? outVal: -1;
-        ChangeParticipantNumber(_participantNumber.ToString());
-    }
-
-    public void LoadExperimentsFromFile()
-    {
-            Dropdown.ClearOptions();
-        if (PlayerPrefs.HasKey("SelectedFile"))
-        {
-            _fileSelected = true;
-            _environmentConfigurations = CsvUtils.EnvironmentConfigsFromCsv(PlayerPrefs.GetString("SelectedFile"));
-            Dropdown.AddOptions(_environmentConfigurations.Keys.ToList().ConvertAll(k => k.ToString()));
-            ChangeParticipantNumber(_participantNumber.ToString());
-        }
-        else
-        {
-            _fileSelected = false;
-            ShowErrorMessage("Please select an experiment file in settings menu!");
-        }
-    }
-
     private void ShowErrorMessage(string msg)
     {
         ErrorText.text = msg;
@@ -82,27 +53,44 @@ public class StartMenu : MonoBehaviour
             if (_moduloActive)
             {
                 _experimentId = _participantNumber % _moduloValue;
-                if (_fileSelected && _environmentConfigurations.Keys.ToList().Count > _experimentId)
+                if (_fileSelected && _environmentConfigurations.Keys.ToList().Count <= _experimentId)
                 {
-                    // Debug.Log($"Experiment {_experimentId} selected!");
-                    Dropdown.value = _experimentId;
-                }else if (_fileSelected)
-                {
-                    // Debug.Log($"Not Enough experiments ({_environmentConfigurations.Keys.ToList().Count}) for modulo value {_moduloValue} with result {_experimentId}!");
                     _experimentId = _environmentConfigurations.Keys.ToList().Count - 1;
-                    // Debug.Log($"Selected last Experiment: {_experimentId}!");
-                    Dropdown.value = _experimentId;
                 }
             }
         }
     }
 
+    public void LoadStartMenu()
+    {
+        _moduloActive = Convert.ToBoolean(PlayerPrefs.GetInt("ModuloActiveSetting"));
+        _moduloValue = PlayerPrefs.HasKey("ModuloSetting") ? PlayerPrefs.GetInt("ModuloSetting"): 10;
+        _environmentConfigurations = SettingsMenu.EnvironmentConfigurations;
+        _fileSelected = _environmentConfigurations != null && _environmentConfigurations.Keys.Count > 0;
+        if (!_fileSelected)
+        {
+            ShowErrorMessage("Check experiment file in settings menu!");
+        }
+        if (!_moduloActive)
+        {
+            _experimentId = SettingsMenu.ExperimentId;
+        }
+        else
+        {
+            _experimentId = _participantNumber % _moduloValue;
+            if (_environmentConfigurations != null && _fileSelected && _environmentConfigurations.Keys.ToList().Count <= _experimentId)
+            {
+                _experimentId = _environmentConfigurations.Keys.ToList().Count - 1;
+            }
+        }
+    }
+    
     public void StartGame()
     {
-        if (_fileSelected && _participantNumber >= 0)
+        if (_experimentId >= 0 && _fileSelected && _participantNumber >= 0)
         {
             // start game
-            List<EnvironmentConfiguration> list = _environmentConfigurations[0];
+            var list = _environmentConfigurations[_experimentId];
             
             //TODO generate seed or get it from somewhere
             ExperimentMetaData.Seed = 100;
@@ -110,13 +98,13 @@ public class StartMenu : MonoBehaviour
             ExperimentMetaData.Environments = list;
             ExperimentMetaData.TimeInEnvironment = PlayerPrefs.GetInt("TimeSetting");
             ExperimentMetaData.StartTime = DateTime.Now;
-
+            
+            Debug.Log($"Starting with id: {_experimentId}");
             Cursor.lockState = CursorLockMode.Locked;
             SceneManager.LoadScene(1);
         }
         else
         {
-            // Debug.Log($"Can't start the game due to missing info!");
             ShowErrorMessage("Please enter a positive participant number and select an experiment file!");
         }
     }

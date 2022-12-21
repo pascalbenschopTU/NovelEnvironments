@@ -425,10 +425,10 @@ RectTransform:
   m_Father: {fileID: 1307712517}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.5}
-  m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 146.3469, y: 0}
-  m_SizeDelta: {x: 292.6938, y: 65}
+  m_AnchorMin: {x: 1, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: -1172.2134, y: 0}
+  m_SizeDelta: {x: 544.4269, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &8517750
 MonoBehaviour:
@@ -450,7 +450,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Experiment:'
+  m_text: Experiment selection
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
   m_sharedMaterial: {fileID: 2164040, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
@@ -484,7 +484,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 4
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -4533,6 +4533,7 @@ RectTransform:
   - {fileID: 1937384057}
   - {fileID: 1129524065}
   - {fileID: 1594405824}
+  - {fileID: 1307712517}
   m_Father: {fileID: 1899559774}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4562,7 +4563,9 @@ MonoBehaviour:
   FullscreenToggle: {fileID: 1419289065}
   ButtonChooseFile: {fileID: 1080586312}
   ButtonChangeFile: {fileID: 1448262776}
+  ExperimentSelection: {fileID: 1307712516}
   TextFilename: {fileID: 1003282503}
+  experimentSelectionDropdown: {fileID: 1818379547}
 --- !u!1 &577209795
 GameObject:
   m_ObjectHideFlags: 0
@@ -5185,7 +5188,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Enter a participant number and select an experiment!
+  m_text: Enter a participant number and press Start!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
   m_sharedMaterial: {fileID: 2164040, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
@@ -6676,7 +6679,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1069010709}
         m_TargetAssemblyTypeName: StartMenu, Assembly-CSharp
-        m_MethodName: LoadExperimentsFromFile
+        m_MethodName: LoadStartMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7607,6 +7610,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 563926013}
+        m_TargetAssemblyTypeName: SettingsMenu, Assembly-CSharp
+        m_MethodName: LoadSettingsMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1015592991
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8133,9 +8148,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f32623a0a07df14f9e5fbba9cba1166, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Dropdown: {fileID: 1818379547}
   InputParticipantNumber: {fileID: 1777445519}
   ErrorText: {fileID: 362762223}
+  SettingsMenu: {fileID: 563926013}
   ErrorTextTimeout: 2
 --- !u!1 &1080586312
 GameObject:
@@ -9767,7 +9782,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1307712517}
   m_Layer: 5
-  m_Name: Experiment
+  m_Name: ExperimentSelection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9787,13 +9802,13 @@ RectTransform:
   m_Children:
   - {fileID: 8517749}
   - {fileID: 1818379546}
-  m_Father: {fileID: 1939854896}
-  m_RootOrder: 2
+  m_Father: {fileID: 563926012}
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -23, y: -143}
-  m_SizeDelta: {x: 900, y: 100}
+  m_AnchoredPosition: {x: 0.0041504, y: -273.53}
+  m_SizeDelta: {x: 1200, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1339288644
 GameObject:
@@ -11991,6 +12006,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1622267432}
+  - component: {fileID: 1622267433}
   m_Layer: 5
   m_Name: MainMenu
   m_TagString: Untagged
@@ -12023,6 +12039,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1622267433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1622267431}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6972e0ff05999045a9859916d0964d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SettingsMenu: {fileID: 563926011}
+  ExperimentCreator: {fileID: 2140825880}
+  StartMenu: {fileID: 1069010707}
 --- !u!1 &1629629748
 GameObject:
   m_ObjectHideFlags: 0
@@ -12929,7 +12960,19 @@ MonoBehaviour:
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 563926013}
+        m_TargetAssemblyTypeName: SettingsMenu, Assembly-CSharp
+        m_MethodName: UpdateExperiment
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_AlphaFadeSpeed: 0.15
 --- !u!114 &1818379548
 MonoBehaviour:
@@ -13392,7 +13435,6 @@ RectTransform:
   m_Children:
   - {fileID: 696561002}
   - {fileID: 1906049322}
-  - {fileID: 1307712517}
   m_Father: {fileID: 1069010708}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

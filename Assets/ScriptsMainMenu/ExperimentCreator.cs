@@ -40,13 +40,11 @@ public class ExperimentCreator : MonoBehaviour
         DisableOldTabs(_experimentId);
         
         _experimentId = Math.Max(_environmentConfigurations.Keys.Count, _environmentTabs.Keys.Count);
-        Debug.Log($"Creating new Experiment with id {_experimentId}");
         _environmentConfigurations.Add(_experimentId, new List<EnvironmentConfiguration>());
         _environmentTabs.Add(_experimentId, new List<EnvironmentTabManager>());
         Dropdown.AddOptions(new List<string>{_experimentId.ToString()});
         Dropdown.value = _experimentId;
         
-        Debug.Log("Creation Tab enabled on New Experiment");
         CreationTab.SetActive(true);
         CreationTab.transform.localPosition = new Vector3(-1400 + _environmentTabs[_experimentId].Count*700,0,0);
     }
@@ -120,7 +118,6 @@ public class ExperimentCreator : MonoBehaviour
         Dropdown.ClearOptions();
         Dropdown.value = 0;
         Scrollbar.gameObject.SetActive(false);
-        Debug.Log("Creation Tab disabled on clear Exper");
         CreationTab.SetActive(false);
         CreationTab.transform.localPosition = new Vector3(-1400,0,0);
         _experimentId = -1;
@@ -224,11 +221,9 @@ public class ExperimentCreator : MonoBehaviour
         if (_environmentTabs[_experimentId].Count >= _maxTabs)
         {
             CreationTab.SetActive(false);
-            Debug.Log("Creation Tab disabled!");
         }
         else
         {
-            Debug.Log("Creation Tab enabled!");
             CreationTab.SetActive(true);
             CreationTab.transform.localPosition = new Vector3(-1400 + _environmentTabs[_experimentId].Count*700,0,0);
         }
@@ -267,12 +262,10 @@ public class ExperimentCreator : MonoBehaviour
                 CreationTab.transform.localPosition = new Vector3(-1400 + _environmentTabs[_experimentId].Count*700,0,0);
                 if (_environmentTabs[_experimentId].Count == _maxTabs)
                 {
-                    Debug.Log("Creation Tab disabled in Creation!");
                     CreationTab.SetActive(false);
                 }
                 else
                 {
-                    Debug.Log("Creation Tab enabled in Creation!");
                     CreationTab.SetActive(true);
                 }
             }
@@ -284,7 +277,6 @@ public class ExperimentCreator : MonoBehaviour
     }
     public void DeleteEnvironmentTab(int id)
     {
-        Debug.Log($"Deleting tab {id}");
         var index = -1;
         
         for (var i = 0; i < _environmentTabs[_experimentId].Count; i++)
@@ -299,7 +291,6 @@ public class ExperimentCreator : MonoBehaviour
                 }
             }
         }
-        Debug.Log($"Deleting tab on index {index}");
 
         if (index >= 0)
         {
@@ -309,7 +300,6 @@ public class ExperimentCreator : MonoBehaviour
                 _environmentTabs[_experimentId][i].UpdateID(_environmentTabs[_experimentId][i].GetEnvironmentConfig().Index-1);
             }
             CreationTab.transform.localPosition = new Vector3(-1400 + _environmentTabs[_experimentId].Count*700,0,0);
-            Debug.Log("Creation Tab enabled on Delete tab");
             CreationTab.SetActive(true);
         }
     }
