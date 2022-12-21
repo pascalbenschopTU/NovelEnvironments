@@ -119,8 +119,6 @@ public class SettingsMenu : MonoBehaviour
         }
         ResolutionDropdown.AddOptions(resolutions);
         ResolutionDropdown.value = index;
-    
-        PlayerPrefs.DeleteKey("SelectedFile");
         
         if(!PlayerPrefs.HasKey("FullScreenSetting")) PlayerPrefs.SetInt("FullScreenSetting",1);
         if(!PlayerPrefs.HasKey("ModuloActiveSetting")) PlayerPrefs.SetInt("ModuloActiveSetting",1);
