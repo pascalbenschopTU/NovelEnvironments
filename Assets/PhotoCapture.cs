@@ -99,7 +99,6 @@ public class PhotoCapture : MonoBehaviour
     private void SavePhoto()
     {
         byte[] bytes = screenCapture.EncodeToPNG();
-        string path = Application.dataPath;
         var dirPath = Application.dataPath + "/Pictures/";
         if (!Directory.Exists(dirPath))
         {
