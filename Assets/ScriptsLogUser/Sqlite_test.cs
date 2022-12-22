@@ -24,10 +24,14 @@ public class Sqlite_test : MonoBehaviour
         IDataReader reader_enduser = dbCommandCreateTableEndUser.ExecuteReader();
 
         // Create a table for the positions
-        // IDbCommand dbCommandCreateTable = dbConnection.CreateCommand();
-        // dbCommandCreateTable.CommandText = "CREATE TABLE IF NOT EXISTS Positions (id INTEGER PRIMARY KEY, experiment_id INTEGER NOT NULL, position_x REAL NOT NULL, position_y REAL NOT NULL, position_z REAL NOT NULL, index INTEGER )";
-        // dbCommandCreateTable.ExecuteReader();
+        IDbCommand dbCommandCreateTable = dbConnection.CreateCommand();
+        dbCommandCreateTable.CommandText = "CREATE TABLE IF NOT EXISTS Positions (id INTEGER PRIMARY KEY, experiment_id INTEGER NOT NULL, position_x REAL NOT NULL, position_y REAL NOT NULL, position_z REAL NOT NULL, i INTEGER )";
+        dbCommandCreateTable.ExecuteReader();
 
+        // Create a table for the rotations
+        IDbCommand dbCommandCreateTable = dbConnection.CreateCommand();
+        dbCommandCreateTable.CommandText = "CREATE TABLE IF NOT EXISTS Rotations (id INTEGER PRIMARY KEY, experiment_id INTEGER NOT NULL, w REAL NOT NULL, x REAL NOT NULL, y REAL NOT NULL, z REAL NOT NULL, i INTEGER )";
+        dbCommandCreateTable.ExecuteReader();
 
         reader_enduser.Close();
         reader_enduser = null;
@@ -149,7 +153,7 @@ public class Sqlite_test : MonoBehaviour
 
 
         IDbCommand dbCommandStoreUserAndEnvironment = dbConnection.CreateCommand();
-        dbCommandStoreUserAndEnvironment.CommandText = "SELECT * FROM Positions WHERE experiment_id='" + experiment_id + "'"; //  
+        dbCommandStoreUserAndEnvironment.CommandText = "SELECT * FROM Positions WHERE experiment_id='" + experiment_id + "'";
         IDataReader reader = dbCommandStoreUserAndEnvironment.ExecuteReader();
 
         object[] dataRow = new object[reader.FieldCount];
