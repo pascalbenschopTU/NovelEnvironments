@@ -100,15 +100,15 @@ public class StartMenu : MonoBehaviour
 
     public void StartGame()
     {
-        // if (_fileSelected && _participantNumber >= 0)
-        // {
-        //     // start game
-        //     Debug.Log($"Starting game with number: {_participantNumber}");
-        // }
-        // else
-        // {
-        //     Debug.Log($"Can't start the game due to missing info!");
-        // }
-        SceneManager.LoadScene(1);
+        if (_fileSelected && _participantNumber >= 0)
+        {
+            // start game
+            Debug.Log($"Starting game with number: {_participantNumber}");
+            SceneManager.LoadScene(1);
+        }
+        else
+        {
+            Debug.Log($"Can't start the game due to missing info!");
+        }
     }
 }

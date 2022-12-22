@@ -90,8 +90,9 @@ public class EnvironmentGenerator : MonoBehaviour
 
         createBorders();
 
-        pathGenerator.GenerateLandmarks(meshes);
+        pathGenerator.GenerateLandmarkCoords(meshes);
         pathGenerator.GeneratePaths(meshes);
+        pathGenerator.GenerateLandmarks(meshes);
 
         GameObject temp = new GameObject("EnvironmentObjects");
         temp.transform.parent = transform;
