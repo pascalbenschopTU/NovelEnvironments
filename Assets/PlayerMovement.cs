@@ -37,6 +37,19 @@ public class PlayerMovement : MonoBehaviour
         recorder = GetComponent<Recorder>();
     }
 
+    private void Start()
+    {
+        InvokeRepeating("logData", 0f, 1.0f);
+    }
+
+    private void logData()
+    {
+        ReplayData data = new ReplayData(this.transform.position, this.transform.rotation);
+        if(recorder != null) 
+        {
+            recorder.recordReplayFrame(data);
+        }
+    }
 
     private void HandleFootSteps()
     {
@@ -115,12 +128,12 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void LateUpdate()
-    {
-        ReplayData data = new ReplayData(this.transform.position, this.transform.rotation);
-        if(recorder != null) 
-        {
-            recorder.recordReplayFrame(data);
-        }
-    }
+    // private void LateUpdate()
+    // {
+        // ReplayData data = new ReplayData(this.transform.position, this.transform.rotation);
+        // if(recorder != null) 
+        // {
+        //     recorder.recordReplayFrame(data);
+        // }
+    // }
 }
