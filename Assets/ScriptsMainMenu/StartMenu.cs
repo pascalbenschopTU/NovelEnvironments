@@ -8,33 +8,24 @@ using UnityEngine.SceneManagement;
 
 public class StartMenu : MonoBehaviour
 {
-    public GameObject ButtonChooseFile;
-    public GameObject ButtonChangeFile;
-    public TextMeshProUGUI TextFilename;
-    public TMP_Dropdown Dropdown;
     public TMP_InputField InputParticipantNumber;
     public TextMeshProUGUI ErrorText;
+    public SettingsMenu SettingsMenu;
 
+    public float ErrorTextTimeout;
     private int _participantNumber;
     private int _experimentId;
-    private int _moduloValue;
     private bool _fileSelected;
+    private int _moduloValue;
     private bool _moduloActive;
-    public float ErrorTextTimeout;
     private int _vanishingRate;
     private float _errorEndTime;
     private bool _errorOccured;
     private Dictionary<int, List<EnvironmentConfiguration>> _environmentConfigurations;
     
-    // Start is called before the first frame update
     private void Awake()
     {
         InputParticipantNumber.text = string.Empty;
-        TextFilename.text = string.Empty;
-        TextFilename.gameObject.SetActive(false);
-        ButtonChangeFile.SetActive(false);
-        ButtonChooseFile.SetActive(true);
-        Dropdown.gameObject.SetActive(false);
         ErrorText.text = "";
         _participantNumber = -1;
         _experimentId = -1;
@@ -46,16 +37,11 @@ public class StartMenu : MonoBehaviour
         _vanishingRate = 10;
     }
 
-    public void ToggleModulo(bool value)
+    private void ShowErrorMessage(string msg)
     {
-        _moduloActive = value;
-        ChangeParticipantNumber(_participantNumber.ToString());
-    }
-
-    public void SetModuloValue(string value)
-    {
-        _moduloValue = int.TryParse(value, out var outVal) ? outVal: -1;
-        ChangeParticipantNumber(_participantNumber.ToString());
+        ErrorText.text = msg;
+        _errorEndTime = Time.time + ErrorTextTimeout;
+        _errorOccured = true;
     }
 
     public void ChangeParticipantNumber(string input)
@@ -67,75 +53,59 @@ public class StartMenu : MonoBehaviour
             if (_moduloActive)
             {
                 _experimentId = _participantNumber % _moduloValue;
-                if (_fileSelected && _environmentConfigurations.Keys.ToList().Count > _experimentId)
+                if (_fileSelected && _environmentConfigurations.Keys.ToList().Count <= _experimentId)
                 {
-                    // Debug.Log($"Experiment {_experimentId} selected!");
-                    Dropdown.value = _experimentId;
-                }else if (_fileSelected)
-                {
-                    // Debug.Log($"Not Enough experiments ({_environmentConfigurations.Keys.ToList().Count}) for modulo value {_moduloValue} with result {_experimentId}!");
                     _experimentId = _environmentConfigurations.Keys.ToList().Count - 1;
-                    // Debug.Log($"Selected last Experiment: {_experimentId}!");
-                    Dropdown.value = _experimentId;
                 }
             }
         }
     }
-    
-    public void ChooseExperimentFileButtonCallback()
-    {
-        var a = FileBrowser.ShowLoadDialog(paths =>
-        {
-            ChooseExperimentFile(paths[0]);
-        }, () => {}, FileBrowser.PickMode.Files);
-    }
 
-    private void ChooseExperimentFile(string path)
+    public void LoadStartMenu()
     {
-        ButtonChangeFile.SetActive(true);
-        ButtonChooseFile.SetActive(false);
-        Dropdown.gameObject.SetActive(true);
-        TextFilename.gameObject.SetActive(true);
-        List<string> parts;
-        if (path.Contains("/"))
+        _moduloActive = Convert.ToBoolean(PlayerPrefs.GetInt("ModuloActiveSetting"));
+        _moduloValue = PlayerPrefs.HasKey("ModuloSetting") ? PlayerPrefs.GetInt("ModuloSetting"): 10;
+        _environmentConfigurations = SettingsMenu.EnvironmentConfigurations;
+        _fileSelected = _environmentConfigurations != null && _environmentConfigurations.Keys.Count > 0;
+        if (!_fileSelected)
         {
-            parts = path.Split("/").ToList();
-        }else if (path.Contains("\\"))
+            ShowErrorMessage("Check experiment file in settings menu!");
+        }
+        if (!_moduloActive)
         {
-            parts = path.Split("\\").ToList();
+            _experimentId = SettingsMenu.ExperimentId;
         }
         else
         {
-            return;
+            _experimentId = _participantNumber % _moduloValue;
+            if (_environmentConfigurations != null && _fileSelected && _environmentConfigurations.Keys.ToList().Count <= _experimentId)
+            {
+                _experimentId = _environmentConfigurations.Keys.ToList().Count - 1;
+            }
         }
-
-        TextFilename.text = parts[^1];
-        Dropdown.ClearOptions();
-        _fileSelected = true;
-        _environmentConfigurations = CsvUtils.EnvironmentConfigsFromCsv(path);
-        Dropdown.AddOptions(_environmentConfigurations.Keys.ToList().ConvertAll(k => k.ToString()));
-        ChangeParticipantNumber(_participantNumber.ToString());
     }
-
+    
     public void StartGame()
     {
-        if (_fileSelected && _participantNumber >= 0)
+        if (_experimentId >= 0 && _fileSelected && _participantNumber >= 0)
         {
             // start game
-            List<EnvironmentConfiguration> list = _environmentConfigurations[0];
-            Settings.environments = list;
-            // Change to appropriate location
-            Settings.seed = 100;
-
+            var list = _environmentConfigurations[_experimentId];
+            
+            //TODO generate seed or get it from somewhere
+            ExperimentMetaData.Seed = 100;
+            ExperimentMetaData.ParticipantNumber = _participantNumber;
+            ExperimentMetaData.Environments = list;
+            ExperimentMetaData.TimeInEnvironment = PlayerPrefs.GetInt("TimeSetting");
+            ExperimentMetaData.StartTime = DateTime.Now;
+            
+            Debug.Log($"Starting with id: {_experimentId}");
             Cursor.lockState = CursorLockMode.Locked;
             SceneManager.LoadScene(1);
         }
         else
         {
-            // Debug.Log($"Can't start the game due to missing info!");
-            ErrorText.text = "Please enter a positive Participant Number and select an Experiment File!";
-            _errorEndTime = Time.time + ErrorTextTimeout;
-            _errorOccured = true;
+            ShowErrorMessage("Please enter a positive participant number and select an experiment file!");
         }
     }
 
