@@ -61,20 +61,22 @@ public class StartingPositionGenerator : MonoBehaviour
         player = GameObject.Find("Player");
         setPlayerMiniMap();
         setPlayerFOV();
+        TogglePlayerCamera();
     }
 
     private void setPlayerMiniMap()
     {
-        if (player.transform.Find("Canvas") != null)
+        Transform canvas = player.transform.Find("Canvas");
+        if (canvas != null)
         {
-            GameObject canvas = player.transform.Find("Canvas").gameObject;
+            GameObject minimap = canvas.Find("RawImage").gameObject;
             if (environmentConfiguration.MapConfig == ConfigType.Low)
             {
-                canvas.SetActive(false);
+                minimap.SetActive(false);
             }
             else
             {
-                canvas.SetActive(true);
+                minimap.SetActive(true);
             }
         }
         else
@@ -101,6 +103,23 @@ public class StartingPositionGenerator : MonoBehaviour
         else
         {
             Debug.LogWarning("No camera attached to player?");
+        }
+    }
+
+    private void TogglePlayerCamera()
+    {
+        PhotoCapture photoCaptureScript = player.GetComponent<PhotoCapture>();
+
+        if (photoCaptureScript != null)
+        {
+            if (environmentConfiguration.CameraTask)
+            {
+                photoCaptureScript.enabled = true;
+            } 
+            else
+            {
+                photoCaptureScript.enabled = false;
+            }
         }
     }
 
