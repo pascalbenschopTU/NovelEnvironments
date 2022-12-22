@@ -117,7 +117,7 @@ public class StartingPositionGenerator : MonoBehaviour
         script.createNewEnvironment();
 
         startingPosition = script.getSpawnPoint();
-        System.Console.WriteLine("startingPosition: {0}", startingPosition);
+        // startingPosition = script.getMeshStartingVertex() + new Vector3(0.0f, 1.0f, 0.0f);
 
         CharacterController cc = player.GetComponent<CharacterController>();
         cc.enabled = false;
@@ -137,7 +137,7 @@ public class StartingPositionGenerator : MonoBehaviour
         endEnvironmentEvent.Invoke();
         Queue<ReplayData> rq = player.GetComponent<Recorder>().recordingQueue;
         Debug.Log("Recording Queue Size: " + rq.Count);
-        player.GetComponent<Sqlite_test>().storeUserPositions(11, 11, rq);
+        // player.GetComponent<Sqlite_test>().storeUserPositionQueue(11, 11, rq);
         Debug.Log("Time has run out!");
         SceneManager.LoadScene("DefaultScene");
     }

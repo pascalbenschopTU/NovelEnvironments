@@ -59,7 +59,7 @@ public class Sqlite_test : MonoBehaviour
         dbConnection = null;
     }
 
-    public void storeUserPositions(int user_id, int experiment_id, Queue<ReplayData> recordingQueue) {
+    public void storeUserPositionQueue(int user_id, int experiment_id, Queue<ReplayData> recordingQueue) {
         string path_to_db = "URI=file:" + Application.dataPath + "/experiment_log.db";
         Debug.Log("Database: Storing user id: " + user_id + " and environment id: " + experiment_id);
 
@@ -82,6 +82,56 @@ public class Sqlite_test : MonoBehaviour
             
             i++;
         }
+        dbConnection.Close();
+        dbConnection = null;
+        // dbCommandStoreUserAndEnvironment.Dispose();
+        // dbCommandStoreUserAndEnvironment = null;
+        
+    }
+
+    public void storeUserPosition(int user_id, int experiment_id, ReplayData data, int index) {
+        string path_to_db = "URI=file:" + Application.dataPath + "/experiment_log.db";
+        Debug.Log("Database: Storing position of user : " + user_id + " and environment id: " + experiment_id);
+
+        
+        IDbConnection dbConnection = new SqliteConnection(path_to_db); 
+        dbConnection.Open();
+
+
+        IDbCommand dbCommandStoreUserAndEnvironment = dbConnection.CreateCommand();
+        dbCommandStoreUserAndEnvironment.CommandText = "INSERT INTO Positions (experiment_id, position_x, position_y, position_z, i) VALUES(" + experiment_id + ", " + data.position.x + ", " + data.position.y + ", " + data.position.z + ", " + index + ")";
+        IDataReader reader = dbCommandStoreUserAndEnvironment.ExecuteReader();
+
+        reader.Close();
+        reader = null;
+        dbCommandStoreUserAndEnvironment.Dispose();
+        dbCommandStoreUserAndEnvironment = null;
+            
+        dbConnection.Close();
+        dbConnection = null;
+        // dbCommandStoreUserAndEnvironment.Dispose();
+        // dbCommandStoreUserAndEnvironment = null;
+        
+    }
+
+    public void storeUserRotation(int user_id, int experiment_id, ReplayData data, int i) {
+        string path_to_db = "URI=file:" + Application.dataPath + "/experiment_log.db";
+        Debug.Log("Database: Storing user id: " + user_id + " and environment id: " + experiment_id);
+
+        
+        IDbConnection dbConnection = new SqliteConnection(path_to_db); 
+        dbConnection.Open();
+
+
+        IDbCommand dbCommandStoreUserAndEnvironment = dbConnection.CreateCommand();
+        dbCommandStoreUserAndEnvironment.CommandText = "INSERT INTO Rotations (experiment_id, w, x, y, z, i) VALUES(" + experiment_id + ", " + data.rotation.w+ ", " + data.rotation.x + ", " + data.rotation.y + ", " + data.rotation.z + ", " + i + ")";
+        IDataReader reader = dbCommandStoreUserAndEnvironment.ExecuteReader();
+
+        reader.Close();
+        reader = null;
+        dbCommandStoreUserAndEnvironment.Dispose();
+        dbCommandStoreUserAndEnvironment = null;
+            
         dbConnection.Close();
         dbConnection = null;
         // dbCommandStoreUserAndEnvironment.Dispose();

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -32,22 +33,37 @@ public class PlayerMovement : MonoBehaviour
 
     private Recorder recorder;
 
+    private GameObject player;
+    private Scene scene;
+    private int recording_step;
+
     private void Awake()
     {
         recorder = GetComponent<Recorder>();
+        recording_step = 0;
     }
 
     private void Start()
     {
-        InvokeRepeating("logData", 0f, 1.0f);
+
+        player = GameObject.Find("Player");
+
+        // Log data every .5 seconds
+        InvokeRepeating("logData", 0f, 0.5f);
+        scene = SceneManager.GetActiveScene();
     }
 
     private void logData()
     {
         ReplayData data = new ReplayData(this.transform.position, this.transform.rotation);
-        if(recorder != null) 
+        if((recorder != null) && (scene.name != "DefaultScene")) 
         {
             recorder.recordReplayFrame(data);
+            
+            player.GetComponent<Sqlite_test>().storeUserPosition(11, 11, data, recording_step);
+            player.GetComponent<Sqlite_test>().storeUserRotation(11, 11, data, recording_step);
+
+            recording_step++;
         }
     }
 
@@ -127,13 +143,4 @@ public class PlayerMovement : MonoBehaviour
             HandleFootSteps();
         }
     }
-
-    // private void LateUpdate()
-    // {
-        // ReplayData data = new ReplayData(this.transform.position, this.transform.rotation);
-        // if(recorder != null) 
-        // {
-        //     recorder.recordReplayFrame(data);
-        // }
-    // }
 }
