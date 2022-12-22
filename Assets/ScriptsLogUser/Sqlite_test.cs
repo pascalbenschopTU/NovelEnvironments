@@ -91,7 +91,7 @@ public class Sqlite_test : MonoBehaviour
 
     public void storeUserPosition(int user_id, int experiment_id, ReplayData data, int index) {
         string path_to_db = "URI=file:" + Application.dataPath + "/experiment_log.db";
-        Debug.Log("Database: Storing position of user : " + user_id + " and environment id: " + experiment_id);
+        // Debug.Log("Database: Storing position of user : " + user_id + " and environment id: " + experiment_id);
 
         
         IDbConnection dbConnection = new SqliteConnection(path_to_db); 
@@ -116,7 +116,7 @@ public class Sqlite_test : MonoBehaviour
 
     public void storeUserRotation(int user_id, int experiment_id, ReplayData data, int i) {
         string path_to_db = "URI=file:" + Application.dataPath + "/experiment_log.db";
-        Debug.Log("Database: Storing user id: " + user_id + " and environment id: " + experiment_id);
+        // Debug.Log("Database: Storing user id: " + user_id + " and environment id: " + experiment_id);
 
         
         IDbConnection dbConnection = new SqliteConnection(path_to_db); 
@@ -126,6 +126,40 @@ public class Sqlite_test : MonoBehaviour
         IDbCommand dbCommandStoreUserAndEnvironment = dbConnection.CreateCommand();
         dbCommandStoreUserAndEnvironment.CommandText = "INSERT INTO Rotations (experiment_id, w, x, y, z, i) VALUES(" + experiment_id + ", " + data.rotation.w+ ", " + data.rotation.x + ", " + data.rotation.y + ", " + data.rotation.z + ", " + i + ")";
         IDataReader reader = dbCommandStoreUserAndEnvironment.ExecuteReader();
+
+        reader.Close();
+        reader = null;
+        dbCommandStoreUserAndEnvironment.Dispose();
+        dbCommandStoreUserAndEnvironment = null;
+            
+        dbConnection.Close();
+        dbConnection = null;
+        // dbCommandStoreUserAndEnvironment.Dispose();
+        // dbCommandStoreUserAndEnvironment = null;
+        
+    }
+
+    public void getUserPosition(int user_id, int experiment_id) {
+        string path_to_db = "URI=file:" + Application.dataPath + "/experiment_log.db";
+        // Debug.Log("Database: Storing position of user : " + user_id + " and environment id: " + experiment_id);
+
+        
+        IDbConnection dbConnection = new SqliteConnection(path_to_db); 
+        dbConnection.Open();
+
+
+        IDbCommand dbCommandStoreUserAndEnvironment = dbConnection.CreateCommand();
+        dbCommandStoreUserAndEnvironment.CommandText = "SELECT * FROM Positions WHERE experiment_id='" + experiment_id + "'"; //  
+        IDataReader reader = dbCommandStoreUserAndEnvironment.ExecuteReader();
+
+        object[] dataRow = new object[reader.FieldCount];
+        while (reader.Read()) { 
+            int cols = reader.GetValues(dataRow); 
+            for (int i = 0; i < cols; i++) {
+                Debug.Log(dataRow[i]);
+            }
+        }
+        reader.Close();
 
         reader.Close();
         reader = null;
