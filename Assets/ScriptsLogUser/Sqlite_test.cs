@@ -24,19 +24,27 @@ public class Sqlite_test : MonoBehaviour
         IDataReader reader_enduser = dbCommandCreateTableEndUser.ExecuteReader();
 
         // Create a table for the positions
-        IDbCommand dbCommandCreateTable = dbConnection.CreateCommand();
-        dbCommandCreateTable.CommandText = "CREATE TABLE IF NOT EXISTS Positions (id INTEGER PRIMARY KEY, experiment_id INTEGER NOT NULL, position_x REAL NOT NULL, position_y REAL NOT NULL, position_z REAL NOT NULL, i INTEGER )";
-        dbCommandCreateTable.ExecuteReader();
+        IDbCommand dbCommandCreateTablePositions = dbConnection.CreateCommand();
+        dbCommandCreateTablePositions.CommandText = "CREATE TABLE IF NOT EXISTS Positions (id INTEGER PRIMARY KEY, experiment_id INTEGER NOT NULL, position_x REAL NOT NULL, position_y REAL NOT NULL, position_z REAL NOT NULL, i INTEGER )";
+        dbCommandCreateTablePositions.ExecuteReader();
 
         // Create a table for the rotations
-        IDbCommand dbCommandCreateTable = dbConnection.CreateCommand();
-        dbCommandCreateTable.CommandText = "CREATE TABLE IF NOT EXISTS Rotations (id INTEGER PRIMARY KEY, experiment_id INTEGER NOT NULL, w REAL NOT NULL, x REAL NOT NULL, y REAL NOT NULL, z REAL NOT NULL, i INTEGER )";
-        dbCommandCreateTable.ExecuteReader();
+        IDbCommand dbCommandCreateTableRotations = dbConnection.CreateCommand();
+        dbCommandCreateTableRotations.CommandText = "CREATE TABLE IF NOT EXISTS Rotations (id INTEGER PRIMARY KEY, experiment_id INTEGER NOT NULL, w REAL NOT NULL, x REAL NOT NULL, y REAL NOT NULL, z REAL NOT NULL, i INTEGER )";
+        dbCommandCreateTableRotations.ExecuteReader();
 
         reader_enduser.Close();
         reader_enduser = null;
+
         dbCommandCreateTableEndUser.Dispose();
         dbCommandCreateTableEndUser = null;
+
+        dbCommandCreateTablePositions.Dispose();
+        dbCommandCreateTablePositions = null;
+
+        dbCommandCreateTableRotations.Dispose();
+        dbCommandCreateTableRotations = null;
+        
         dbConnection.Close();
         dbConnection = null;
 
