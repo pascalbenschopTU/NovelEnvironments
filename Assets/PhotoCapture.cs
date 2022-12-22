@@ -8,6 +8,8 @@ public class PhotoCapture : MonoBehaviour
     private Texture2D screenCapture;
 
     private GameObject player;
+    private Transform canvas;
+
     private GameObject cameraFlash;
     private float flashTime = 0.2f;
 
@@ -37,7 +39,7 @@ public class PhotoCapture : MonoBehaviour
 
     private void AddOverLay()
     {
-        Transform canvas = player.transform.Find("Canvas");
+        canvas = player.transform.Find("Canvas");
         if (canvas != null)
         {
             GameObject panel = new GameObject("Panel");
@@ -47,26 +49,36 @@ public class PhotoCapture : MonoBehaviour
             rectTransform.anchoredPosition = new Vector2(0f, 0f);
             rectTransform.sizeDelta = new Vector2(100f, 100f);
 
+            // Top and bottom
             for (int i = 0; i < 2; i++)
             {
-                GameObject sprite = new GameObject("Sprite " + i);
-                sprite.AddComponent<Image>();
-                RectTransform spriteTransform = sprite.GetComponent<RectTransform>();
-                spriteTransform.transform.SetParent(panel.transform, false);
-                spriteTransform.anchorMin = new Vector2(0.5f, i * 1.0f);
-                spriteTransform.anchorMax = new Vector2(0.5f, i * 1.0f);
-                spriteTransform.sizeDelta = new Vector2(5f, 40f);
+                // Left and right
+                for (int j = 0; j < 2; j++)
+                {
+                    GameObject sprite = new GameObject("Sprite " + i + j);
+                    sprite.AddComponent<Image>();
+                    RectTransform spriteTransform = sprite.GetComponent<RectTransform>();
+                    spriteTransform.transform.SetParent(panel.transform, false);
+                    spriteTransform.anchorMin = new Vector2(Mathf.Abs(j - 0.1f), i);
+                    spriteTransform.anchorMax = new Vector2(Mathf.Abs(j - 0.1f), i);
+                    spriteTransform.sizeDelta = new Vector2(25f, 5f);
+                }
             }
 
+            // Left and right
             for (int i = 0; i < 2; i++)
             {
-                GameObject sprite = new GameObject("Sprite " + (i+2));
-                sprite.AddComponent<Image>();
-                RectTransform spriteTransform = sprite.GetComponent<RectTransform>();
-                spriteTransform.transform.SetParent(panel.transform, false);
-                spriteTransform.anchorMin = new Vector2(i * 1.0f, 0.5f);
-                spriteTransform.anchorMax = new Vector2(i * 1.0f, 0.5f);
-                spriteTransform.sizeDelta = new Vector2(40f, 5f);
+                // Top and bottom
+                for (int j = 0; j < 2; j++)
+                {
+                    GameObject sprite = new GameObject("Sprite " + (i + 2) + (j+2));
+                    sprite.AddComponent<Image>();
+                    RectTransform spriteTransform = sprite.GetComponent<RectTransform>();
+                    spriteTransform.transform.SetParent(panel.transform, false);
+                    spriteTransform.anchorMin = new Vector2(i, Mathf.Abs(j - 0.1f));
+                    spriteTransform.anchorMax = new Vector2(i, Mathf.Abs(j - 0.1f));
+                    spriteTransform.sizeDelta = new Vector2(5f, 25f);
+                } 
             }
         }
     }
