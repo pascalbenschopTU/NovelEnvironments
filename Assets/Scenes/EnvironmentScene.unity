@@ -1315,6 +1315,11 @@ MonoBehaviour:
   - {fileID: 1786732080692216, guid: 46aa8b6d013691a43a624b2200d4519a, type: 3}
   - {fileID: 1721112587459618, guid: 2ed80e4af24778742a16837f6b64d172, type: 3}
   - {fileID: 1065655044243356, guid: 20f64b4081161ef43b320aa975519fdc, type: 3}
+  - {fileID: 1960440776389710, guid: 0450d19464994a4439f6c7dea52104b2, type: 3}
+  - {fileID: 1977925246162678, guid: 8b7b6b45c88df22498a9e20b7d7a34de, type: 3}
+  - {fileID: 1814914059941812, guid: c7c726d17347cd44a8b6a3d3600f37b9, type: 3}
+  - {fileID: 1682417958822914, guid: 2e603bc31b2f54a41a14216f94f897cb, type: 3}
+  - {fileID: 1173167114142786, guid: a07a929fcb59ef44aa0b84e31eb0078e, type: 3}
   landmarks: []
   meshTag: SandFloor
   objectAmount: 10
@@ -1391,7 +1396,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1355761736}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1831,25 +1836,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   layer: Ground
   objects:
-  - {fileID: 1056816346895226, guid: fce1307539b865c4d942dfa642eab7ec, type: 3}
-  - {fileID: 1153027382682948, guid: 7d227c3a7fa9cf54a8d07c8a5e34b64a, type: 3}
-  - {fileID: 1131628691654494, guid: 5c6ccde0684f68f4f9de1e388495c480, type: 3}
-  - {fileID: 1143307919750216, guid: 3dff328fdba649c44a1d608ec75217d7, type: 3}
-  - {fileID: 1763038635241144, guid: b6adf14e248ee014597da88e5b5cb4b8, type: 3}
-  - {fileID: 1817203163705728, guid: 030c083b63658d2409864330589d7c2e, type: 3}
-  - {fileID: 1977470886905136, guid: 31d5af46872794c47831f7a6da72a909, type: 3}
-  - {fileID: 1026519327573510, guid: df93f3d6378363547a6e517b28966afd, type: 3}
-  - {fileID: 1448558995247362, guid: de4ee8b58db0a0f4d96175ffd1f29120, type: 3}
-  - {fileID: 1977470886905136, guid: 31d5af46872794c47831f7a6da72a909, type: 3}
-  - {fileID: 1017275491852100, guid: cbb2baf7f26aed649a2393144227a562, type: 3}
-  - {fileID: 1575919079451628, guid: 89f0268b869809841b9a32b72053e107, type: 3}
-  - {fileID: 1697415565114782, guid: ab28e8006e210aa4480fe64bd6fa7208, type: 3}
-  - {fileID: 1237205094868938, guid: 2909343e8fc65984b82bff9fab8cf5d1, type: 3}
-  - {fileID: 1273699440398734, guid: 3959f9b79ac88ac4d8690e7e6c7e3ded, type: 3}
-  - {fileID: 1844933204605362, guid: 16784d6fbb71942438b159522cd5d5c3, type: 3}
+  - {fileID: 1212380520111254, guid: 562df8355904213468a690c4ce6740b6, type: 3}
+  - {fileID: 1212380520111254, guid: 562df8355904213468a690c4ce6740b6, type: 3}
+  - {fileID: 1248084678627422, guid: 7df26aa64e4b3fc48933a809e1a48078, type: 3}
+  - {fileID: 1503822532645738, guid: c8c7944afbb63f548bf2b2bddd8a848f, type: 3}
+  - {fileID: 1700467701915904, guid: 332e08e35cda1b84e8c36c123299b8ac, type: 3}
+  - {fileID: 1355464884281048, guid: 80f1713dca16e654abd9002f6e9f5627, type: 3}
+  - {fileID: 1878098898913144, guid: b62a88683020bad4f88cd9c883281901, type: 3}
+  - {fileID: 1403461033924870, guid: 03f4debef6f82ef43b174ff67987c532, type: 3}
+  - {fileID: 1313561039655254, guid: 28e73319f340c644db3fdb95596c6596, type: 3}
+  - {fileID: 1716336653257340, guid: 49e4fbb0397806849a4871cd85eaca26, type: 3}
+  - {fileID: 1350961368450940, guid: c6e50eec7153f5b45ac3917fb6cfd06a, type: 3}
+  - {fileID: 1964126759934866, guid: 1b917d070ca78d8458d7db3681a2c913, type: 3}
+  - {fileID: 1213795830858570, guid: 9a52ba64c3a0abf49ad9515917ade04b, type: 3}
+  - {fileID: 1899946360806954, guid: 7d569c6acdec3c2428d7b39889d89720, type: 3}
+  - {fileID: 1199332134306268, guid: 1e198ff9400b5064c816d8f779eff296, type: 3}
+  - {fileID: 1646639913439324, guid: ac16a24c584766f4e905adc7db85b93d, type: 3}
+  - {fileID: 1631595132073662, guid: 2c1f60045e2f58f48966f8cea8354944, type: 3}
+  - {fileID: 1228088659953116, guid: 80c5916b9606ce646be16611d9a06d13, type: 3}
+  - {fileID: 1307031912822190, guid: c954a7e383194f246b3502f6c815acb4, type: 3}
+  - {fileID: 1276862051916332, guid: 1be61187b5d765449be824463642cb0f, type: 3}
+  - {fileID: 1282495547358542, guid: fb63f2d87ad55dd42891f1e2dbfe660d, type: 3}
+  - {fileID: 1876599732148902, guid: 6ebfc6898dc70814c86bb78d43e72a9c, type: 3}
   landmarks: []
   meshTag: ConcreteFloor
-  objectAmount: 5
+  objectAmount: 3
   terrainMaterial: {fileID: 2100000, guid: 1b20a390d157f314e8b9bb5dcd9a8c00, type: 2}
   heightCurve:
     serializedVersion: 2
@@ -2079,7 +2090,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
