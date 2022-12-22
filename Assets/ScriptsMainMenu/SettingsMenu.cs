@@ -57,6 +57,7 @@ namespace ScriptsMainMenu
         public void UpdateExperiment(int index)
         {
             ExperimentId = index;
+            PlayerPrefs.SetInt("LastExperimentId", ExperimentId);
         }
         public void ChooseExperimentFileButtonCallback()
         {
@@ -97,7 +98,8 @@ namespace ScriptsMainMenu
                 EnvironmentConfigurations = CsvUtils.EnvironmentConfigsFromCsv(PlayerPrefs.GetString("SelectedFile"));
                 Debug.Log($"Loaded data from: {PlayerPrefs.GetString("SelectedFile")}");
                 experimentSelectionDropdown.AddOptions(EnvironmentConfigurations.Keys.ToList().ConvertAll(k => k.ToString()));
-                ExperimentId = 0;
+                ExperimentId = PlayerPrefs.HasKey("LastExperimentId") && EnvironmentConfigurations.Keys.Contains(PlayerPrefs.GetInt("LastExperimentId"))? PlayerPrefs.GetInt("LastExperimentId"): 0;
+                PlayerPrefs.SetInt("LastExperimentId", ExperimentId);
                 experimentSelectionDropdown.value = ExperimentId;
                 ExperimentSelection.SetActive(!ModuloToggle.isOn && EnvironmentConfigurations != null && EnvironmentConfigurations.Count > 0);
             }

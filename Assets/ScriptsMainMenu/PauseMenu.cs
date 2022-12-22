@@ -33,11 +33,12 @@ namespace ScriptsMainMenu
             _paused = false;
         }
 
-        public void SwitchSceneTo(int sceneId)
+        public void QuitExperiment()
         {
             Resume();
             Cursor.lockState = CursorLockMode.None;
-            SceneManager.LoadScene(sceneId);
+            ExperimentMetaData.ExperimentFinished = true;
+            SceneManager.LoadScene(0);
         }
 
         private void Awake()

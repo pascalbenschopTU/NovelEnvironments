@@ -25,6 +25,7 @@ public class StartingPositionGenerator : MonoBehaviour
             Debug.Log("Experiment finished");
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
+            ExperimentMetaData.ExperimentFinished = true;
             SceneManager.LoadScene("MainMenu");
             return;
         }

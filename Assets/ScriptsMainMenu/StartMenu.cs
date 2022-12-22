@@ -70,6 +70,7 @@ namespace ScriptsMainMenu
         {
             _moduloActive = Convert.ToBoolean(PlayerPrefs.GetInt("ModuloActiveSetting"));
             _moduloValue = PlayerPrefs.HasKey("ModuloSetting") ? PlayerPrefs.GetInt("ModuloSetting"): 10;
+            SettingsMenu.LoadExperimentsFromFile();
             _environmentConfigurations = SettingsMenu.EnvironmentConfigurations;
             _fileSelected = _environmentConfigurations != null && _environmentConfigurations.Keys.Count > 0;
             if (!_fileSelected)

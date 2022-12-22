@@ -2,14 +2,18 @@ using UnityEngine;
 
 namespace ScriptsMainMenu
 {
-    public class MainMenu : MonoBehaviour
+    public class MainMenuScript : MonoBehaviour
     {
         [SerializeField]
         private GameObject SettingsMenu;
         [SerializeField]
         private GameObject ExperimentCreator;
         [SerializeField]
-        private GameObject StartMenu;
+        private GameObject StartMenu;        
+        [SerializeField]
+        private GameObject MainMenu;
+        [SerializeField]
+        private GameObject FinishScreen;
         void Awake()
         {
             SettingsMenu.SetActive(true);        
@@ -18,6 +22,12 @@ namespace ScriptsMainMenu
             ExperimentCreator.SetActive(false);        
             SettingsMenu.SetActive(false);        
             StartMenu.SetActive(false);        
+            FinishScreen.SetActive(false);
+            if (ExperimentMetaData.ExperimentFinished)
+            {
+                MainMenu.SetActive(false);
+                FinishScreen.SetActive(true);
+            }
         }
 
     }
