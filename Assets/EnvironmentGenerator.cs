@@ -100,6 +100,7 @@ public class EnvironmentGenerator : MonoBehaviour
         foreach(Mesh mesh in meshes)
         {
             objectGenerator.GenerateObjects(mesh, temp);
+            objectGenerator.GenerateGatherables(mesh, temp);
         }
     }
 

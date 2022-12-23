@@ -1085,7 +1085,7 @@ MonoBehaviour:
   - {fileID: 1879388732584624, guid: ba2b67dbc790eb74f8a401c592dd619f, type: 3}
   - {fileID: 1004710975425532, guid: c0aa33e678586aa43a1a9254fdfdfb4d, type: 3}
   landmarks: []
-  gatherable: {fileID: 0}
+  gatherable: {fileID: 150698, guid: f4c62b1a746281e44800c9250dd3643c, type: 3}
   meshTag: SnowFloor
   objectAmount: 20
   terrainMaterial: {fileID: 2100000, guid: 1b20a390d157f314e8b9bb5dcd9a8c00, type: 2}
@@ -1325,7 +1325,7 @@ MonoBehaviour:
   - {fileID: 1721112587459618, guid: 2ed80e4af24778742a16837f6b64d172, type: 3}
   - {fileID: 1065655044243356, guid: 20f64b4081161ef43b320aa975519fdc, type: 3}
   landmarks: []
-  gatherable: {fileID: 0}
+  gatherable: {fileID: 150698, guid: f4c62b1a746281e44800c9250dd3643c, type: 3}
   meshTag: SandFloor
   objectAmount: 10
   terrainMaterial: {fileID: 2100000, guid: 1b20a390d157f314e8b9bb5dcd9a8c00, type: 2}
@@ -1871,7 +1871,7 @@ MonoBehaviour:
   - {fileID: 1273699440398734, guid: 3959f9b79ac88ac4d8690e7e6c7e3ded, type: 3}
   - {fileID: 1844933204605362, guid: 16784d6fbb71942438b159522cd5d5c3, type: 3}
   landmarks: []
-  gatherable: {fileID: 0}
+  gatherable: {fileID: 150698, guid: f4c62b1a746281e44800c9250dd3643c, type: 3}
   meshTag: ConcreteFloor
   objectAmount: 5
   terrainMaterial: {fileID: 2100000, guid: 1b20a390d157f314e8b9bb5dcd9a8c00, type: 2}

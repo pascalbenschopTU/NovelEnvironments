@@ -9,6 +9,7 @@ public class ObjectGenerator : MonoBehaviour
     private GameObject gatherable;
     private int seed;
     private int amount;
+    System.Random prng;
     
     public void Initialize(string layer, GameObject[] objects, int seed, int amount, GameObject gatherable)
     {
@@ -17,12 +18,12 @@ public class ObjectGenerator : MonoBehaviour
         this.seed = seed;
         this.amount = amount;
         this.gatherable = gatherable;
+        this.prng = new System.Random(seed);
     }
 
     public void GenerateObjects(Mesh mesh, GameObject temp)
     {
         Vector3 startingPosition = new Vector3(30.0f, 1.0f, -20.0f);
-        System.Random prng = new System.Random(seed);
         for (int i = 0; i < objects.Length; i++)
         {
             // Generate #amount instances of objects[i] 
@@ -39,6 +40,11 @@ public class ObjectGenerator : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void GenerateGatherables(Mesh mesh, GameObject temp)
+    {
+        Vector3 startingPosition = new Vector3(30.0f, 1.0f, -20.0f);
 
         for (int i = 0; i < 3; i++){
             int vertIndex = prng.Next(0, mesh.vertices.Length);
