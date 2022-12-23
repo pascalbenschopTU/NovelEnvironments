@@ -116,6 +116,6 @@ public class PhotoCapture : MonoBehaviour
         {
             Directory.CreateDirectory(dirPath);
         }
-        File.WriteAllBytes(dirPath + System.DateTime.Now.ToString("yyyy/MM/dd_HH-mm-ss") + ".png", bytes);
+        File.WriteAllBytes(dirPath + System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss") + ".png", bytes);
     }
 }
