@@ -33,6 +33,11 @@ public class SqliteLogging : MonoBehaviour
         dbCommandCreateTableRotations.CommandText = "CREATE TABLE IF NOT EXISTS Rotations (id INTEGER PRIMARY KEY, experiment_id INTEGER NOT NULL, w REAL NOT NULL, x REAL NOT NULL, y REAL NOT NULL, z REAL NOT NULL, i INTEGER )";
         dbCommandCreateTableRotations.ExecuteReader();
 
+        // Create a table for the rotations
+        IDbCommand dbCommandCreateTablePictures = dbConnection.CreateCommand();
+        dbCommandCreateTablePictures.CommandText = "CREATE TABLE IF NOT EXISTS Pictures (id INTEGER PRIMARY KEY, participant_id INTEGER NOT NULL, environment_id INTEGER NOT NULL, filepath STRING NOT NULL)";
+        dbCommandCreateTablePictures.ExecuteReader();
+
         reader_enduser.Close();
         reader_enduser = null;
 
