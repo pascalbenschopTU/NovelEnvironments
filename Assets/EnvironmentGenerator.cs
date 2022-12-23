@@ -12,6 +12,7 @@ public class EnvironmentGenerator : MonoBehaviour
 
     public GameObject[] objects;
     public GameObject[] landmarks;
+    public GameObject gatherable;
 
     public string meshTag;
 
@@ -31,7 +32,8 @@ public class EnvironmentGenerator : MonoBehaviour
     public Gradient gradient;
 
     public int size = 400;
-    
+
+    private bool generateGatherables = false;
 
     private Mesh[] meshes;
     private int index = 0;
@@ -51,7 +53,7 @@ public class EnvironmentGenerator : MonoBehaviour
         pathGenerator = gameObject.AddComponent<PathGenerator>();
         pathGenerator.Initialize(layer, landmarks, seed, terrainMaterial);
         objectGenerator = gameObject.AddComponent<ObjectGenerator>();
-        objectGenerator.Initialize(layer, objects, seed, objectAmount);
+        objectGenerator.Initialize(layer, objects, seed, objectAmount, gatherable);
         Debug.Log(gameObject.tag);
 
         switch(gameObject.tag)
@@ -99,12 +101,21 @@ public class EnvironmentGenerator : MonoBehaviour
         foreach(Mesh mesh in meshes)
         {
             objectGenerator.GenerateObjects(mesh, temp);
+            if (generateGatherables)
+            {
+                objectGenerator.GenerateGatherables(mesh, temp);
+            }
         }
     }
 
     public Vector3 getSpawnPoint()
     {
         return pathGenerator.getSpawn();
+    }
+
+    public void ToggleGatherables()
+    {
+        generateGatherables = true;
     }
 
     private void createBorders()
