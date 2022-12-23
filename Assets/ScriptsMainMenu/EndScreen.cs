@@ -26,6 +26,9 @@ namespace ScriptsMainMenu
         {
             // this method needs data from the run and the run configuration which is stored in the ExperimentMetaData
             // TODO get all the data from the run
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+
             ExperimentMetaData.EndTime = DateTime.Now;
             SetGameTime(ExperimentMetaData.StartTime, ExperimentMetaData.EndTime);
             SetDistanceWalked(0);

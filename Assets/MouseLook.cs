@@ -14,7 +14,7 @@ public class MouseLook : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        mouseSenstivity = 1000.0f;
+        mouseSenstivity = 300.0f;
     }
 
     // Update is called once per frame
