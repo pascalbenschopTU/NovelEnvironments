@@ -23,16 +23,17 @@ public class StartingPositionGenerator : MonoBehaviour
     // Start is called before the first frame update
     void OnEnable()
     {
-        if (Settings.index >= Settings.environments.Count)
+        if (ExperimentMetaData.Index >= ExperimentMetaData.Environments.Count)
         {
             Debug.Log("Experiment finished");
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
+            ExperimentMetaData.ExperimentFinished = true;
             SceneManager.LoadScene("MainMenu");
             return;
         }
 
-        environmentConfiguration = Settings.environments[Settings.index];
+        environmentConfiguration = ExperimentMetaData.Environments[ExperimentMetaData.Index];
 
         if (environmentConfiguration == null)
         {
@@ -48,6 +49,7 @@ public class StartingPositionGenerator : MonoBehaviour
 
         // endEnvironmentEvent.AddListener(player.GetComponent<Recorder>().storeRecording);
         Settings.index += 1;
+        ExperimentMetaData.Index += 1;
     }
 
     private void InitializeEnvironments()
@@ -65,20 +67,22 @@ public class StartingPositionGenerator : MonoBehaviour
         player = GameObject.Find("Player");
         setPlayerMiniMap();
         setPlayerFOV();
+        TogglePlayerCamera();
     }
 
     private void setPlayerMiniMap()
     {
-        if (player.transform.Find("Canvas") != null)
+        Transform canvas = player.transform.Find("Canvas");
+        if (canvas != null)
         {
-            GameObject canvas = player.transform.Find("Canvas").gameObject;
+            GameObject minimap = canvas.Find("RawImage").gameObject;
             if (environmentConfiguration.MapConfig == ConfigType.Low)
             {
-                canvas.SetActive(false);
+                minimap.SetActive(false);
             }
             else
             {
-                canvas.SetActive(true);
+                minimap.SetActive(true);
             }
         }
         else
@@ -108,6 +112,23 @@ public class StartingPositionGenerator : MonoBehaviour
         }
     }
 
+    private void TogglePlayerCamera()
+    {
+        PhotoCapture photoCaptureScript = player.GetComponent<PhotoCapture>();
+
+        if (photoCaptureScript != null)
+        {
+            if (environmentConfiguration.CameraTask)
+            {
+                photoCaptureScript.enabled = true;
+            } 
+            else
+            {
+                photoCaptureScript.enabled = false;
+            }
+        }
+    }
+
     private void selectNextEnvironment()
     {
         chosenEnvironment = environments[(int)environmentConfiguration.EnvironmentType];
@@ -132,13 +153,17 @@ public class StartingPositionGenerator : MonoBehaviour
 
     private IEnumerator CountDown()
     {
-        yield return new WaitForSeconds(Settings.time);
+
+//        yield return new WaitForSeconds(Settings.time);
+        yield return new WaitForSeconds(ExperimentMetaData.TimeInEnvironment);
+
         Debug.Log("Ending Environment");
         endEnvironmentEvent.Invoke();
         Queue<ReplayData> rq = player.GetComponent<Recorder>().recordingQueue;
         Debug.Log("Recording Queue Size: " + rq.Count);
         // player.GetComponent<SqliteLogging>().storeUserPositionQueue(11, 11, rq);
         player.GetComponent<SqliteLogging>().getUserPosition(11, 11);
+
         Debug.Log("Time has run out!");
         SceneManager.LoadScene("DefaultScene");
     }

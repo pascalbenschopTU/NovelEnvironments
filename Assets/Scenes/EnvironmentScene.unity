@@ -401,7 +401,6 @@ MonoBehaviour:
   scale: 100
   octaves: 5
   lacunarity: 2
-  seed: 450
   gradient:
     serializedVersion: 2
     key0: {r: 0, g: 0.9622642, b: 0.9622642, a: 1}
@@ -450,7 +449,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &355603887
 AudioSource:
@@ -590,7 +589,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &481062164
 GameObject:
@@ -794,7 +793,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 71.771, y: -7.314, z: -639.397}
 --- !u!114 &705507996
 MonoBehaviour:
@@ -882,7 +881,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &963194225
 GameObject:
@@ -1048,7 +1047,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1117622806
 MonoBehaviour:
@@ -1104,7 +1103,6 @@ MonoBehaviour:
   scale: 100
   octaves: 5
   lacunarity: 1
-  seed: 450
   gradient:
     serializedVersion: 2
     key0: {r: 1, g: 1, b: 1, a: 1}
@@ -1384,6 +1382,63 @@ Transform:
   m_Father: {fileID: 1582923930}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1342346377
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1417411106231021673, guid: a474f5538f883a841b470d5aa4c2f80a, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1417411106231021673, guid: a474f5538f883a841b470d5aa4c2f80a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1417411106231021673, guid: a474f5538f883a841b470d5aa4c2f80a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1417411106231021673, guid: a474f5538f883a841b470d5aa4c2f80a, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1417411106231021673, guid: a474f5538f883a841b470d5aa4c2f80a, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1417411106231021673, guid: a474f5538f883a841b470d5aa4c2f80a, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1417411106231021673, guid: a474f5538f883a841b470d5aa4c2f80a, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1417411106231021673, guid: a474f5538f883a841b470d5aa4c2f80a, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1417411106231021673, guid: a474f5538f883a841b470d5aa4c2f80a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1417411106231021673, guid: a474f5538f883a841b470d5aa4c2f80a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1417411106231021673, guid: a474f5538f883a841b470d5aa4c2f80a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1417411106231021675, guid: a474f5538f883a841b470d5aa4c2f80a, type: 3}
+      propertyPath: m_Name
+      value: PauseMenu (1)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a474f5538f883a841b470d5aa4c2f80a, type: 3}
 --- !u!1 &1355761736
 GameObject:
   m_ObjectHideFlags: 0
@@ -1461,7 +1516,6 @@ MonoBehaviour:
   scale: 100
   octaves: 5
   lacunarity: 1
-  seed: 450
   gradient:
     serializedVersion: 2
     key0: {r: 0.9716981, g: 0.8701988, b: 0, a: 1}
@@ -1510,7 +1564,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &1355761739
 AudioSource:
@@ -1740,7 +1794,7 @@ Transform:
   - {fileID: 481062168}
   - {fileID: 224483634}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1582923931
 MonoBehaviour:
@@ -2148,7 +2202,6 @@ MonoBehaviour:
   scale: 100
   octaves: 5
   lacunarity: 1
-  seed: 450
   gradient:
     serializedVersion: 2
     key0: {r: 0.5058824, g: 0.49411765, b: 0.4745098, a: 1}
@@ -2197,7 +2250,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &1939442655
 AudioSource:
