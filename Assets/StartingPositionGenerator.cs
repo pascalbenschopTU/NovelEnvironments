@@ -41,7 +41,7 @@ public class StartingPositionGenerator : MonoBehaviour
         InitializePlayer();
         InitializeEnvironments();
         
-        selectNextEnvironment();
+        SelectNextEnvironment();
         StartTimer();
 
         ExperimentMetaData.Index += 1;
@@ -60,12 +60,12 @@ public class StartingPositionGenerator : MonoBehaviour
     private void InitializePlayer()
     {
         player = GameObject.Find("Player");
-        setPlayerMiniMap();
-        setPlayerFOV();
+        SetPlayerMiniMap();
+        SetPlayerFOV();
         TogglePlayerCamera();
     }
 
-    private void setPlayerMiniMap()
+    private void SetPlayerMiniMap()
     {
         Transform canvas = player.transform.Find("Canvas");
         if (canvas != null)
@@ -86,7 +86,7 @@ public class StartingPositionGenerator : MonoBehaviour
         }
     }
 
-    private void setPlayerFOV()
+    private void SetPlayerFOV()
     {
         if (player.transform.Find("Main Camera") != null)
         {
@@ -124,16 +124,38 @@ public class StartingPositionGenerator : MonoBehaviour
         }
     }
 
-    private void selectNextEnvironment()
+    private void SelectNextEnvironment()
     {
         chosenEnvironment = environments[(int)environmentConfiguration.EnvironmentType];
 
+        
+
         script = chosenEnvironment.GetComponent<EnvironmentGenerator>();
         script.objectAmount = environmentConfiguration.GetNumberObjectsConfigValue();
+
+        ToggleForaging();
+
         script.createNewEnvironment();
 
+        
+        TeleportPlayer();
+    }
+
+    private void ToggleForaging()
+    {
+        if (environmentConfiguration.PickupTask)
+        {
+            photoCaptureScript.enabled = true;
+        }
+        else
+        {
+            photoCaptureScript.enabled = false;
+        }
+    }
+
+    private void TeleportPlayer()
+    {
         startingPosition = script.getSpawnPoint();
-        System.Console.WriteLine("startingPosition: {0}", startingPosition);
 
         CharacterController cc = player.GetComponent<CharacterController>();
         cc.enabled = false;
