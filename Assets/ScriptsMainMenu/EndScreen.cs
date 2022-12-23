@@ -75,7 +75,11 @@ namespace ScriptsMainMenu
             if (taskActive)
             {
                 ResultsPicturesTakenObject.SetActive(true);
-                ResultsPicturesTaken.text = $"{value}";
+
+                int participant_id = ExperimentMetaData.ParticipantNumber;
+                object count = gameObject.GetComponent<SqliteLogging>().getCountPictureByUserInEnvironment(participant_id);
+
+                ResultsPicturesTaken.text = $"{count}";
             }
             else
             {

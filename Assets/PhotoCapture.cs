@@ -116,6 +116,36 @@ public class PhotoCapture : MonoBehaviour
         {
             Directory.CreateDirectory(dirPath);
         }
-        File.WriteAllBytes(dirPath + System.DateTime.Now.ToString("yyyy/MM/dd_HH-mm-ss") + ".png", bytes);
+
+        string path = dirPath + System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss") + ".png";
+        File.WriteAllBytes(path, bytes);
+
+        storePictureInDB(path);
+    }
+
+    private void storePictureInDB(string filepath) {
+        int participant_id = ExperimentMetaData.ParticipantNumber;
+        
+        int index = ExperimentMetaData.Index;
+
+        EnvironmentConfiguration environmentConfiguration = null;
+
+        if(index > 0) {
+            environmentConfiguration = ExperimentMetaData.Environments[index-1];
+        }
+        else {
+            return;
+        }
+
+        if(environmentConfiguration != null) 
+        {
+            int environment_id = (int)ExperimentMetaData.Environments[index-1].EnvironmentType;
+            player.GetComponent<SqliteLogging>().storePicture(participant_id, environment_id, filepath);
+        }
+        else 
+        {
+            Debug.Log("Cannot Take Picture rn");
+            return;
+        }
     }
 }

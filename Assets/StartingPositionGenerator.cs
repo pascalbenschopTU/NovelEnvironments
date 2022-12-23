@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 
 public class StartingPositionGenerator : MonoBehaviour
 {
@@ -16,6 +17,8 @@ public class StartingPositionGenerator : MonoBehaviour
     private Vector3 startingPosition;
 
     private EnvironmentGenerator script;
+
+    UnityEvent endEnvironmentEvent = new UnityEvent();
 
     // Start is called before the first frame update
     void OnEnable()
@@ -44,7 +47,18 @@ public class StartingPositionGenerator : MonoBehaviour
         selectNextEnvironment();
         StartTimer();
 
+        // endEnvironmentEvent.AddListener(player.GetComponent<Recorder>().storeRecording);
         ExperimentMetaData.Index += 1;
+
+        storeParticipantAndEnvironment();
+    }
+
+    private void storeParticipantAndEnvironment() {
+        int participant_id = ExperimentMetaData.ParticipantNumber;
+        int environment_id = (int)environmentConfiguration.EnvironmentType;
+
+        player.GetComponent<SqliteLogging>().createUserEnvironment(participant_id, environment_id);
+
     }
 
     private void InitializeEnvironments()
@@ -133,7 +147,7 @@ public class StartingPositionGenerator : MonoBehaviour
         script.createNewEnvironment();
 
         startingPosition = script.getSpawnPoint();
-        System.Console.WriteLine("startingPosition: {0}", startingPosition);
+        // startingPosition = script.getMeshStartingVertex() + new Vector3(0.0f, 1.0f, 0.0f);
 
         CharacterController cc = player.GetComponent<CharacterController>();
         cc.enabled = false;
@@ -148,8 +162,22 @@ public class StartingPositionGenerator : MonoBehaviour
 
     private IEnumerator CountDown()
     {
+
+//        yield return new WaitForSeconds(Settings.time);
         yield return new WaitForSeconds(ExperimentMetaData.TimeInEnvironment);
+
+        Debug.Log("Ending Environment");
+        endEnvironmentEvent.Invoke();
+        Queue<ReplayData> rq = player.GetComponent<Recorder>().recordingQueue;
+        Debug.Log("Recording Queue Size: " + rq.Count);
+        // player.GetComponent<SqliteLogging>().storeUserPositionQueue(11, 11, rq);
+        // player.GetComponent<SqliteLogging>().getCountPictureByUserInEnvironment(66);
+
         Debug.Log("Time has run out!");
         SceneManager.LoadScene("DefaultScene");
+    }
+
+    public GameObject getChosenEnv() {
+        return this.chosenEnvironment;
     }
 }
