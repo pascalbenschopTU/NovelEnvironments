@@ -59,9 +59,9 @@ public class PlayerMovement : MonoBehaviour
         if((recorder != null) && (scene.name != "DefaultScene")) 
         {
             recorder.recordReplayFrame(data);
-            
-            player.GetComponent<Sqlite_test>().storeUserPosition(11, 11, data, recording_step);
-            player.GetComponent<Sqlite_test>().storeUserRotation(11, 11, data, recording_step);
+
+            player.GetComponent<SqliteLogging>().storeUserPosition(11, 11, data, recording_step);
+            player.GetComponent<SqliteLogging>().storeUserRotation(11, 11, data, recording_step);
 
             recording_step++;
         }
