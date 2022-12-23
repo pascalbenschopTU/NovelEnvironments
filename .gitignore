@@ -17,6 +17,9 @@
 /Assets/44.1 General Library (Free Sample Pack)
 /Assets/Nature Sound FX/
 /Assets/Plugins/
+/Assets/experiment_log.db
+/Assets/experiment_log.db-journal.meta
+
 
 !/Assets/Plugins/sqlite3.def
 !/Assets/Plugins/sqlite3.dll
