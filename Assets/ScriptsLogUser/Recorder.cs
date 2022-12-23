@@ -30,15 +30,15 @@ public class Recorder : MonoBehaviour
         // using var writer = new StreamWriter(path);
         using (StreamWriter writer = new StreamWriter(path))
         {
-            if(Settings.index != null)
-            {
-                int index = Settings.index;
-                List<EnvironmentConfiguration> environments = Settings.environments;
-                if (environments.Count > 0) {
-                    EnvironmentConfiguration environment_config = environments[index];
-                    writer.WriteLine(environment_config.ToString());
-                }
-            }
+            //if(Settings.index != null)
+            //{
+            //    int index = Settings.index;
+            //    List<EnvironmentConfiguration> environments = Settings.environments;
+            //    if (environments.Count > 0) {
+            //        EnvironmentConfiguration environment_config = environments[index];
+            //        writer.WriteLine(environment_config.ToString());
+            //    }
+            //}
             // EnvironmentGenerator env_generator = environment.GetComponent<EnvironmentGenerator>();
 
             foreach (ReplayData data in recordingQueue)
