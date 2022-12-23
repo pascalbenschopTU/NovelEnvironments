@@ -12,6 +12,7 @@ public class EnvironmentGenerator : MonoBehaviour
 
     public GameObject[] objects;
     public GameObject[] landmarks;
+    public GameObject gatherable;
 
     public string meshTag;
 
@@ -51,7 +52,7 @@ public class EnvironmentGenerator : MonoBehaviour
         pathGenerator = gameObject.AddComponent<PathGenerator>();
         pathGenerator.Initialize(layer, landmarks, seed, terrainMaterial);
         objectGenerator = gameObject.AddComponent<ObjectGenerator>();
-        objectGenerator.Initialize(layer, objects, seed, objectAmount);
+        objectGenerator.Initialize(layer, objects, seed, objectAmount, gatherable);
         Debug.Log(gameObject.tag);
 
         switch(gameObject.tag)

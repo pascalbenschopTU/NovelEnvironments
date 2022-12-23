@@ -97,10 +97,8 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 112000000, guid: 079ce2a9ad4a82842a15d99dc8cd928e,
-    type: 2}
-  m_LightingSettings: {fileID: 4890085278179872738, guid: 2694a7e60111a9e419050d7fc3a698c5,
-    type: 2}
+  m_LightingDataAsset: {fileID: 112000000, guid: 079ce2a9ad4a82842a15d99dc8cd928e, type: 2}
+  m_LightingSettings: {fileID: 4890085278179872738, guid: 2694a7e60111a9e419050d7fc3a698c5, type: 2}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -234,6 +232,7 @@ GameObject:
   - component: {fileID: 224483633}
   - component: {fileID: 224483632}
   - component: {fileID: 224483631}
+  - component: {fileID: 224483635}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -323,6 +322,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &224483635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 224483630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ac7704a0e5718d499876d26e6f678c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &355603884
 GameObject:
   m_ObjectHideFlags: 0
@@ -371,6 +382,7 @@ MonoBehaviour:
   landmarks:
   - {fileID: 919132149155446097, guid: 0649b321e494e5c48a13c5a8bdec8a54, type: 3}
   - {fileID: 3377046667944978610, guid: 10d94be75d500154c8747f2417d28ba0, type: 3}
+  gatherable: {fileID: 150698, guid: f4c62b1a746281e44800c9250dd3643c, type: 3}
   meshTag: GrassFloor
   objectAmount: 50
   terrainMaterial: {fileID: 2100000, guid: 1b20a390d157f314e8b9bb5dcd9a8c00, type: 2}
@@ -403,7 +415,6 @@ MonoBehaviour:
   scale: 100
   octaves: 5
   lacunarity: 2
-  seed: 450
   gradient:
     serializedVersion: 2
     key0: {r: 0, g: 0.9622642, b: 0.9622642, a: 1}
@@ -579,7 +590,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0467ec0ee33170743a940f72499c5921, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  time: 10
 --- !u!4 &361438522
 Transform:
   m_ObjectHideFlags: 0
@@ -1075,6 +1085,7 @@ MonoBehaviour:
   - {fileID: 1879388732584624, guid: ba2b67dbc790eb74f8a401c592dd619f, type: 3}
   - {fileID: 1004710975425532, guid: c0aa33e678586aa43a1a9254fdfdfb4d, type: 3}
   landmarks: []
+  gatherable: {fileID: 0}
   meshTag: SnowFloor
   objectAmount: 20
   terrainMaterial: {fileID: 2100000, guid: 1b20a390d157f314e8b9bb5dcd9a8c00, type: 2}
@@ -1107,7 +1118,6 @@ MonoBehaviour:
   scale: 100
   octaves: 5
   lacunarity: 1
-  seed: 450
   gradient:
     serializedVersion: 2
     key0: {r: 1, g: 1, b: 1, a: 1}
@@ -1315,6 +1325,7 @@ MonoBehaviour:
   - {fileID: 1721112587459618, guid: 2ed80e4af24778742a16837f6b64d172, type: 3}
   - {fileID: 1065655044243356, guid: 20f64b4081161ef43b320aa975519fdc, type: 3}
   landmarks: []
+  gatherable: {fileID: 0}
   meshTag: SandFloor
   objectAmount: 10
   terrainMaterial: {fileID: 2100000, guid: 1b20a390d157f314e8b9bb5dcd9a8c00, type: 2}
@@ -1347,7 +1358,6 @@ MonoBehaviour:
   scale: 100
   octaves: 5
   lacunarity: 1
-  seed: 450
   gradient:
     serializedVersion: 2
     key0: {r: 0.9716981, g: 0.8701988, b: 0, a: 1}
@@ -1580,6 +1590,7 @@ GameObject:
   - component: {fileID: 1582923931}
   - component: {fileID: 1582923932}
   - component: {fileID: 1582923933}
+  - component: {fileID: 1582923934}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1799,6 +1810,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerCamera: {fileID: 963194225}
   target: {fileID: 0}
+--- !u!114 &1582923934
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1582923928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ac7704a0e5718d499876d26e6f678c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1939442652
 GameObject:
   m_ObjectHideFlags: 0
@@ -1848,6 +1871,7 @@ MonoBehaviour:
   - {fileID: 1273699440398734, guid: 3959f9b79ac88ac4d8690e7e6c7e3ded, type: 3}
   - {fileID: 1844933204605362, guid: 16784d6fbb71942438b159522cd5d5c3, type: 3}
   landmarks: []
+  gatherable: {fileID: 0}
   meshTag: ConcreteFloor
   objectAmount: 5
   terrainMaterial: {fileID: 2100000, guid: 1b20a390d157f314e8b9bb5dcd9a8c00, type: 2}
@@ -1880,7 +1904,6 @@ MonoBehaviour:
   scale: 100
   octaves: 5
   lacunarity: 1
-  seed: 450
   gradient:
     serializedVersion: 2
     key0: {r: 0.5058824, g: 0.49411765, b: 0.4745098, a: 1}

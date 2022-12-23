@@ -6,15 +6,17 @@ public class ObjectGenerator : MonoBehaviour
 {
     private string layer;
     private GameObject[] objects;
+    private GameObject gatherable;
     private int seed;
     private int amount;
     
-    public void Initialize(string layer, GameObject[] objects, int seed, int amount)
+    public void Initialize(string layer, GameObject[] objects, int seed, int amount, GameObject gatherable)
     {
         this.layer = layer;
         this.objects = objects;
         this.seed = seed;
         this.amount = amount;
+        this.gatherable = gatherable;
     }
 
     public void GenerateObjects(Mesh mesh, GameObject temp)
@@ -35,6 +37,20 @@ public class ObjectGenerator : MonoBehaviour
                     objectToSpawn.layer = LayerMask.NameToLayer(layer);
                     Instantiate(objectToSpawn, vertice, Quaternion.identity);
                 }
+            }
+        }
+
+        for (int i = 0; i < 3; i++){
+            int vertIndex = prng.Next(0, mesh.vertices.Length);
+            Vector3 vert = mesh.vertices[vertIndex];
+
+            if ((vert.x > startingPosition.x+5 || vert.x < startingPosition.x-5) && (vert.z > startingPosition.z+5 || vert.z < startingPosition.z-5))
+            {
+                GameObject gatherableCopy = gatherable;
+                gatherableCopy.layer = LayerMask.NameToLayer(layer);
+                gatherableCopy.transform.localScale = new Vector3(4, 4, 4);
+                gatherableCopy.tag = "Gather";
+                Instantiate(gatherableCopy, vert, Quaternion.identity);
             }
         }
     }
