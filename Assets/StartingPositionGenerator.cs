@@ -142,9 +142,19 @@ public class StartingPositionGenerator : MonoBehaviour
     {
         if (environmentConfiguration.PickupTask)
         {
+            player.AddComponent<Highlight>();
+
             GameObject bush = (GameObject)Resources.Load("P_Bush03", typeof(GameObject));
-            Debug.Log(bush);
-            script.AddObjectsToEnvironment(bush, ExperimentMetaData.ForagingAmount);
+            if (bush != null)
+            {
+                string layer = "Forageable";
+                script.AddObjectsToEnvironment(layer, bush, ExperimentMetaData.ForagingAmount);
+            } 
+            else
+            {
+                Debug.LogWarning("Foraging bush not found!");
+            }
+            
         }
     }
 

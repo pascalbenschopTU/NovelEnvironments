@@ -32,10 +32,21 @@ public class ObjectGenerator : MonoBehaviour
                 if ((vertice.x > startingPosition.x+5 || vertice.x < startingPosition.x-5) && (vertice.z > startingPosition.z+5 || vertice.z < startingPosition.z-5))
                 {
                     GameObject objectToSpawn = objects[i];
-                    objectToSpawn.layer = LayerMask.NameToLayer(layer);
+                    SetLayerOfGameObject(objectToSpawn, LayerMask.NameToLayer(layer));
                     Instantiate(objectToSpawn, vertice, Quaternion.identity);
                 }
             }
+        }
+    }
+
+
+    private void SetLayerOfGameObject(GameObject obj, LayerMask layer)
+    {
+        obj.layer = layer;
+
+        foreach (Transform trans in obj.GetComponentsInChildren<Transform>(true))
+        {
+            trans.gameObject.layer = layer;
         }
     }
 }

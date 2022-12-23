@@ -109,7 +109,7 @@ public class EnvironmentGenerator : MonoBehaviour
         return pathGenerator.getSpawn();
     }
 
-    public void AddObjectsToEnvironment(GameObject gameObject, int objectAmount)
+    public void AddObjectsToEnvironment(string layer, GameObject gameObject, int objectAmount)
     {
         GameObject[] newObjects = new GameObject[] { gameObject };
         objectGenerator.Initialize(layer, newObjects, seed + 1, objectAmount);
