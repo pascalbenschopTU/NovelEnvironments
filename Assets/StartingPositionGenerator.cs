@@ -148,7 +148,6 @@ public class StartingPositionGenerator : MonoBehaviour
         script.createNewEnvironment();
 
         startingPosition = script.getSpawnPoint();
-        // startingPosition = script.getMeshStartingVertex() + new Vector3(0.0f, 1.0f, 0.0f);
 
         CharacterController cc = player.GetComponent<CharacterController>();
         cc.enabled = false;
