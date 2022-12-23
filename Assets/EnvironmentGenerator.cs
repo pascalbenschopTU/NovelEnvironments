@@ -31,7 +31,9 @@ public class EnvironmentGenerator : MonoBehaviour
     public Gradient gradient;
 
     public int size = 400;
-    
+
+    private int seed = 0;
+    private GameObject objectHolder;
 
     private Mesh[] meshes;
     private int index = 0;
@@ -44,7 +46,7 @@ public class EnvironmentGenerator : MonoBehaviour
 
     public void Initialize()
     {
-        int seed = ExperimentMetaData.Seed;
+        seed = ExperimentMetaData.Seed;
 
         meshGenerator = gameObject.AddComponent<MeshGenerator>();
         meshGenerator.Initialize(layer, objects, landmarks, terrainMaterial, heightCurve, scale, octaves, lacunarity, seed, gradient);
@@ -93,18 +95,28 @@ public class EnvironmentGenerator : MonoBehaviour
         pathGenerator.GeneratePaths(meshes);
         pathGenerator.GenerateLandmarks(meshes);
 
-        GameObject temp = new GameObject("EnvironmentObjects");
-        temp.transform.parent = transform;
+        objectHolder = new GameObject("EnvironmentObjects");
+        objectHolder.transform.parent = transform;
 
         foreach(Mesh mesh in meshes)
         {
-            objectGenerator.GenerateObjects(mesh, temp);
+            objectGenerator.GenerateObjects(mesh, objectHolder);
         }
     }
 
     public Vector3 getSpawnPoint()
     {
         return pathGenerator.getSpawn();
+    }
+
+    public void AddObjectsToEnvironment(GameObject gameObject, int objectAmount)
+    {
+        GameObject[] newObjects = new GameObject[] { gameObject };
+        objectGenerator.Initialize(layer, newObjects, seed + 1, objectAmount);
+        foreach (Mesh mesh in meshes)
+        {
+            objectGenerator.GenerateObjects(mesh, objectHolder);
+        }
     }
 
     private void createBorders()

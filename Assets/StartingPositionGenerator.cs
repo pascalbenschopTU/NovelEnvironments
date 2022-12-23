@@ -132,12 +132,9 @@ public class StartingPositionGenerator : MonoBehaviour
 
         script = chosenEnvironment.GetComponent<EnvironmentGenerator>();
         script.objectAmount = environmentConfiguration.GetNumberObjectsConfigValue();
-
-        ToggleForaging();
-
         script.createNewEnvironment();
 
-        
+        ToggleForaging();
         TeleportPlayer();
     }
 
@@ -145,11 +142,9 @@ public class StartingPositionGenerator : MonoBehaviour
     {
         if (environmentConfiguration.PickupTask)
         {
-            photoCaptureScript.enabled = true;
-        }
-        else
-        {
-            photoCaptureScript.enabled = false;
+            GameObject bush = (GameObject)Resources.Load("P_Bush03", typeof(GameObject));
+            Debug.Log(bush);
+            script.AddObjectsToEnvironment(bush, ExperimentMetaData.ForagingAmount);
         }
     }
 
