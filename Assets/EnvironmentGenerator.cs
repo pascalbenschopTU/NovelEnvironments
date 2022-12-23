@@ -32,7 +32,8 @@ public class EnvironmentGenerator : MonoBehaviour
     public Gradient gradient;
 
     public int size = 400;
-    
+
+    private bool generateGatherables = false;
 
     private Mesh[] meshes;
     private int index = 0;
@@ -100,13 +101,21 @@ public class EnvironmentGenerator : MonoBehaviour
         foreach(Mesh mesh in meshes)
         {
             objectGenerator.GenerateObjects(mesh, temp);
-            objectGenerator.GenerateGatherables(mesh, temp);
+            if (generateGatherables)
+            {
+                objectGenerator.GenerateGatherables(mesh, temp);
+            }
         }
     }
 
     public Vector3 getSpawnPoint()
     {
         return pathGenerator.getSpawn();
+    }
+
+    public void ToggleGatherables()
+    {
+        generateGatherables = true;
     }
 
     private void createBorders()

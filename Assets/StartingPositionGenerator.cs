@@ -110,6 +110,7 @@ public class StartingPositionGenerator : MonoBehaviour
 
         script = chosenEnvironment.GetComponent<EnvironmentGenerator>();
         script.objectAmount = environmentConfiguration.GetNumberObjectsConfigValue();
+        ToggleGathering();
         script.createNewEnvironment();
 
         startingPosition = script.getSpawnPoint();
@@ -119,6 +120,15 @@ public class StartingPositionGenerator : MonoBehaviour
         cc.enabled = false;
         player.transform.SetPositionAndRotation(startingPosition, Quaternion.identity);
         cc.enabled = true;
+    }
+
+    private void ToggleGathering()
+    {
+        if (environmentConfiguration.PickupTask)
+        {
+            player.AddComponent<Gathering>();
+            script.ToggleGatherables();
+        }
     }
 
     private void StartTimer()
