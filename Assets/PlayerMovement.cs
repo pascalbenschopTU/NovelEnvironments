@@ -44,6 +44,9 @@ public class PlayerMovement : MonoBehaviour
         int index = ExperimentMetaData.Index;
         if(index > 0) {
             environmentConfiguration = ExperimentMetaData.Environments[index-1];
+        } else
+        {
+            environmentConfiguration = ExperimentMetaData.Environments[0];
         }
         recorder = GetComponent<Recorder>();
         recording_step = 0;
