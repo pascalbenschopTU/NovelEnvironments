@@ -327,4 +327,38 @@ public class SqliteLogging : MonoBehaviour
         dbConnection.Close();
         dbConnection = null;   
     }
+
+    public object getCountPictureByUserInEnvironment(int participant_id) { //, int environment_id
+        string path_to_db = "URI=file:" + Application.dataPath + "/experiment_log.db";
+
+        IDbConnection dbConnection = new SqliteConnection(path_to_db); 
+        dbConnection.Open();
+
+
+        IDbCommand dbCommandStoreUserAndEnvironment = dbConnection.CreateCommand();
+        // Debug.Log("SELECT COUNT(*) FROM Pictures WHERE participant_id='" + participant_id + "' AND environment_id='" + environment_id + "'");
+        dbCommandStoreUserAndEnvironment.CommandText = "SELECT COUNT(*) FROM Pictures WHERE participant_id='" + participant_id + "'"; //"' AND environment_id='" + environment_id +
+        IDataReader reader = dbCommandStoreUserAndEnvironment.ExecuteReader();
+
+        object[] dataRow = new object[reader.FieldCount];        
+        object count = 0;
+        while (reader.Read()) {
+
+
+            int cols = reader.GetValues(dataRow);
+            count = dataRow[0];
+        }
+        Debug.Log(count);
+        reader.Close();
+
+        reader.Close();
+
+        dbConnection.Close();
+        dbConnection = null;
+
+
+
+        Debug.Log("User: " + participant_id + " has taken " + count + " pictures");       
+        return count;
+    }
 }

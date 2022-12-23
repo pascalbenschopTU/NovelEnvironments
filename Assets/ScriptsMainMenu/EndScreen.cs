@@ -75,6 +75,10 @@ namespace ScriptsMainMenu
             if (taskActive)
             {
                 ResultsPicturesTakenObject.SetActive(true);
+
+                // GameObject player = GameObject.Find("Player");
+                // player.GetComponent<SqliteLogging>().getCountPictureByUserInEnvironment(66);
+
                 ResultsPicturesTaken.text = $"{value}";
             }
             else
