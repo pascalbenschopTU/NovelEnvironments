@@ -52,15 +52,28 @@ public class SqliteLogging : MonoBehaviour
         // return dbConnection;
     }
 
-    public void createUserEnvironment(int user_id, int experiment_id) {
+    public void createUserEnvironment(int participant_id, int experiment_id) {
         string path_to_db = "URI=file:" + Application.dataPath + "/experiment_log.db";
-        Debug.Log("Database: Storing user id: " + user_id + " and environment id: " + experiment_id);
+        Debug.Log("Database: Storing user id: " + participant_id + " and environment id: " + experiment_id);
 
         IDbConnection dbConnection = new SqliteConnection(path_to_db); 
         dbConnection.Open();
 
         IDbCommand dbCommandStoreUserAndEnvironment = dbConnection.CreateCommand();
-        dbCommandStoreUserAndEnvironment.CommandText = "INSERT INTO EndUser (participant_id ,experiment_id) VALUES(" + user_id + ", " + experiment_id + ")";
+
+        IDbDataParameter param1 = dbCommandStoreUserAndEnvironment.CreateParameter();
+        IDbDataParameter param2 = dbCommandStoreUserAndEnvironment.CreateParameter();
+
+        param1.ParameterName = "@v1";
+        param1.Value = participant_id;
+
+        param2.ParameterName = "@v2";
+        param2.Value = experiment_id;
+
+        dbCommandStoreUserAndEnvironment.Parameters.Add(param1);
+        dbCommandStoreUserAndEnvironment.Parameters.Add(param2);
+
+        dbCommandStoreUserAndEnvironment.CommandText = "INSERT INTO EndUser (participant_id ,experiment_id) VALUES(@v1, @v2)";
         IDataReader reader = dbCommandStoreUserAndEnvironment.ExecuteReader();
 
         reader.Close();
@@ -73,7 +86,7 @@ public class SqliteLogging : MonoBehaviour
 
     public void storeUserPositionQueue(int user_id, int experiment_id, Queue<ReplayData> recordingQueue) {
         string path_to_db = "URI=file:" + Application.dataPath + "/experiment_log.db";
-        Debug.Log("Database: Storing user id: " + user_id + " and environment id: " + experiment_id);
+        // Debug.Log("Database: Storing user id: " + user_id + " and environment id: " + experiment_id);
 
         
         IDbConnection dbConnection = new SqliteConnection(path_to_db); 
@@ -84,7 +97,38 @@ public class SqliteLogging : MonoBehaviour
 
 
             IDbCommand dbCommandStoreUserAndEnvironment = dbConnection.CreateCommand();
-            dbCommandStoreUserAndEnvironment.CommandText = "INSERT INTO Positions (experiment_id, position_x, position_y, position_z, i) VALUES(" + experiment_id + ", " + data.position.x + ", " + data.position.y + ", " + data.position.z + ", " + i + ")";
+
+
+            IDbDataParameter param1 = dbCommandStoreUserAndEnvironment.CreateParameter();
+            IDbDataParameter param2 = dbCommandStoreUserAndEnvironment.CreateParameter();
+            IDbDataParameter param3 = dbCommandStoreUserAndEnvironment.CreateParameter();
+            IDbDataParameter param4 = dbCommandStoreUserAndEnvironment.CreateParameter();
+            IDbDataParameter param5 = dbCommandStoreUserAndEnvironment.CreateParameter();
+
+            param1.ParameterName = "@v1";
+            param1.Value = experiment_id;
+
+            param2.ParameterName = "@v2";
+            param2.Value = data.position.x;
+
+            param3.ParameterName = "@v3";
+            param3.Value = data.position.y;
+
+            param4.ParameterName = "@v4";
+            param4.Value = data.position.z;
+
+            param5.ParameterName = "@v5";
+            param5.Value = i;
+
+            dbCommandStoreUserAndEnvironment.Parameters.Add(param1);
+            dbCommandStoreUserAndEnvironment.Parameters.Add(param2);
+            dbCommandStoreUserAndEnvironment.Parameters.Add(param3);
+            dbCommandStoreUserAndEnvironment.Parameters.Add(param4);
+            dbCommandStoreUserAndEnvironment.Parameters.Add(param5);
+
+            dbCommandStoreUserAndEnvironment.CommandText = "INSERT INTO Positions (experiment_id, position_x, position_y, position_z, i) VALUES(@v1, @v2, @v3, @v4, @v5)";
+            // " + experiment_id + ", " + data.position.x + ", " + data.position.y + ", " + data.position.z + ", " + i + "
+
             IDataReader reader = dbCommandStoreUserAndEnvironment.ExecuteReader();
 
             reader.Close();
@@ -101,7 +145,7 @@ public class SqliteLogging : MonoBehaviour
         
     }
 
-    public void storeUserPosition(int user_id, int experiment_id, ReplayData data, int index) {
+    public void storeUserPosition(int user_id, int experiment_id, ReplayData data, int i) {
         string path_to_db = "URI=file:" + Application.dataPath + "/experiment_log.db";
         // Debug.Log("Database: Storing position of user : " + user_id + " and environment id: " + experiment_id);
 
@@ -109,9 +153,39 @@ public class SqliteLogging : MonoBehaviour
         IDbConnection dbConnection = new SqliteConnection(path_to_db); 
         dbConnection.Open();
 
-
         IDbCommand dbCommandStoreUserAndEnvironment = dbConnection.CreateCommand();
-        dbCommandStoreUserAndEnvironment.CommandText = "INSERT INTO Positions (experiment_id, position_x, position_y, position_z, i) VALUES(" + experiment_id + ", " + data.position.x + ", " + data.position.y + ", " + data.position.z + ", " + index + ")";
+
+        IDbDataParameter param1 = dbCommandStoreUserAndEnvironment.CreateParameter();
+        IDbDataParameter param2 = dbCommandStoreUserAndEnvironment.CreateParameter();
+        IDbDataParameter param3 = dbCommandStoreUserAndEnvironment.CreateParameter();
+        IDbDataParameter param4 = dbCommandStoreUserAndEnvironment.CreateParameter();
+        IDbDataParameter param5 = dbCommandStoreUserAndEnvironment.CreateParameter();
+
+        param1.ParameterName = "@v1";
+        param1.Value = experiment_id;
+
+        param2.ParameterName = "@v2";
+        param2.Value = data.position.x;
+
+        param3.ParameterName = "@v3";
+        param3.Value = data.position.y;
+
+        param4.ParameterName = "@v4";
+        param4.Value = data.position.z;
+
+        param5.ParameterName = "@v5";
+        param5.Value = i;
+
+        dbCommandStoreUserAndEnvironment.Parameters.Add(param1);
+        dbCommandStoreUserAndEnvironment.Parameters.Add(param2);
+        dbCommandStoreUserAndEnvironment.Parameters.Add(param3);
+        dbCommandStoreUserAndEnvironment.Parameters.Add(param4);
+        dbCommandStoreUserAndEnvironment.Parameters.Add(param5);
+
+        // dbCommandStoreUserAndEnvironment.CommandText = "INSERT INTO Positions (experiment_id, position_x, position_y, position_z, i) VALUES(" + experiment_id + ", " + data.position.x + ", " + data.position.y + ", " + data.position.z + ", " + i + ")";
+        dbCommandStoreUserAndEnvironment.CommandText = "INSERT INTO Positions (experiment_id, position_x, position_y, position_z, i) VALUES(@v1, @v2, @v3, @v4, @v5)";
+        // " + experiment_id + ", " + data.position.x + ", " + data.position.y + ", " + data.position.z + ", " + i + "
+
         IDataReader reader = dbCommandStoreUserAndEnvironment.ExecuteReader();
 
         reader.Close();
@@ -136,7 +210,43 @@ public class SqliteLogging : MonoBehaviour
 
 
         IDbCommand dbCommandStoreUserAndEnvironment = dbConnection.CreateCommand();
-        dbCommandStoreUserAndEnvironment.CommandText = "INSERT INTO Rotations (experiment_id, w, x, y, z, i) VALUES(" + experiment_id + ", " + data.rotation.w+ ", " + data.rotation.x + ", " + data.rotation.y + ", " + data.rotation.z + ", " + i + ")";
+
+
+        IDbDataParameter param1 = dbCommandStoreUserAndEnvironment.CreateParameter();
+        IDbDataParameter param2 = dbCommandStoreUserAndEnvironment.CreateParameter();
+        IDbDataParameter param3 = dbCommandStoreUserAndEnvironment.CreateParameter();
+        IDbDataParameter param4 = dbCommandStoreUserAndEnvironment.CreateParameter();
+        IDbDataParameter param5 = dbCommandStoreUserAndEnvironment.CreateParameter();
+        IDbDataParameter param6 = dbCommandStoreUserAndEnvironment.CreateParameter();
+
+
+        param1.ParameterName = "@v1";
+        param1.Value = experiment_id;
+
+        param2.ParameterName = "@v2";
+        param2.Value = data.rotation.w;
+
+        param3.ParameterName = "@v3";
+        param3.Value = data.rotation.x;
+
+        param4.ParameterName = "@v4";
+        param4.Value = data.rotation.y;
+
+        param5.ParameterName = "@v5";
+        param5.Value = data.rotation.z;
+
+        param6.ParameterName = "@v6";
+        param6.Value = i;
+
+        dbCommandStoreUserAndEnvironment.Parameters.Add(param1);
+        dbCommandStoreUserAndEnvironment.Parameters.Add(param2);
+        dbCommandStoreUserAndEnvironment.Parameters.Add(param3);
+        dbCommandStoreUserAndEnvironment.Parameters.Add(param4);
+        dbCommandStoreUserAndEnvironment.Parameters.Add(param5);
+        dbCommandStoreUserAndEnvironment.Parameters.Add(param6);
+
+        dbCommandStoreUserAndEnvironment.CommandText = "INSERT INTO Rotations (experiment_id, w, x, y, z, i) VALUES(@v1, @v2, @v3, @v4, @v5, @v6)";
+        // " + experiment_id + ", " + data.rotation.w+ ", " + data.rotation.x + ", " + data.rotation.y + ", " + data.rotation.z + ", " + i + "
         IDataReader reader = dbCommandStoreUserAndEnvironment.ExecuteReader();
 
         reader.Close();
