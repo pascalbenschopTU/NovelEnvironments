@@ -47,9 +47,6 @@ public class SqliteLogging : MonoBehaviour
         
         dbConnection.Close();
         dbConnection = null;
-
-        createUserEnvironment(11, 11);
-        // return dbConnection;
     }
 
     public void createUserEnvironment(int participant_id, int experiment_id) {
@@ -290,8 +287,44 @@ public class SqliteLogging : MonoBehaviour
             
         dbConnection.Close();
         dbConnection = null;
-        // dbCommandStoreUserAndEnvironment.Dispose();
-        // dbCommandStoreUserAndEnvironment = null;
-        
+    }
+
+    public void storePicture(int participant_id, int environment_id, string filepath) {
+        string path_to_db = "URI=file:" + Application.dataPath + "/experiment_log.db";
+
+        //  (id INTEGER PRIMARY KEY, participant_id INTEGER , environment_id INTEGER,  filepath TEXT NOT NULL        
+        IDbConnection dbConnection = new SqliteConnection(path_to_db); 
+        dbConnection.Open();
+
+        IDbCommand dbCommandStoreUserAndEnvironment = dbConnection.CreateCommand();
+
+        IDbDataParameter param1 = dbCommandStoreUserAndEnvironment.CreateParameter();
+        IDbDataParameter param2 = dbCommandStoreUserAndEnvironment.CreateParameter();
+        IDbDataParameter param3 = dbCommandStoreUserAndEnvironment.CreateParameter();
+
+        param1.ParameterName = "@v1";
+        param1.Value = participant_id;
+
+        param2.ParameterName = "@v2";
+        param2.Value = environment_id;
+
+        param3.ParameterName = "@v3";
+        param3.Value = filepath;
+
+        dbCommandStoreUserAndEnvironment.Parameters.Add(param1);
+        dbCommandStoreUserAndEnvironment.Parameters.Add(param2);
+        dbCommandStoreUserAndEnvironment.Parameters.Add(param3);
+
+        dbCommandStoreUserAndEnvironment.CommandText = "INSERT INTO Pictures (participant_id, environment_id, filepath) VALUES(@v1, @v2, @v3)";
+
+        IDataReader reader = dbCommandStoreUserAndEnvironment.ExecuteReader();
+
+        reader.Close();
+        reader = null;
+        dbCommandStoreUserAndEnvironment.Dispose();
+        dbCommandStoreUserAndEnvironment = null;
+            
+        dbConnection.Close();
+        dbConnection = null;   
     }
 }

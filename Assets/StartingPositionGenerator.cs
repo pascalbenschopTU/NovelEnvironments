@@ -48,8 +48,17 @@ public class StartingPositionGenerator : MonoBehaviour
         StartTimer();
 
         // endEnvironmentEvent.AddListener(player.GetComponent<Recorder>().storeRecording);
-        Settings.index += 1;
         ExperimentMetaData.Index += 1;
+
+        storeParticipantAndEnvironment();
+    }
+
+    private void storeParticipantAndEnvironment() {
+        int participant_id = ExperimentMetaData.ParticipantNumber;
+        int environment_id = (int)environmentConfiguration.EnvironmentType;
+
+        player.GetComponent<SqliteLogging>().createUserEnvironment(participant_id, environment_id);
+
     }
 
     private void InitializeEnvironments()

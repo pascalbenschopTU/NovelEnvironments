@@ -7,6 +7,8 @@ public class PlayerMovement : MonoBehaviour
 {
 
     public CharacterController controller;
+    public EnvironmentConfiguration environmentConfiguration;
+
 
     public float speed = 12f;
     public float gravity = -9.81f;
@@ -39,6 +41,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void Awake()
     {
+        int index = ExperimentMetaData.Index;
+        if(index > 0) {
+            environmentConfiguration = ExperimentMetaData.Environments[index-1];
+        }
         recorder = GetComponent<Recorder>();
         recording_step = 0;
     }
@@ -60,8 +66,11 @@ public class PlayerMovement : MonoBehaviour
         {
             recorder.recordReplayFrame(data);
 
-            player.GetComponent<SqliteLogging>().storeUserPosition(11, 11, data, recording_step);
-            player.GetComponent<SqliteLogging>().storeUserRotation(11, 11, data, recording_step);
+            int participant_id = ExperimentMetaData.ParticipantNumber;
+            int environment_id = (int)environmentConfiguration.EnvironmentType;
+
+            player.GetComponent<SqliteLogging>().storeUserPosition(participant_id, environment_id, data, recording_step);
+            player.GetComponent<SqliteLogging>().storeUserRotation(participant_id, environment_id, data, recording_step);
 
             recording_step++;
         }
