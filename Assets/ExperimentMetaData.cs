@@ -17,6 +17,8 @@ public class ExperimentMetaData : MonoBehaviour
     public static DateTime EndTime = DateTime.Now;
     
     public static int ParticipantNumber = 0;
+
+    public static bool ExperimentFinished = false;
     // attach the real log content or path to logging file for final dataset ?
     public static string Log="";
 }
