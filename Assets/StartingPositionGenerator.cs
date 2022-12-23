@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 
 public class StartingPositionGenerator : MonoBehaviour
 {
@@ -17,6 +18,8 @@ public class StartingPositionGenerator : MonoBehaviour
 
     private EnvironmentGenerator script;
 
+    UnityEvent endEnvironmentEvent = new UnityEvent();
+
     // Start is called before the first frame update
     void OnEnable()
     {
@@ -25,6 +28,7 @@ public class StartingPositionGenerator : MonoBehaviour
             Debug.Log("Experiment finished");
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
+            ExperimentMetaData.ExperimentFinished = true;
             SceneManager.LoadScene("MainMenu");
             return;
         }
@@ -43,7 +47,18 @@ public class StartingPositionGenerator : MonoBehaviour
         selectNextEnvironment();
         StartTimer();
 
+        // endEnvironmentEvent.AddListener(player.GetComponent<Recorder>().storeRecording);
         ExperimentMetaData.Index += 1;
+
+        storeParticipantAndEnvironment();
+    }
+
+    private void storeParticipantAndEnvironment() {
+        int participant_id = ExperimentMetaData.ParticipantNumber;
+        int environment_id = (int)environmentConfiguration.EnvironmentType;
+
+        player.GetComponent<SqliteLogging>().createUserEnvironment(participant_id, environment_id);
+
     }
 
     private void InitializeEnvironments()
@@ -61,20 +76,22 @@ public class StartingPositionGenerator : MonoBehaviour
         player = GameObject.Find("Player");
         setPlayerMiniMap();
         setPlayerFOV();
+        TogglePlayerCamera();
     }
 
     private void setPlayerMiniMap()
     {
-        if (player.transform.Find("Canvas") != null)
+        Transform canvas = player.transform.Find("Canvas");
+        if (canvas != null)
         {
-            GameObject canvas = player.transform.Find("Canvas").gameObject;
+            GameObject minimap = canvas.Find("RawImage").gameObject;
             if (environmentConfiguration.MapConfig == ConfigType.Low)
             {
-                canvas.SetActive(false);
+                minimap.SetActive(false);
             }
             else
             {
-                canvas.SetActive(true);
+                minimap.SetActive(true);
             }
         }
         else
@@ -104,6 +121,23 @@ public class StartingPositionGenerator : MonoBehaviour
         }
     }
 
+    private void TogglePlayerCamera()
+    {
+        PhotoCapture photoCaptureScript = player.GetComponent<PhotoCapture>();
+
+        if (photoCaptureScript != null)
+        {
+            if (environmentConfiguration.CameraTask)
+            {
+                photoCaptureScript.enabled = true;
+            } 
+            else
+            {
+                photoCaptureScript.enabled = false;
+            }
+        }
+    }
+
     private void selectNextEnvironment()
     {
         chosenEnvironment = environments[(int)environmentConfiguration.EnvironmentType];
@@ -114,7 +148,7 @@ public class StartingPositionGenerator : MonoBehaviour
         script.createNewEnvironment();
 
         startingPosition = script.getSpawnPoint();
-        System.Console.WriteLine("startingPosition: {0}", startingPosition);
+        // startingPosition = script.getMeshStartingVertex() + new Vector3(0.0f, 1.0f, 0.0f);
 
         CharacterController cc = player.GetComponent<CharacterController>();
         cc.enabled = false;
@@ -138,8 +172,22 @@ public class StartingPositionGenerator : MonoBehaviour
 
     private IEnumerator CountDown()
     {
+
+//        yield return new WaitForSeconds(Settings.time);
         yield return new WaitForSeconds(ExperimentMetaData.TimeInEnvironment);
+
+        Debug.Log("Ending Environment");
+        endEnvironmentEvent.Invoke();
+        Queue<ReplayData> rq = player.GetComponent<Recorder>().recordingQueue;
+        Debug.Log("Recording Queue Size: " + rq.Count);
+        // player.GetComponent<SqliteLogging>().storeUserPositionQueue(11, 11, rq);
+        // player.GetComponent<SqliteLogging>().getCountPictureByUserInEnvironment(66);
+
         Debug.Log("Time has run out!");
         SceneManager.LoadScene("DefaultScene");
+    }
+
+    public GameObject getChosenEnv() {
+        return this.chosenEnvironment;
     }
 }

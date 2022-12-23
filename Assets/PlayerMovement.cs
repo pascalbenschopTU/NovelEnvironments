@@ -1,11 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
 
     public CharacterController controller;
+    public EnvironmentConfiguration environmentConfiguration;
+
 
     public float speed = 12f;
     public float gravity = -9.81f;
@@ -30,6 +33,48 @@ public class PlayerMovement : MonoBehaviour
     public Camera playerCamera;
     private Vector2 currentInput;
 
+    private Recorder recorder;
+
+    private GameObject player;
+    private Scene scene;
+    private int recording_step;
+
+    private void Awake()
+    {
+        int index = ExperimentMetaData.Index;
+        if(index > 0) {
+            environmentConfiguration = ExperimentMetaData.Environments[index-1];
+        }
+        recorder = GetComponent<Recorder>();
+        recording_step = 0;
+    }
+
+    private void Start()
+    {
+
+        player = GameObject.Find("Player");
+
+        // Log data every .5 seconds
+        InvokeRepeating("logData", 0f, 0.5f);
+        scene = SceneManager.GetActiveScene();
+    }
+
+    private void logData()
+    {
+        ReplayData data = new ReplayData(this.transform.position, this.transform.rotation);
+        if((recorder != null) && (scene.name != "DefaultScene")) 
+        {
+            recorder.recordReplayFrame(data);
+
+            int participant_id = ExperimentMetaData.ParticipantNumber;
+            int environment_id = (int)environmentConfiguration.EnvironmentType;
+
+            player.GetComponent<SqliteLogging>().storeUserPosition(participant_id, environment_id, data, recording_step);
+            player.GetComponent<SqliteLogging>().storeUserRotation(participant_id, environment_id, data, recording_step);
+
+            recording_step++;
+        }
+    }
 
     private void HandleFootSteps()
     {
@@ -46,23 +91,26 @@ public class PlayerMovement : MonoBehaviour
         if(footStepTimer <= 0) {
             if(Physics.Raycast(landingRay, out hit, 3))
             {
-                switch(hit.collider.tag)
+                if(footStepsAudioSrc != null) 
                 {
-                    case "GrassFloor":
-                        footStepsAudioSrc.PlayOneShot(grassSounds[Random.Range(0, grassSounds.Length -1 )]);
-                        break;
-                    case "ConcreteFloor":
-                        footStepsAudioSrc.PlayOneShot(concreteSounds[Random.Range(0, concreteSounds.Length -1 )]);
-                        break;
-                    case "SandFloor":
-                        footStepsAudioSrc.PlayOneShot(sandSounds[Random.Range(0, sandSounds.Length -1 )]);
-                        break;
-                    case "SnowFloor":
-                        footStepsAudioSrc.PlayOneShot(snowSounds[Random.Range(0, snowSounds.Length -1 )]);
-                        break;
-                    default:
-                        footStepsAudioSrc.PlayOneShot(concreteSounds[Random.Range(0, concreteSounds.Length -1 )]);
-                        break;
+                    switch(hit.collider.tag)
+                    {
+                        case "GrassFloor":
+                            footStepsAudioSrc.PlayOneShot(grassSounds[Random.Range(0, grassSounds.Length -1 )]);
+                            break;
+                        case "ConcreteFloor":
+                            footStepsAudioSrc.PlayOneShot(concreteSounds[Random.Range(0, concreteSounds.Length -1 )]);
+                            break;
+                        case "SandFloor":
+                            footStepsAudioSrc.PlayOneShot(sandSounds[Random.Range(0, sandSounds.Length -1 )]);
+                            break;
+                        case "SnowFloor":
+                            footStepsAudioSrc.PlayOneShot(snowSounds[Random.Range(0, snowSounds.Length -1 )]);
+                            break;
+                        default:
+                            footStepsAudioSrc.PlayOneShot(concreteSounds[Random.Range(0, concreteSounds.Length -1 )]);
+                            break;
+                    }
 
                 }
             }
