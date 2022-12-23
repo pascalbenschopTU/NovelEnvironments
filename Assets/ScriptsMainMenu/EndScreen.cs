@@ -76,10 +76,10 @@ namespace ScriptsMainMenu
             {
                 ResultsPicturesTakenObject.SetActive(true);
 
-                // GameObject player = GameObject.Find("Player");
-                // player.GetComponent<SqliteLogging>().getCountPictureByUserInEnvironment(66);
+                int participant_id = ExperimentMetaData.ParticipantNumber;
+                object count = gameObject.GetComponent<SqliteLogging>().getCountPictureByUserInEnvironment(participant_id);
 
-                ResultsPicturesTaken.text = $"{value}";
+                ResultsPicturesTaken.text = $"{count}";
             }
             else
             {

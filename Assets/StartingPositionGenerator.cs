@@ -171,7 +171,7 @@ public class StartingPositionGenerator : MonoBehaviour
         Queue<ReplayData> rq = player.GetComponent<Recorder>().recordingQueue;
         Debug.Log("Recording Queue Size: " + rq.Count);
         // player.GetComponent<SqliteLogging>().storeUserPositionQueue(11, 11, rq);
-        player.GetComponent<SqliteLogging>().getCountPictureByUserInEnvironment(66);
+        // player.GetComponent<SqliteLogging>().getCountPictureByUserInEnvironment(66);
 
         Debug.Log("Time has run out!");
         SceneManager.LoadScene("DefaultScene");
