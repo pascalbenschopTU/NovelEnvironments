@@ -48,8 +48,18 @@ public class StartingPositionGenerator : MonoBehaviour
         StartTimer();
 
         // endEnvironmentEvent.AddListener(player.GetComponent<Recorder>().storeRecording);
-        Settings.index += 1;
+        // Settings.index += 1;
         ExperimentMetaData.Index += 1;
+
+        storeParticipantAndEnvironment();
+    }
+
+    private void storeParticipantAndEnvironment() {
+        int participant_id = ExperimentMetaData.ParticipantNumber;
+        int environment_id = (int)environmentConfiguration.EnvironmentType;
+
+        player.GetComponent<SqliteLogging>().createUserEnvironment(participant_id, environment_id);
+
     }
 
     private void InitializeEnvironments()
@@ -161,8 +171,12 @@ public class StartingPositionGenerator : MonoBehaviour
         endEnvironmentEvent.Invoke();
         Queue<ReplayData> rq = player.GetComponent<Recorder>().recordingQueue;
         Debug.Log("Recording Queue Size: " + rq.Count);
-        // player.GetComponent<SqliteLogging>().storeUserPositionQueue(11, 11, rq);
-        player.GetComponent<SqliteLogging>().getUserPosition(11, 11);
+
+        int participant_id = ExperimentMetaData.ParticipantNumber;
+        int environment_id = (int)environmentConfiguration.EnvironmentType;
+        player.GetComponent<SqliteLogging>().getUserPosition(participant_id, environment_id);
+
+        // player.GetComponent<SqliteLogging>().getCountPictureByUserInEnvironment(participant_id, environment_id);
 
         Debug.Log("Time has run out!");
         SceneManager.LoadScene("DefaultScene");

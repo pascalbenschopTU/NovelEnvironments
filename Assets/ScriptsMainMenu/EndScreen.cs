@@ -74,7 +74,14 @@ namespace ScriptsMainMenu
 
             if (taskActive)
             {
-                ResultsPicturesTakenObject.SetActive(true);
+
+
+                // GameObject player = GameObject.Find("Player");
+                // int participant_id = ExperimentMetaData.ParticipantNumber;
+                // int environment_id = (int)ExperimentMetaData.Environments[ExperimentMetaData.Index].EnvironmentType;
+                // object count = player.GetComponent<SqliteLogging>().getCountPictureByUserInEnvironment(participant_id, environment_id);
+
+                // ResultsPicturesTakenObject.SetActive(true);
                 ResultsPicturesTaken.text = $"{value}";
             }
             else

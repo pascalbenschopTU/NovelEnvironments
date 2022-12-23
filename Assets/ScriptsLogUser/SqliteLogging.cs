@@ -20,7 +20,7 @@ public class SqliteLogging : MonoBehaviour
 
         // Create a table for the end user
         IDbCommand dbCommandCreateTableEndUser = dbConnection.CreateCommand();
-        dbCommandCreateTableEndUser.CommandText = "CREATE TABLE IF NOT EXISTS EndUser (participant_id INTEGER PRIMARY KEY, experiment_id INTEGER )";
+        dbCommandCreateTableEndUser.CommandText = "CREATE TABLE IF NOT EXISTS EndUser ( participant_id INTEGER, experiment_id INTEGER, environment_id INTEGER, UNIQUE(participant_id,environment_id), PRIMARY KEY(experiment_id AUTOINCREMENT) )";
         IDataReader reader_enduser = dbCommandCreateTableEndUser.ExecuteReader();
 
         // Create a table for the positions
@@ -32,6 +32,11 @@ public class SqliteLogging : MonoBehaviour
         IDbCommand dbCommandCreateTableRotations = dbConnection.CreateCommand();
         dbCommandCreateTableRotations.CommandText = "CREATE TABLE IF NOT EXISTS Rotations (id INTEGER PRIMARY KEY, experiment_id INTEGER NOT NULL, w REAL NOT NULL, x REAL NOT NULL, y REAL NOT NULL, z REAL NOT NULL, i INTEGER )";
         dbCommandCreateTableRotations.ExecuteReader();
+
+        // Create a table for the pictures
+        IDbCommand dbCommandCreateTablePictures = dbConnection.CreateCommand();
+        dbCommandCreateTablePictures.CommandText = "CREATE TABLE IF NOT EXISTS Pictures (id INTEGER PRIMARY KEY, participant_id INTEGER , environment_id INTEGER,  filepath TEXT NOT NULL)";
+        dbCommandCreateTablePictures.ExecuteReader();
 
         reader_enduser.Close();
         reader_enduser = null;
@@ -48,13 +53,12 @@ public class SqliteLogging : MonoBehaviour
         dbConnection.Close();
         dbConnection = null;
 
-        createUserEnvironment(11, 11);
         // return dbConnection;
     }
 
-    public void createUserEnvironment(int participant_id, int experiment_id) {
+    public void createUserEnvironment(int participant_id, int environment_id) {
         string path_to_db = "URI=file:" + Application.dataPath + "/experiment_log.db";
-        Debug.Log("Database: Storing user id: " + participant_id + " and environment id: " + experiment_id);
+        Debug.Log("Database: Storing user id: " + participant_id + " and environment id: " + environment_id);
 
         IDbConnection dbConnection = new SqliteConnection(path_to_db); 
         dbConnection.Open();
@@ -68,12 +72,12 @@ public class SqliteLogging : MonoBehaviour
         param1.Value = participant_id;
 
         param2.ParameterName = "@v2";
-        param2.Value = experiment_id;
+        param2.Value = environment_id;
 
         dbCommandStoreUserAndEnvironment.Parameters.Add(param1);
         dbCommandStoreUserAndEnvironment.Parameters.Add(param2);
 
-        dbCommandStoreUserAndEnvironment.CommandText = "INSERT INTO EndUser (participant_id ,experiment_id) VALUES(@v1, @v2)";
+        dbCommandStoreUserAndEnvironment.CommandText = "INSERT INTO EndUser (participant_id ,environment_id) VALUES(@v1, @v2)";
         IDataReader reader = dbCommandStoreUserAndEnvironment.ExecuteReader();
 
         reader.Close();
@@ -184,7 +188,6 @@ public class SqliteLogging : MonoBehaviour
 
         // dbCommandStoreUserAndEnvironment.CommandText = "INSERT INTO Positions (experiment_id, position_x, position_y, position_z, i) VALUES(" + experiment_id + ", " + data.position.x + ", " + data.position.y + ", " + data.position.z + ", " + i + ")";
         dbCommandStoreUserAndEnvironment.CommandText = "INSERT INTO Positions (experiment_id, position_x, position_y, position_z, i) VALUES(@v1, @v2, @v3, @v4, @v5)";
-        // " + experiment_id + ", " + data.position.x + ", " + data.position.y + ", " + data.position.z + ", " + i + "
 
         IDataReader reader = dbCommandStoreUserAndEnvironment.ExecuteReader();
 
@@ -195,9 +198,6 @@ public class SqliteLogging : MonoBehaviour
             
         dbConnection.Close();
         dbConnection = null;
-        // dbCommandStoreUserAndEnvironment.Dispose();
-        // dbCommandStoreUserAndEnvironment = null;
-        
     }
 
     public void storeUserRotation(int user_id, int experiment_id, ReplayData data, int i) {
@@ -246,7 +246,6 @@ public class SqliteLogging : MonoBehaviour
         dbCommandStoreUserAndEnvironment.Parameters.Add(param6);
 
         dbCommandStoreUserAndEnvironment.CommandText = "INSERT INTO Rotations (experiment_id, w, x, y, z, i) VALUES(@v1, @v2, @v3, @v4, @v5, @v6)";
-        // " + experiment_id + ", " + data.rotation.w+ ", " + data.rotation.x + ", " + data.rotation.y + ", " + data.rotation.z + ", " + i + "
         IDataReader reader = dbCommandStoreUserAndEnvironment.ExecuteReader();
 
         reader.Close();
@@ -256,9 +255,6 @@ public class SqliteLogging : MonoBehaviour
             
         dbConnection.Close();
         dbConnection = null;
-        // dbCommandStoreUserAndEnvironment.Dispose();
-        // dbCommandStoreUserAndEnvironment = null;
-        
     }
 
     public void getUserPosition(int user_id, int experiment_id) {
@@ -275,11 +271,12 @@ public class SqliteLogging : MonoBehaviour
         IDataReader reader = dbCommandStoreUserAndEnvironment.ExecuteReader();
 
         object[] dataRow = new object[reader.FieldCount];
-        while (reader.Read()) { 
+        Queue<ReplayData> recordingQueue = new Queue<ReplayData>();
+        while (reader.Read()) {
+            
+
             int cols = reader.GetValues(dataRow); 
-            for (int i = 0; i < cols; i++) {
-                Debug.Log(dataRow[i]);
-            }
+            ReplayData data = new ReplayData(new Vector3((float)dataRow[2], (float)dataRow[3], (float)dataRow[4]), new Quaternion(0,0,0,1));
         }
         reader.Close();
 
@@ -289,9 +286,82 @@ public class SqliteLogging : MonoBehaviour
         dbCommandStoreUserAndEnvironment = null;
             
         dbConnection.Close();
-        dbConnection = null;
-        // dbCommandStoreUserAndEnvironment.Dispose();
-        // dbCommandStoreUserAndEnvironment = null;
+        dbConnection = null;       
+    }
+
+    public void storePicture(int participant_id, int environment_id, string filepath) {
+        string path_to_db = "URI=file:" + Application.dataPath + "/experiment_log.db";
+
+        //  (id INTEGER PRIMARY KEY, participant_id INTEGER , environment_id INTEGER,  filepath TEXT NOT NULL        
+        IDbConnection dbConnection = new SqliteConnection(path_to_db); 
+        dbConnection.Open();
+
+        IDbCommand dbCommandStoreUserAndEnvironment = dbConnection.CreateCommand();
+
+        IDbDataParameter param1 = dbCommandStoreUserAndEnvironment.CreateParameter();
+        IDbDataParameter param2 = dbCommandStoreUserAndEnvironment.CreateParameter();
+        IDbDataParameter param3 = dbCommandStoreUserAndEnvironment.CreateParameter();
+
+        param1.ParameterName = "@v1";
+        param1.Value = participant_id;
+
+        param2.ParameterName = "@v2";
+        param2.Value = environment_id;
+
+        param3.ParameterName = "@v3";
+        param3.Value = filepath;
+
+        dbCommandStoreUserAndEnvironment.Parameters.Add(param1);
+        dbCommandStoreUserAndEnvironment.Parameters.Add(param2);
+        dbCommandStoreUserAndEnvironment.Parameters.Add(param3);
+
+        dbCommandStoreUserAndEnvironment.CommandText = "INSERT INTO Pictures (participant_id, environment_id, filepath) VALUES(@v1, @v2, @v3)";
+
+        IDataReader reader = dbCommandStoreUserAndEnvironment.ExecuteReader();
+
+        reader.Close();
+        reader = null;
+        dbCommandStoreUserAndEnvironment.Dispose();
+        dbCommandStoreUserAndEnvironment = null;
+            
+        dbConnection.Close();
+        dbConnection = null;   
+    }
+
+    public object getCountPictureByUserInEnvironment(int participant_id, int environment_id) {
+        string path_to_db = "URI=file:" + Application.dataPath + "/experiment_log.db";
         
+        IDbConnection dbConnection = new SqliteConnection(path_to_db); 
+        dbConnection.Open();
+
+
+        IDbCommand dbCommandStoreUserAndEnvironment = dbConnection.CreateCommand();
+        Debug.Log("SELECT COUNT(*) FROM Pictures WHERE participant_id='" + participant_id + "' AND environment_id='" + environment_id + "'");
+        dbCommandStoreUserAndEnvironment.CommandText = "SELECT COUNT(*) FROM Pictures WHERE participant_id='" + participant_id + "' AND environment_id='" + environment_id + "'";
+        IDataReader reader = dbCommandStoreUserAndEnvironment.ExecuteReader();
+
+        object[] dataRow = new object[reader.FieldCount];        
+        object count = 0;
+        while (reader.Read()) {
+            
+
+            int cols = reader.GetValues(dataRow);
+            count = dataRow[0];
+        }
+        Debug.Log(count);
+        reader.Close();
+
+        reader.Close();
+        reader = null;
+        dbCommandStoreUserAndEnvironment.Dispose();
+        dbCommandStoreUserAndEnvironment = null;
+            
+        dbConnection.Close();
+        dbConnection = null;
+
+        
+
+        Debug.Log("User: " + participant_id + " has taken " + count + "pictures");       
+        return count;
     }
 }
