@@ -104,6 +104,7 @@ namespace ScriptsMainMenu
                 ExperimentMetaData.Environments = list;
                 ExperimentMetaData.TimeInEnvironment = PlayerPrefs.GetInt("TimeSetting");
                 ExperimentMetaData.StartTime = DateTime.Now;
+                ExperimentMetaData.Index = 0;
             
                 Debug.Log($"Starting with id: {_experimentId}");
                 Cursor.lockState = CursorLockMode.Locked;
