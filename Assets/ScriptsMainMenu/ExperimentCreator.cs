@@ -91,30 +91,6 @@ namespace ScriptsMainMenu
                 Destroy(tab.gameObject);
             }
 
-            // var lowerIds = new List<int>();
-            // var keys = new List<int>(_environmentConfigurations.Keys);
-            // foreach (var id in keys)
-            // {
-            //     if (id > _experimentId)
-            //     {
-            //         if (_environmentTabs.ContainsKey(id))
-            //         {
-            //         
-            //             foreach (var tab in _environmentTabs[id])
-            //             {
-            //                 tab.GetEnvironmentConfig().ExperimentId -= 1;
-            //             }
-            //         
-            //             _environmentTabs[id-1] = _environmentTabs[id];
-            //         }
-            //         _environmentConfigurations[id-1] = _environmentConfigurations[id];
-            //     }
-            //     else
-            //     {
-            //         lowerIds.Add(id);
-            //     }
-            // }
-
             _environmentConfigurations.Remove(_experimentId);
             _environmentTabs.Remove(_experimentId);
 
