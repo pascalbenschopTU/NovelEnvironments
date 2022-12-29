@@ -144,6 +144,8 @@ namespace ScriptsMainMenu
             {
                 Directory.Delete(dirPath, true);
             }
+
+            Recorder.ResetRecordings();
         }
 
         public void QuitGame()

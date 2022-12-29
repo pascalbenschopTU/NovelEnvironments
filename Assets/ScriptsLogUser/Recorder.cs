@@ -9,12 +9,17 @@ public class Recorder : MonoBehaviour
     public static List<PositionalData> recording {get; private set;}
     public static List<TaskData> tasks { get; private set; }
 
-
-    private void Awake() 
+    public static void ResetRecordings()
     {
-        recording = new List<PositionalData>();
-
-        tasks = new List<TaskData>();
+        if (recording != null && tasks != null)
+        {
+            recording.Clear();
+            tasks.Clear();
+        } else
+        {
+            recording = new List<PositionalData>();
+            tasks = new List<TaskData>();
+        }
     }
 
     public static void RecordPlayerData(PositionalData data)
@@ -39,9 +44,8 @@ public class Recorder : MonoBehaviour
             {
                 data
             };
-            return;
         }
-        if (data != null && !tasks.Contains(data))
+        else if (data != null && !tasks.Contains(data))
         {
             tasks.Add(data);
         } 

@@ -96,14 +96,7 @@ public class StartingPositionGenerator : MonoBehaviour
         {
             GameObject camera = player.transform.Find("Main Camera").gameObject;
             Camera c = camera.GetComponent<Camera>();
-            if (environmentConfiguration.FOVConfig == ConfigType.Low)
-            {
-                c.fieldOfView = environmentConfiguration.GetFOVConfigValue();
-            }
-            else
-            {
-                c.fieldOfView = environmentConfiguration.GetFOVConfigValue();
-            }
+            c.farClipPlane = environmentConfiguration.GetRDConfigValue();
         }
         else
         {

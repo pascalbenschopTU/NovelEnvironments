@@ -45,6 +45,10 @@ public class PlayerMovement : MonoBehaviour
         {
             // Log data 40 times per second.
             InvokeRepeating("LogData", 0f, 0.025f);
+        } else
+        {
+            player.transform.position = new Vector3(0, 1, 0);
+            player.transform.rotation = new Quaternion(0, 180, 0, 0);
         }
     }
 

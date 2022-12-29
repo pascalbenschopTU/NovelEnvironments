@@ -11,7 +11,7 @@ public class EnvironmentTabManager : MonoBehaviour
     public ToggleGroupAdv TextureToggleGroup;
     public ToggleGroupAdv MovingObjectsToggleGroup;
     public ToggleGroupAdv InteractionToggleGroup;
-    public ToggleGroupAdv FOVRangeToggleGroup;
+    public ToggleGroupAdv RDRangeToggleGroup;
     public ToggleGroupAdv MapToggleGroup;
     public Toggle CameraTaskToggle;
     public Toggle PickupTaskToggle;
@@ -31,7 +31,7 @@ public class EnvironmentTabManager : MonoBehaviour
         UpdateToggleGroup(TextureToggleGroup, _environmentConfiguration.NumberObjectsConfig);
         UpdateToggleGroup(MovingObjectsToggleGroup, _environmentConfiguration.MovingObjectConfig);
         UpdateToggleGroup(InteractionToggleGroup, _environmentConfiguration.InteractionConfig);
-        UpdateToggleGroup(FOVRangeToggleGroup, _environmentConfiguration.FOVConfig);
+        UpdateToggleGroup(RDRangeToggleGroup, _environmentConfiguration.RDConfig);
         UpdateToggleGroup(MapToggleGroup, _environmentConfiguration.MapConfig);
         CameraTaskToggle.isOn = _environmentConfiguration.CameraTask;
         PickupTaskToggle.isOn = _environmentConfiguration.PickupTask;
@@ -75,7 +75,7 @@ public class EnvironmentTabManager : MonoBehaviour
     public void UpdateFOVConfig(ConfigType config)
     {
         // Debug.Log($"Updated FOV config to {config}");
-        _environmentConfiguration.FOVConfig = config;
+        _environmentConfiguration.RDConfig = config;
     }
     public void UpdateMapConfig(ConfigType config)
     {
@@ -93,7 +93,7 @@ public class EnvironmentTabManager : MonoBehaviour
         _environmentConfiguration = new EnvironmentConfiguration();
         _toggleGroups = new List<ToggleGroupAdv>
         {
-            TextureToggleGroup, MovingObjectsToggleGroup, InteractionToggleGroup, FOVRangeToggleGroup, MapToggleGroup
+            TextureToggleGroup, MovingObjectsToggleGroup, InteractionToggleGroup, RDRangeToggleGroup, MapToggleGroup
         };
         _toggleCallbacks = new List<Action<ConfigType>>
         {
