@@ -34,7 +34,7 @@ public class PhotoCapture : MonoBehaviour
         Light lightComponent = cameraFlash.AddComponent<Light>();
         lightComponent.color = Color.white;
         lightComponent.range = 100;
-        lightComponent.intensity = 10;
+        lightComponent.intensity = 1000;
 
         cameraFlash.transform.parent = player.transform;
         cameraFlash.transform.position = player.transform.position + player.transform.forward;
@@ -62,6 +62,7 @@ public class PhotoCapture : MonoBehaviour
                 {
                     GameObject sprite = new GameObject("Sprite " + i + j);
                     sprite.AddComponent<Image>();
+                    sprite.GetComponent<Image>().color = Color.black;
                     RectTransform spriteTransform = sprite.GetComponent<RectTransform>();
                     spriteTransform.transform.SetParent(panel.transform, false);
                     spriteTransform.anchorMin = new Vector2(Mathf.Abs(j - 0.1f), i);
@@ -78,6 +79,7 @@ public class PhotoCapture : MonoBehaviour
                 {
                     GameObject sprite = new GameObject("Sprite " + (i + 2) + (j+2));
                     sprite.AddComponent<Image>();
+                    sprite.GetComponent<Image>().color = Color.black;
                     RectTransform spriteTransform = sprite.GetComponent<RectTransform>();
                     spriteTransform.transform.SetParent(panel.transform, false);
                     spriteTransform.anchorMin = new Vector2(i, Mathf.Abs(j - 0.1f));
@@ -98,6 +100,7 @@ public class PhotoCapture : MonoBehaviour
 
     IEnumerator CapturePhoto()
     {
+        canvas.gameObject.SetActive(false);
         yield return new WaitForEndOfFrame();
 
         Rect regionToRead = new Rect(0, 0, Screen.width, Screen.height);
@@ -110,6 +113,7 @@ public class PhotoCapture : MonoBehaviour
         cameraFlash.SetActive(false);
 
         SavePhoto();
+        canvas.gameObject.SetActive(true);
     }
 
 
