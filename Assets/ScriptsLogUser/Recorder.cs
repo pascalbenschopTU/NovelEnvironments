@@ -15,36 +15,19 @@ public class Recorder : MonoBehaviour
 
     public void recordReplayFrame(ReplayData data)
     {
-        if (recordingQueue != null) {
+        if (recordingQueue != null) 
+        {
+            recordingQueue.Enqueue(data);
+        } else
+        {
+            recordingQueue = new Queue<ReplayData>();
             recordingQueue.Enqueue(data);
         }
-        // Debug.Log("Recording data: " + data.position + " Rotation: " + data.rotation);
     }
 
     public void storeRecording()
     {
         Debug.Log("End Recording");
-        string path = "./recording.csv";
-        // FileStream stream = new FileStream(path, FileMode.Create, FileAccess.Write);
-
-        // using var writer = new StreamWriter(path);
-        using (StreamWriter writer = new StreamWriter(path))
-        {
-            //if(Settings.index != null)
-            //{
-            //    int index = Settings.index;
-            //    List<EnvironmentConfiguration> environments = Settings.environments;
-            //    if (environments.Count > 0) {
-            //        EnvironmentConfiguration environment_config = environments[index];
-            //        writer.WriteLine(environment_config.ToString());
-            //    }
-            //}
-            // EnvironmentGenerator env_generator = environment.GetComponent<EnvironmentGenerator>();
-
-            foreach (ReplayData data in recordingQueue)
-            {
-                writer.WriteLine(data);
-            }
-        }
+        
     }
 }
