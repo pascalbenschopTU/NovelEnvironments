@@ -9,6 +9,8 @@ public class ExperimentMetaData : MonoBehaviour
 
     public static List<EnvironmentConfiguration> Environments;
 
+    public static EnvironmentConfiguration currentEnvironment;
+
     public static int TimeInEnvironment = 20;
 
     public static int Seed = 100;
