@@ -105,7 +105,8 @@ namespace ScriptsMainMenu
                 ExperimentMetaData.Environments = list;
                 ExperimentMetaData.TimeInEnvironment = PlayerPrefs.GetInt("TimeSetting");
                 ExperimentMetaData.StartTime = DateTime.Now;
-
+                ExperimentMetaData.Index = 0;
+                
                 DeleteLogsOnStartNewGame(_participantNumber);
 
                 Debug.Log($"Starting with id: {_experimentId}");

@@ -37,6 +37,7 @@ namespace ScriptsMainMenu
 
         private int _experimentId;
         private float _scrollOffset;
+        
         private Dictionary<int,List<EnvironmentTabManager>> _environmentTabs;
         private Dictionary<int,List<EnvironmentConfiguration>> _environmentConfigurations;
 
@@ -48,15 +49,35 @@ namespace ScriptsMainMenu
         public void NewExperiment()
         {
             DisableOldTabs(_experimentId);
-        
-            _experimentId = Math.Max(_environmentConfigurations.Keys.Count, _environmentTabs.Keys.Count);
+            var expId = 0;
+            while (_environmentConfigurations.Keys.Contains(expId) || _environmentTabs.Keys.Contains(expId))
+            {
+                expId++;
+            }
+
+            _experimentId = expId;
             _environmentConfigurations.Add(_experimentId, new List<EnvironmentConfiguration>());
             _environmentTabs.Add(_experimentId, new List<EnvironmentTabManager>());
+            
             Dropdown.AddOptions(new List<string>{_experimentId.ToString()});
-            Dropdown.value = _experimentId;
-        
+            var i = FindDropdownIndex(_experimentId);
+            Dropdown.value = i > 0 ?  i : 0;
+
             CreationTab.SetActive(true);
             CreationTab.transform.localPosition = new Vector3(-1400 + _environmentTabs[_experimentId].Count*700,0,0);
+        }
+
+        private int FindDropdownIndex(int toFind)
+        {
+            for (int i = 0; i < Dropdown.options.Count; i++)
+            {
+                if (Dropdown.options[i].text == toFind.ToString())
+                {
+                    return i;
+                }
+            }
+
+            return -1;
         }
 
         public void DeleteExperiment()
@@ -70,51 +91,18 @@ namespace ScriptsMainMenu
                 Destroy(tab.gameObject);
             }
 
-            var lowerIds = new List<int>();
-            var keys = new List<int>(_environmentConfigurations.Keys); ;
-            foreach (var id in keys)
-            {
-                if (id > _experimentId)
-                {
-                    if (_environmentTabs.ContainsKey(id))
-                    {
-                    
-                        foreach (var tab in _environmentTabs[id])
-                        {
-                            tab.GetEnvironmentConfig().ExperimentId -= 1;
-                        }
-                    
-                        _environmentTabs[id-1] = _environmentTabs[id];
-                    }
-                    _environmentConfigurations[id-1] = _environmentConfigurations[id];
-                }
-                else
-                {
-                    lowerIds.Add(id);
-                }
-            }
+            _environmentConfigurations.Remove(_experimentId);
+            _environmentTabs.Remove(_experimentId);
 
-            _environmentConfigurations.Remove(_environmentConfigurations.Keys.Count - 1);
-            _environmentTabs.Remove(_environmentTabs.Keys.Count - 1);
-        
             if (_environmentConfigurations.Keys.Count > 0)
             {
-                var nextId = 0;
-                if (lowerIds.Count > 0)
-                {
-                    nextId = lowerIds.Max(v => v);   
-                }
-                _experimentId = nextId;
+                _experimentId = _environmentConfigurations.Keys.First();
                 Dropdown.ClearOptions();
                 Dropdown.AddOptions(_environmentConfigurations.Keys.ToList().ConvertAll(k => k.ToString()));
-                if (Dropdown.value == nextId)
-                {
-                    UpdateExperimentSelection(0);
-                }
-                else
-                {
-                    Dropdown.value = nextId;
-                }
+                var id = FindDropdownIndex(_experimentId);
+                id = id > 0 ? id : 0;
+                Dropdown.value = id;
+                UpdateExperimentSelection(id);
             }
             else
             {
@@ -182,16 +170,20 @@ namespace ScriptsMainMenu
             _environmentConfigurations = CsvUtils.EnvironmentConfigsFromCsv(path);
             if (_environmentConfigurations.Keys.Count > 0)
             {
+                _experimentId = 0;
                 Dropdown.AddOptions(_environmentConfigurations.Keys.ToList().ConvertAll(k => k.ToString()));
                 // dropdown only calls callback when value changes, otherwise do it manually
-                if (Dropdown.value == 0)
+                foreach (var id in _environmentConfigurations.Keys.Where(id => !_environmentTabs.ContainsKey(id)))
                 {
-                    UpdateExperimentSelection(0);
+                    _environmentTabs.Add(id, new List<EnvironmentTabManager>());
+                    foreach (var config in _environmentConfigurations[id])
+                    {
+                        CreateNewEnvironmentTab(config);
+                        _environmentTabs[id][config.Index].gameObject.SetActive(false);
+                    }
                 }
-                else
-                {
-                    Dropdown.value = 0;
-                }
+                Dropdown.value = 0;
+                UpdateExperimentSelection(0);
             }
         }
 
@@ -208,15 +200,16 @@ namespace ScriptsMainMenu
     
         public void UpdateExperimentSelection(int index)
         {
+            var expId = int.Parse(Dropdown.options[index].text);
             var currentExperimentId = _experimentId;
-            _experimentId = index;
-            // disable old tabs when there where some
+            _experimentId = expId;
+            // disable old tabs when there were some
             DisableOldTabs(currentExperimentId);
-        
-            if (!_environmentTabs.ContainsKey(index))
+            
+            if (!_environmentTabs.ContainsKey(expId))
             {
-                _environmentTabs.Add(index, new List<EnvironmentTabManager>());
-                foreach (var config in _environmentConfigurations[index])
+                _environmentTabs.Add(expId, new List<EnvironmentTabManager>());
+                foreach (var config in _environmentConfigurations[expId])
                 {
                     CreateNewEnvironmentTab(config);
                 }
@@ -251,26 +244,27 @@ namespace ScriptsMainMenu
     
         public void CreateNewEnvironmentTab(EnvironmentConfiguration environmentConfiguration)
         {
-            if (_environmentTabs[_experimentId].Count < _maxTabs)
+            var expId = environmentConfiguration == null ? _experimentId : environmentConfiguration.ExperimentId;
+            if (_environmentTabs[expId].Count < _maxTabs)
             {
-                var obj = Instantiate(EnvironmentTabTemplate, new Vector3(-1400 + _environmentTabs[_experimentId].Count * 700, 0, 0), Quaternion.identity,
+                var obj = Instantiate(EnvironmentTabTemplate, new Vector3(-1400 + _environmentTabs[expId].Count * 700, 0, 0), Quaternion.identity,
                     TabList.transform);
-                obj.transform.localPosition = new Vector3(-1400 + _environmentTabs[_experimentId].Count * 700, 0, 0);
+                obj.transform.localPosition = new Vector3(-1400 + _environmentTabs[expId].Count * 700, 0, 0);
                 var btn = obj.transform.GetChild(1).GetComponent<Button>();
                 if (btn != null)
                 {
                     var tab = obj.GetComponent<EnvironmentTabManager>();
-                    tab.UpdateID(_environmentTabs[_experimentId].Count);
-                    tab.GetEnvironmentConfig().ExperimentId = _experimentId;
+                    tab.UpdateID(_environmentTabs[expId].Count);
+                    tab.GetEnvironmentConfig().ExperimentId = expId;
                     if (environmentConfiguration != null)
                     {
                         tab.SetEnvironmentConfig(environmentConfiguration);
                     }
-                    _environmentTabs[_experimentId].Add(tab);
+                    _environmentTabs[expId].Add(tab);
                 
                     btn.onClick.AddListener(delegate { DeleteEnvironmentTab(tab.GetEnvironmentConfig().Index); });
-                    CreationTab.transform.localPosition = new Vector3(-1400 + _environmentTabs[_experimentId].Count*700,0,0);
-                    if (_environmentTabs[_experimentId].Count == _maxTabs)
+                    CreationTab.transform.localPosition = new Vector3(-1400 + _environmentTabs[expId].Count*700,0,0);
+                    if (_environmentTabs[expId].Count == _maxTabs)
                     {
                         CreationTab.SetActive(false);
                     }
