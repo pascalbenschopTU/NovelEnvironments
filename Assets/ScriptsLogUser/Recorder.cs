@@ -6,28 +6,45 @@ using System.IO;
 
 public class Recorder : MonoBehaviour
 {
-    public Queue<ReplayData> recordingQueue {get; private set;}
+    public static List<PositionalData> recording {get; private set;}
+    public static List<TaskData> tasks { get; private set; }
+
 
     private void Awake() 
     {
-        recordingQueue = new Queue<ReplayData>();
+        recording = new List<PositionalData>();
+
+        tasks = new List<TaskData>();
     }
 
-    public void recordReplayFrame(ReplayData data)
+    public static void RecordPlayerData(PositionalData data)
     {
-        if (recordingQueue != null) 
+        if (recording != null) 
         {
-            recordingQueue.Enqueue(data);
+            recording.Add(data);
         } else
         {
-            recordingQueue = new Queue<ReplayData>();
-            recordingQueue.Enqueue(data);
+            recording = new List<PositionalData>
+            {
+                data
+            };
         }
     }
 
-    public void storeRecording()
+    public static void RecordTaskData(TaskData data)
     {
-        Debug.Log("End Recording");
+        if (tasks == null)
+        {
+            tasks = new List<TaskData>()
+            {
+                data
+            };
+            return;
+        }
+        if (data != null && !tasks.Contains(data))
+        {
+            tasks.Add(data);
+        } 
         
     }
 }
