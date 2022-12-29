@@ -11,7 +11,7 @@ public class EnvironmentTabManager : MonoBehaviour
     public ToggleGroupAdv TextureToggleGroup;
     public ToggleGroupAdv MovingObjectsToggleGroup;
     public ToggleGroupAdv InteractionToggleGroup;
-    public ToggleGroupAdv RDRangeToggleGroup;
+    public ToggleGroupAdv RDToggleGroup;
     public ToggleGroupAdv MapToggleGroup;
     public Toggle CameraTaskToggle;
     public Toggle PickupTaskToggle;
@@ -31,7 +31,7 @@ public class EnvironmentTabManager : MonoBehaviour
         UpdateToggleGroup(TextureToggleGroup, _environmentConfiguration.NumberObjectsConfig);
         UpdateToggleGroup(MovingObjectsToggleGroup, _environmentConfiguration.MovingObjectConfig);
         UpdateToggleGroup(InteractionToggleGroup, _environmentConfiguration.InteractionConfig);
-        UpdateToggleGroup(RDRangeToggleGroup, _environmentConfiguration.RDConfig);
+        UpdateToggleGroup(RDToggleGroup, _environmentConfiguration.RDConfig);
         UpdateToggleGroup(MapToggleGroup, _environmentConfiguration.MapConfig);
         CameraTaskToggle.isOn = _environmentConfiguration.CameraTask;
         PickupTaskToggle.isOn = _environmentConfiguration.PickupTask;
@@ -72,7 +72,7 @@ public class EnvironmentTabManager : MonoBehaviour
         // Debug.Log($"Updated Interaction config to {config}");
         _environmentConfiguration.InteractionConfig = config;
     }
-    public void UpdateFOVConfig(ConfigType config)
+    public void UpdateRDConfig(ConfigType config)
     {
         // Debug.Log($"Updated FOV config to {config}");
         _environmentConfiguration.RDConfig = config;
@@ -93,14 +93,14 @@ public class EnvironmentTabManager : MonoBehaviour
         _environmentConfiguration = new EnvironmentConfiguration();
         _toggleGroups = new List<ToggleGroupAdv>
         {
-            TextureToggleGroup, MovingObjectsToggleGroup, InteractionToggleGroup, RDRangeToggleGroup, MapToggleGroup
+            TextureToggleGroup, MovingObjectsToggleGroup, InteractionToggleGroup, RDToggleGroup, MapToggleGroup
         };
         _toggleCallbacks = new List<Action<ConfigType>>
         {
             (config) => UpdateNumberObjectConfig(config),
             (config) => UpdateMovingObjectsConfig(config),
             (config) => UpdateInteractionConfig(config),
-            (config) => UpdateFOVConfig(config),
+            (config) => UpdateRDConfig(config),
             (config) => UpdateMapConfig(config),
         };
         
