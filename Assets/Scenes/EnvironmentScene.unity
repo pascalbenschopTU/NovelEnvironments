@@ -237,7 +237,7 @@ GameObject:
   - component: {fileID: 355603886}
   - component: {fileID: 355603885}
   - component: {fileID: 355603887}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Environment1
   m_TagString: Environment1
   m_Icon: {fileID: 0}
