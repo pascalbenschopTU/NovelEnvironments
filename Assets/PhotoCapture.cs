@@ -3,9 +3,12 @@ using UnityEngine;
 //using UnityEngine.Windows;
 using UnityEngine.UI;
 using System.IO;
+using System;
 
 public class PhotoCapture : MonoBehaviour
 {
+    private EnvironmentConfiguration environmentConfiguration;
+
     private Texture2D screenCapture;
 
     private GameObject player;
@@ -18,6 +21,7 @@ public class PhotoCapture : MonoBehaviour
     {
         screenCapture = new Texture2D(Screen.width, Screen.height, TextureFormat.RGB24, false);
 
+        environmentConfiguration = ExperimentMetaData.currentEnvironment;
         player = gameObject;
 
         CreateCameraFlash();
@@ -121,32 +125,19 @@ public class PhotoCapture : MonoBehaviour
         string path = dirPath + System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss") + ".png";
         File.WriteAllBytes(path, bytes);
 
-        storePictureInDB(path);
+        LogPicture();
     }
 
-    private void storePictureInDB(string filepath) {
-        int participant_id = ExperimentMetaData.ParticipantNumber;
-        
-        int index = ExperimentMetaData.Index;
-
-        EnvironmentConfiguration environmentConfiguration = null;
-
-        if(index > 0) {
-            environmentConfiguration = ExperimentMetaData.Environments[index-1];
-        }
-        else {
-            return;
-        }
-
-        if(environmentConfiguration != null) 
-        {
-            int environment_id = (int)ExperimentMetaData.Environments[index-1].EnvironmentType;
-            player.GetComponent<SqliteLogging>().storePicture(participant_id, environment_id, filepath);
-        }
-        else 
-        {
-            Debug.Log("Cannot Take Picture rn");
-            return;
-        }
+    private void LogPicture()
+    {
+        TaskData task = new TaskData(
+            new PositionalData(
+                (int)environmentConfiguration.EnvironmentType, 
+                player.transform.position, 
+                player.transform.rotation
+            ), 
+            "Picture" // name of task
+        );
+        Recorder.RecordTaskData(task);
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -105,7 +106,9 @@ namespace ScriptsMainMenu
                 ExperimentMetaData.TimeInEnvironment = PlayerPrefs.GetInt("TimeSetting");
                 ExperimentMetaData.StartTime = DateTime.Now;
                 ExperimentMetaData.Index = 0;
-            
+                
+                DeleteLogsOnStartNewGame(_participantNumber);
+
                 Debug.Log($"Starting with id: {_experimentId}");
                 Cursor.lockState = CursorLockMode.Locked;
                 SceneManager.LoadScene(1);
@@ -131,6 +134,15 @@ namespace ScriptsMainMenu
                         ErrorText.color = Color.red;
                     }
                 }
+            }
+        }
+
+        private void DeleteLogsOnStartNewGame(int participantNumber)
+        {
+            var dirPath = Application.dataPath + $"/ExperimentLogs_{participantNumber}/";
+            if (Directory.Exists(dirPath))
+            {
+                Directory.Delete(dirPath, true);
             }
         }
 
