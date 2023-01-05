@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using SimpleFileBrowser;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Audio;
@@ -14,6 +12,12 @@ namespace ScriptsMainMenu
         [SerializeField]
         private TextMeshProUGUI VolumeText;
         [SerializeField]
+        private TextMeshProUGUI MouseSensitivityText;
+        [SerializeField] 
+        private Slider VolumeSlider;
+        [SerializeField] 
+        private Slider MouseSensitivitySlider;
+        [SerializeField]
         private AudioMixer AudioMixer;
         [SerializeField]
         private TMP_Dropdown ResolutionDropdown;
@@ -23,9 +27,20 @@ namespace ScriptsMainMenu
         private Resolution[] _screenResolutions;
         public void UpdateVolume(float value)
         {
-            var val = RemapIntValue(Mathf.RoundToInt(value), -80, 0, 0, 100);
-            VolumeText.text = $"{val}";
+            var valueInt = Mathf.RoundToInt(value);
             AudioMixer.SetFloat("VolumeParam", value);
+            PlayerPrefs.SetInt("VolumeSetting", valueInt);
+            var val = SettingsMenu.RemapIntValue(valueInt, SettingsMenu.MinVolume, SettingsMenu.MaxVolume, 0, 100);
+            VolumeText.text = $"{val}";
+        }
+        
+        public void UpdateMouseSensitivity(float value)
+        {
+            var valueInt = Mathf.RoundToInt(value);
+            PlayerPrefs.SetInt("MouseSensitivitySetting", valueInt);
+            var val = SettingsMenu.RemapIntValue(valueInt, SettingsMenu.MinMouseSensitivity, SettingsMenu.MaxMouseSensitivity, 0, 100);
+            MouseLook.MouseSensitivity = valueInt;
+            MouseSensitivityText.text = $"{val}";
         }
 
         public void UpdateResolution(int index)
@@ -53,18 +68,17 @@ namespace ScriptsMainMenu
             ResolutionDropdown.AddOptions(resolutions);
             ResolutionDropdown.value = index;
 
-            FullscreenToggle.isOn = Screen.fullScreen;
+            FullscreenToggle.isOn = Convert.ToBoolean(PlayerPrefs.GetInt("FullScreenSetting"));
             AudioMixer.GetFloat("VolumeParam", out var value);
-            UpdateVolume(value);
+            UpdateMouseSensitivity(PlayerPrefs.GetInt("MouseSensitivitySetting"));
+            MouseSensitivitySlider.value = PlayerPrefs.GetInt("MouseSensitivitySetting");
+            UpdateVolume(PlayerPrefs.GetInt("VolumeSetting"));
+            VolumeSlider.value = PlayerPrefs.GetInt("VolumeSetting");
         }
         public void ToggleFullscreen(bool value)
         {
+            PlayerPrefs.SetInt("FullScreenSetting", Convert.ToInt32(value));
             Screen.fullScreen = value;
-        }
-
-        private int RemapIntValue(int src, int srcFrom, int srcTo, int targetFrom, int targetTo)
-        {
-            return targetFrom + (src - srcFrom) * (targetTo - targetFrom) / (srcTo - srcFrom);
         }
     }
 }

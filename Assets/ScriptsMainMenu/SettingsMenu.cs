@@ -14,6 +14,11 @@ namespace ScriptsMainMenu
         [SerializeField]
         private TextMeshProUGUI VolumeText;
         [SerializeField]
+        private TextMeshProUGUI MouseSensitivityText;
+
+        [SerializeField] private Slider VolumeSlider;
+        [SerializeField] private Slider MouseSensitivitySlider;
+        [SerializeField]
         private AudioMixer AudioMixer;
         [SerializeField]
         private TMP_InputField ModuloInput;
@@ -36,16 +41,30 @@ namespace ScriptsMainMenu
         private TextMeshProUGUI TextFilename;
         [SerializeField]
         private TMP_Dropdown experimentSelectionDropdown;
-    
+
+        public static int MinVolume = -80;
+        public static int MaxVolume = 0;
+        public static int MinMouseSensitivity = 50;
+        public static int MaxMouseSensitivity = 1000;
+
         private Resolution[] _screenResolutions;
         public Dictionary<int, List<EnvironmentConfiguration>> EnvironmentConfigurations { get; private set; }
         public int ExperimentId { get; private set; }
         public void UpdateVolume(float value)
         {
-            var val = RemapIntValue(Mathf.RoundToInt(value), -80, 0, 0, 100);
-            VolumeText.text = $"{val}";
+            var valueInt = Mathf.RoundToInt(value);
             AudioMixer.SetFloat("VolumeParam", value);
-            PlayerPrefs.SetFloat("VolumeParam", val);
+            PlayerPrefs.SetInt("VolumeSetting", valueInt);
+            var val = RemapIntValue(valueInt, MinVolume, MaxVolume, 0, 100);
+            VolumeText.text = $"{val}";
+        }
+
+        public void UpdateMouseSensitivity(float value)
+        {
+            var valueInt = Mathf.RoundToInt(value);
+            PlayerPrefs.SetInt("MouseSensitivitySetting", valueInt);
+            var val = RemapIntValue(valueInt, MinMouseSensitivity, MaxMouseSensitivity, 0, 100);
+            MouseSensitivityText.text = $"{val}";
         }
 
         public void UpdateResolution(int index)
@@ -108,7 +127,6 @@ namespace ScriptsMainMenu
         {
             ExperimentMetaData.TimeInEnvironment = int.TryParse(time, out var outVal) ? outVal : 20;
             PlayerPrefs.SetInt("TimeSetting", ExperimentMetaData.TimeInEnvironment);
-            Debug.Log($"Updated Time to {ExperimentMetaData.TimeInEnvironment}");
         }
 
         public void LoadSettingsMenu()
@@ -135,14 +153,17 @@ namespace ScriptsMainMenu
             }
             ResolutionDropdown.AddOptions(resolutions);
             ResolutionDropdown.value = index;
-        
+            
             if(!PlayerPrefs.HasKey("FullScreenSetting")) PlayerPrefs.SetInt("FullScreenSetting",1);
             if(!PlayerPrefs.HasKey("ModuloActiveSetting")) PlayerPrefs.SetInt("ModuloActiveSetting",1);
             if(!PlayerPrefs.HasKey("ModuloSetting")) PlayerPrefs.SetInt("ModuloSetting",10);
-            if(!PlayerPrefs.HasKey("VolumeSetting")) PlayerPrefs.SetInt("VolumeSetting",100);
+            if (!PlayerPrefs.HasKey("VolumeSetting")) PlayerPrefs.SetInt("VolumeSetting", -40);
             if(!PlayerPrefs.HasKey("TimeSetting")) PlayerPrefs.SetInt("TimeSetting", 20);
-        
+            if (!PlayerPrefs.HasKey("MouseSensitivitySetting")) PlayerPrefs.SetInt("MouseSensitivitySetting", 300);
+
+            ToggleFullscreen(Convert.ToBoolean(PlayerPrefs.GetInt("FullScreenSetting")));
             FullscreenToggle.isOn = Convert.ToBoolean(PlayerPrefs.GetInt("FullScreenSetting"));
+            ToggleModuloActive(Convert.ToBoolean(PlayerPrefs.GetInt("ModuloActiveSetting")));
             ModuloToggle.isOn = Convert.ToBoolean(PlayerPrefs.GetInt("ModuloActiveSetting"));
             ModuloInput.text = $"{PlayerPrefs.GetInt("ModuloSetting")}";
             TimeInput.text = $"{PlayerPrefs.GetInt("TimeSetting")}";
@@ -160,13 +181,20 @@ namespace ScriptsMainMenu
             {
                 ChooseExperimentFile(PlayerPrefs.GetString("SelectedFile"));
             }
-        
-            UpdateVolume(PlayerPrefs.GetFloat("VolumeSetting"));
+
+            MouseSensitivitySlider.minValue = MinMouseSensitivity;
+            MouseSensitivitySlider.maxValue = MaxMouseSensitivity;
+            VolumeSlider.minValue = MinVolume;
+            VolumeSlider.maxValue = MaxVolume;
+            
+            UpdateMouseSensitivity(PlayerPrefs.GetInt("MouseSensitivitySetting"));
+            MouseSensitivitySlider.value = PlayerPrefs.GetInt("MouseSensitivitySetting");
+            UpdateVolume(PlayerPrefs.GetInt("VolumeSetting"));
+            VolumeSlider.value = PlayerPrefs.GetInt("VolumeSetting");
         }
         public void ToggleFullscreen(bool value)
         {
             Screen.fullScreen = value;
-            Debug.Log($"Set fullscreen to {value}");
             PlayerPrefs.SetInt("FullScreenSetting", Convert.ToInt32(value));
         }
         public void ToggleModuloActive(bool active)
@@ -187,7 +215,7 @@ namespace ScriptsMainMenu
             PlayerPrefs.Save();
         }
     
-        private int RemapIntValue(int src, int srcFrom, int srcTo, int targetFrom, int targetTo)
+        public static int RemapIntValue(int src, int srcFrom, int srcTo, int targetFrom, int targetTo)
         {
             return targetFrom + (src - srcFrom) * (targetTo - targetFrom) / (srcTo - srcFrom);
         }
