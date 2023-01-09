@@ -1,114 +1,156 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using SimpleFileBrowser;
+using System.IO;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class StartMenu : MonoBehaviour
+namespace ScriptsMainMenu
 {
-    public GameObject ButtonChooseFile;
-    public GameObject ButtonChangeFile;
-    public TextMeshProUGUI TextFilename;
-    public TMP_Dropdown Dropdown;
-    public TMP_InputField InputParticipantNumber;
-    public TMP_InputField InputModulo;
+    public class StartMenu : MonoBehaviour
+    {
+        [SerializeField]
+        private TMP_InputField InputParticipantNumber;
+        [SerializeField]
+        private TextMeshProUGUI ErrorText;
+        [SerializeField]
+        private SettingsMenu SettingsMenu;
 
-    private int _participantNumber;
-    private int _experimentId;
-    private int _moduloValue;
-    private bool _fileSelected;
-    private bool _moduloActive;
-    private Dictionary<int, List<EnvironmentConfiguration>> _environmentConfigurations;
+        [SerializeField]
+        private float ErrorTextTimeout;
+        private int _participantNumber;
+        private int _experimentId;
+        private bool _fileSelected;
+        private int _moduloValue;
+        private bool _moduloActive;
+        private int _vanishingRate;
+        private float _errorEndTime;
+        private bool _errorOccured;
+        private Dictionary<int, List<EnvironmentConfiguration>> _environmentConfigurations;
     
-    // Start is called before the first frame update
-    private void Awake()
-    {
-        InputParticipantNumber.text = string.Empty;
-        TextFilename.text = string.Empty;
-        TextFilename.gameObject.SetActive(false);
-        ButtonChangeFile.SetActive(false);
-        ButtonChooseFile.SetActive(true);
-        Dropdown.gameObject.SetActive(false);
-        _participantNumber = -1;
-        _experimentId = -1;
-        _fileSelected = false;
-        _moduloValue = 10;
-        _moduloActive = false;
-    }
-
-    public void ToggleModulo(bool value)
-    {
-        _moduloActive = value;
-    }
-
-    public void SetModuloValue(string value)
-    {
-        _moduloValue = int.TryParse(value, out var outVal) ? outVal: -1;
-    }
-
-    public void ChangeParticipantNumber(string input)
-    {
-        var output = int.TryParse(input, out var outVal) ? outVal: -1;
-        Debug.Log($"Changing Part. Number to {output}");
-        _participantNumber = output;
-        if (_participantNumber >= 0)
+        private void Awake()
         {
-            _experimentId = _participantNumber % _moduloValue;
-            Debug.Log($"Experiment Id: {_experimentId}");
-            // if (_fileSelected && _environmentConfigurations.ContainsKey(_experimentId))
-            // {
-            //     Dropdown.value = _experimentId;
-            // }
-            // TODO make dropdown value selection independent of experiment id
+            InputParticipantNumber.text = string.Empty;
+            ErrorText.text = "";
+            _participantNumber = -1;
+            _experimentId = -1;
+            _fileSelected = false;
+            _moduloValue = PlayerPrefs.HasKey("ModuloSetting") ? PlayerPrefs.GetInt("ModuloSetting"): 10;
+            _moduloActive = PlayerPrefs.HasKey("ModuloActiveSetting") ? Convert.ToBoolean(PlayerPrefs.GetInt("ModuloActiveSetting")): true;
+            _errorOccured = false;
+            _errorEndTime = 0.0f;
+            _vanishingRate = 10;
         }
-    }
+
+        private void ShowErrorMessage(string msg)
+        {
+            ErrorText.text = msg;
+            _errorEndTime = Time.time + ErrorTextTimeout;
+            _errorOccured = true;
+        }
+
+        public void ChangeParticipantNumber(string input)
+        {
+            var output = int.TryParse(input, out var outVal) ? outVal: -1;
+            _participantNumber = output;
+            if (_participantNumber >= 0)
+            {
+                if (_moduloActive)
+                {
+                    _experimentId = _participantNumber % _moduloValue;
+                    if (_fileSelected && _environmentConfigurations.Keys.ToList().Count <= _experimentId)
+                    {
+                        _experimentId = _environmentConfigurations.Keys.ToList().Count - 1;
+                    }
+                }
+            }
+        }
+
+        public void LoadStartMenu()
+        {
+            _moduloActive = Convert.ToBoolean(PlayerPrefs.GetInt("ModuloActiveSetting"));
+            _moduloValue = PlayerPrefs.HasKey("ModuloSetting") ? PlayerPrefs.GetInt("ModuloSetting"): 10;
+            SettingsMenu.LoadExperimentsFromFile();
+            _environmentConfigurations = SettingsMenu.EnvironmentConfigurations;
+            _fileSelected = _environmentConfigurations != null && _environmentConfigurations.Keys.Count > 0;
+            if (!_fileSelected)
+            {
+                ShowErrorMessage("Check experiment file in settings menu!");
+            }
+            if (!_moduloActive)
+            {
+                _experimentId = SettingsMenu.ExperimentId;
+            }
+            else
+            {
+                _experimentId = _participantNumber % _moduloValue;
+                if (_environmentConfigurations != null && _fileSelected && _environmentConfigurations.Keys.ToList().Count <= _experimentId)
+                {
+                    _experimentId = _environmentConfigurations.Keys.ToList().Count - 1;
+                }
+            }
+        }
     
-    public void ChooseExperimentFileButtonCallback()
-    {
-        var a = FileBrowser.ShowLoadDialog(paths =>
+        public void StartGame()
         {
-            ChooseExperimentFile(paths[0]);
-        }, () => {}, FileBrowser.PickMode.Files);
-    }
+            if (_experimentId >= 0 && _fileSelected && _participantNumber >= 0)
+            {
+                // start game
+                var list = _environmentConfigurations[_experimentId];
+            
+                //TODO generate seed or get it from somewhere
+                ExperimentMetaData.Seed = 100;
+                ExperimentMetaData.ParticipantNumber = _participantNumber;
+                ExperimentMetaData.Environments = list;
+                ExperimentMetaData.TimeInEnvironment = PlayerPrefs.GetInt("TimeSetting");
+                ExperimentMetaData.StartTime = DateTime.Now;
+                ExperimentMetaData.Index = 0;
+                
+                DeleteLogsOnStartNewGame(_participantNumber);
 
-    private void ChooseExperimentFile(string path)
-    {
-        ButtonChangeFile.SetActive(true);
-        ButtonChooseFile.SetActive(false);
-        Dropdown.gameObject.SetActive(true);
-        TextFilename.gameObject.SetActive(true);
-        List<string> parts;
-        if (path.Contains("/"))
-        {
-            parts = path.Split("/").ToList();
-        }else if (path.Contains("\\"))
-        {
-            parts = path.Split("\\").ToList();
+                Debug.Log($"Starting with id: {_experimentId}");
+                Cursor.lockState = CursorLockMode.Locked;
+                SceneManager.LoadScene(1);
+            }
+            else
+            {
+                ShowErrorMessage("Please enter a positive participant number and select an experiment file!");
+            }
         }
-        else
+
+        private void FixedUpdate()
         {
-            return;
+            if (_errorOccured)
+            {
+                if (_errorEndTime < Time.time)
+                {
+                    var last = (int)ErrorText.faceColor.a;
+                    ErrorText.faceColor = new Color32(255, 0, 0,(byte)(last - _vanishingRate));
+                    if (last - _vanishingRate <= 0)
+                    {
+                        _errorOccured = false;
+                        ErrorText.text = "";
+                        ErrorText.color = Color.red;
+                    }
+                }
+            }
         }
 
-        TextFilename.text = parts[^1];
-        Dropdown.ClearOptions();
-        _fileSelected = true;
-        _environmentConfigurations = CsvUtils.EnvironmentConfigsFromCsv(path);
-        Dropdown.AddOptions(_environmentConfigurations.Keys.ToList().ConvertAll(k => k.ToString()));
-    }
+        private void DeleteLogsOnStartNewGame(int participantNumber)
+        {
+            var dirPath = Application.dataPath + $"/ExperimentLogs_{participantNumber}/";
+            if (Directory.Exists(dirPath))
+            {
+                Directory.Delete(dirPath, true);
+            }
 
-    public void StartGame()
-    {
-        // if (_fileSelected && _participantNumber >= 0)
-        // {
-        //     // start game
-        //     Debug.Log($"Starting game with number: {_participantNumber}");
-        // }
-        // else
-        // {
-        //     Debug.Log($"Can't start the game due to missing info!");
-        // }
-        SceneManager.LoadScene(1);
+            Recorder.ResetRecordings();
+        }
+
+        public void QuitGame()
+        {
+            Application.Quit();
+        }
     }
 }
