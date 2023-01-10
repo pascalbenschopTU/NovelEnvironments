@@ -37,7 +37,6 @@ public class AreaTracker : MonoBehaviour
 			if(once) {
 				done = true;
 			}
-			Debug.Log("Entered Area");
             lookDirection.setTarget(gameObject);
 			if(destroy) Destroy(other.gameObject);
 		}
@@ -46,7 +45,6 @@ public class AreaTracker : MonoBehaviour
 	void OnTriggerExit(Collider other) {
 		if(area && other.gameObject.CompareTag(target)) {
 			leaveEventz.Invoke();
-            Debug.Log("Exit Area");
             lookDirection.setTarget(null);
 		}
 	}

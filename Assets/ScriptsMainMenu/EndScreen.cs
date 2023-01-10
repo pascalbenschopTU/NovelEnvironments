@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
@@ -58,12 +59,34 @@ namespace ScriptsMainMenu
 
         private void SetDistanceWalked(int distance)
         {
+            distance = 0;
+            
+            Dictionary<int, List<PositionalData>> positionalData = CsvUtils.PositionalDataFromCsv();
+            if (positionalData != null && positionalData.Count > 0)
+            {
+                distance = (int)Aggregate.CalculateDistance(positionalData);
+            }
+
             ResultsDistanceWalked.text = $"{distance} m";
         }
 
         private void SetLandmarksFound(int value, int max = -1)
         {
-            ResultsLandmarksFound.text = max >= 0 ? $"{value} / {max}" : $"{value}";
+            if (ExperimentMetaData.Environments == null)
+            {
+                ResultsPicturesTakenObject.SetActive(false);
+                return;
+            }
+
+            var count = 0;
+
+            Dictionary<int, List<TaskData>> tasks = CsvUtils.TaskDataFromCsv();
+            if (tasks != null && tasks.Count > 0)
+            {
+                count = tasks.SelectMany(pair => pair.Value).Where(taskdata => taskdata.task == "Landmark").Count();
+            }
+
+            ResultsLandmarksFound.text = $"{count}";
         }
 
         private void SetPicturesTaken(int value)
@@ -79,8 +102,13 @@ namespace ScriptsMainMenu
             {
                 ResultsPicturesTakenObject.SetActive(true);
 
-                int participant_id = ExperimentMetaData.ParticipantNumber;
-                object count = gameObject.GetComponent<SqliteLogging>().getCountPictureByUserInEnvironment(participant_id);
+                var count = 0;
+
+                Dictionary<int, List<TaskData>> tasks = CsvUtils.TaskDataFromCsv();
+                if (tasks != null && tasks.Count > 0)
+                {
+                    count = tasks.SelectMany(pair => pair.Value).Where(taskdata => taskdata.task == "Picture").Count();
+                }
 
                 ResultsPicturesTaken.text = $"{count}";
             }
@@ -102,18 +130,16 @@ namespace ScriptsMainMenu
             if (taskActive)
             {
                 ResultsObjectsPickedUpObject.SetActive(true);
-                if (!ResultsPicturesTakenObject.activeSelf)
+
+                var count = 0;
+
+                Dictionary<int, List<TaskData>> tasks = CsvUtils.TaskDataFromCsv();
+                if (tasks != null && tasks.Count > 0)
                 {
-                    var currentPos = ResultsObjectsPickedUpObject.transform.localPosition;
-                    ResultsObjectsPickedUpObject.transform.localPosition =
-                        new Vector3(currentPos.x, currentPos.y + 100, 0);
+                    count = tasks.SelectMany(pair => pair.Value).Where(taskdata => taskdata.task == "Gathering").Count();
                 }
-                else
-                {
-                    var currentPos = ResultsObjectsPickedUpObject.transform.localPosition;
-                    ResultsObjectsPickedUpObject.transform.localPosition = new Vector3(currentPos.x, -245, 0);
-                }
-                ResultsObjectsPickedUp.text = max >= 0? $"{value} / {max}": $"{value}";
+
+                ResultsObjectsPickedUp.text = $"{count}";
             }
             else
             {

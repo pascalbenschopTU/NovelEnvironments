@@ -6,45 +6,49 @@ using System.IO;
 
 public class Recorder : MonoBehaviour
 {
-    public Queue<ReplayData> recordingQueue {get; private set;}
+    public static List<PositionalData> recording {get; private set;}
+    public static List<TaskData> tasks { get; private set; }
 
-    private void Awake() 
+    public static void ResetRecordings()
     {
-        recordingQueue = new Queue<ReplayData>();
-    }
-
-    public void recordReplayFrame(ReplayData data)
-    {
-        if (recordingQueue != null) {
-            recordingQueue.Enqueue(data);
-        }
-        // Debug.Log("Recording data: " + data.position + " Rotation: " + data.rotation);
-    }
-
-    public void storeRecording()
-    {
-        Debug.Log("End Recording");
-        string path = "./recording.csv";
-        // FileStream stream = new FileStream(path, FileMode.Create, FileAccess.Write);
-
-        // using var writer = new StreamWriter(path);
-        using (StreamWriter writer = new StreamWriter(path))
+        if (recording != null && tasks != null)
         {
-            //if(Settings.index != null)
-            //{
-            //    int index = Settings.index;
-            //    List<EnvironmentConfiguration> environments = Settings.environments;
-            //    if (environments.Count > 0) {
-            //        EnvironmentConfiguration environment_config = environments[index];
-            //        writer.WriteLine(environment_config.ToString());
-            //    }
-            //}
-            // EnvironmentGenerator env_generator = environment.GetComponent<EnvironmentGenerator>();
-
-            foreach (ReplayData data in recordingQueue)
-            {
-                writer.WriteLine(data);
-            }
+            recording.Clear();
+            tasks.Clear();
+        } else
+        {
+            recording = new List<PositionalData>();
+            tasks = new List<TaskData>();
         }
+    }
+
+    public static void RecordPlayerData(PositionalData data)
+    {
+        if (recording != null) 
+        {
+            recording.Add(data);
+        } else
+        {
+            recording = new List<PositionalData>
+            {
+                data
+            };
+        }
+    }
+
+    public static void RecordTaskData(TaskData data)
+    {
+        if (tasks == null)
+        {
+            tasks = new List<TaskData>()
+            {
+                data
+            };
+        }
+        else if (data != null && !tasks.Contains(data))
+        {
+            tasks.Add(data);
+        } 
+        
     }
 }

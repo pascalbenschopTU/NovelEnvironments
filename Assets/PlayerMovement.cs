@@ -33,50 +33,34 @@ public class PlayerMovement : MonoBehaviour
     public Camera playerCamera;
     private Vector2 currentInput;
 
-    private Recorder recorder;
-
     private GameObject player;
-    private Scene scene;
-    private int recording_step;
-
-    private void Awake()
-    {
-        int index = ExperimentMetaData.Index;
-        if(index > 0) {
-            environmentConfiguration = ExperimentMetaData.Environments[index-1];
-        } else
-        {
-            environmentConfiguration = ExperimentMetaData.Environments[0];
-        }
-        recorder = GetComponent<Recorder>();
-        recording_step = 0;
-    }
 
     private void Start()
     {
-
+        environmentConfiguration = ExperimentMetaData.currentEnvironment;
         player = GameObject.Find("Player");
 
-        // Log data every .5 seconds
-        InvokeRepeating("logData", 0f, 0.5f);
-        scene = SceneManager.GetActiveScene();
+        Scene scene = SceneManager.GetActiveScene();
+        if (scene.name != "DefaultScene")
+        {
+            // Log data 40 times per second.
+            InvokeRepeating("LogData", 0f, 0.025f);
+        } else
+        {
+            player.transform.position = new Vector3(0, 1, 0);
+            player.transform.rotation = new Quaternion(0, 180, 0, 0);
+        }
     }
 
-    private void logData()
+    private void LogData()
     {
-        ReplayData data = new ReplayData(this.transform.position, this.transform.rotation);
-        if((recorder != null) && (scene.name != "DefaultScene")) 
-        {
-            recorder.recordReplayFrame(data);
-
-            int participant_id = ExperimentMetaData.ParticipantNumber;
-            int environment_id = (int)environmentConfiguration.EnvironmentType;
-
-            player.GetComponent<SqliteLogging>().storeUserPosition(participant_id, environment_id, data, recording_step);
-            player.GetComponent<SqliteLogging>().storeUserRotation(participant_id, environment_id, data, recording_step);
-
-            recording_step++;
-        }
+        PositionalData data = new PositionalData
+        (
+            (int)environmentConfiguration.EnvironmentType, 
+            this.transform.position, 
+            this.transform.rotation
+        );
+        Recorder.RecordPlayerData(data);
     }
 
     private void HandleFootSteps()

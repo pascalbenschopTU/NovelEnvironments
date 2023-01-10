@@ -22,7 +22,7 @@ public class EnvironmentConfiguration
     public ConfigType NumberObjectsConfig { get; set; }
     public ConfigType MovingObjectConfig { get; set; }
     public ConfigType InteractionConfig { get; set; }
-    public ConfigType FOVConfig { get; set; }
+    public ConfigType RDConfig { get; set; }
     public ConfigType MapConfig { get; set; }
     public EnvironmentType EnvironmentType { get; set; }
     public int Index { get; set; }
@@ -48,12 +48,12 @@ public class EnvironmentConfiguration
             _ => 0
         };
     }
-    public int GetFOVConfigValue()
+    public int GetRDConfigValue()
     {
-        return FOVConfig switch
+        return RDConfig switch
         {
             ConfigType.Low => 50,
-            ConfigType.High => 90,
+            ConfigType.High => 200,
             _ => 0
         };
     }
@@ -65,7 +65,7 @@ public class EnvironmentConfiguration
         NumberObjectsConfig = ConfigType.Low;
         MovingObjectConfig = ConfigType.Low;
         InteractionConfig = ConfigType.Low;
-        FOVConfig = ConfigType.Low;
+        RDConfig = ConfigType.Low;
         MapConfig = ConfigType.Low;
         EnvironmentType = EnvironmentType.Forest;
         PickupTask = false;
@@ -80,7 +80,7 @@ public class EnvironmentConfiguration
                $"Texture config: {NumberObjectsConfig}\n" +
                $"MovingObject config: {MovingObjectConfig}\n" +
                $"Interaction config: {InteractionConfig}\n" +
-               $"FOV config: {FOVConfig}\n" +
+               $"RD config: {RDConfig}\n" +
                $"Map config: {MapConfig}\n" +
                $"Camera task: {CameraTask}\n" +
                $"Pickup task: {PickupTask}";
@@ -88,7 +88,7 @@ public class EnvironmentConfiguration
 
     public string ToCsv()
     {
-        return $"{ExperimentId};{Index};{EnvironmentType};{NumberObjectsConfig};{MovingObjectConfig};{InteractionConfig};{FOVConfig};{MapConfig};{CameraTask};{PickupTask}";
+        return $"{ExperimentId};{Index};{EnvironmentType};{NumberObjectsConfig};{MovingObjectConfig};{InteractionConfig};{RDConfig};{MapConfig};{CameraTask};{PickupTask}";
     }
 
     public static EnvironmentConfiguration FromCsv(string[] csvColumns)
@@ -101,7 +101,7 @@ public class EnvironmentConfiguration
             NumberObjectsConfig = StringToConfig(csvColumns[3]),
             MovingObjectConfig = StringToConfig(csvColumns[4]),
             InteractionConfig = StringToConfig(csvColumns[5]),
-            FOVConfig = StringToConfig(csvColumns[6]),
+            RDConfig = StringToConfig(csvColumns[6]),
             MapConfig = StringToConfig(csvColumns[7]),
             CameraTask = bool.Parse(csvColumns[8]),
             PickupTask = bool.Parse(csvColumns[9])

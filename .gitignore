@@ -13,6 +13,10 @@
 .idea
 *.csproj
 *.sln
+*.png
+*.png.meta
+*.csv
+*.csv.meta
 /Assets/Low-Poly Style Nature
 /Assets/44.1 General Library (Free Sample Pack)
 /Assets/Nature Sound FX/

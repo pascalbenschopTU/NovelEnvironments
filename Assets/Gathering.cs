@@ -6,15 +6,17 @@ using UnityEngine.UI;
 
 public class Gathering : MonoBehaviour
 {
+    private EnvironmentConfiguration environmentConfiguration;
+
     private enum UpDown { Down = -1, Start = 0, Up = 1 };
     private Text text;
     string shownText = "Press E to collect lantern";
     private UpDown textChanged = UpDown.Start;
     float raycastDistance = 5;
-    bool doGathering = true;
 
-    void Awake()
+    void Start()
     {
+        environmentConfiguration = ExperimentMetaData.currentEnvironment;
         // Load the Arial font from the Unity Resources folder.
         Font arial;
         arial = (Font)Resources.GetBuiltinResource(typeof(Font), "Arial.ttf");
@@ -53,23 +55,35 @@ public class Gathering : MonoBehaviour
 
     void Update()
     {
-        if (doGathering){
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
 
-            if (Physics.Raycast(ray, out hit, raycastDistance))
-            {
-                if (hit.collider.CompareTag("Gather")) {
-                    if (Input.GetKeyDown(KeyCode.E)){
-                        shownText = "Lantern collected";
-                        text.color = Color.magenta;
-                    }
-                    text.text = shownText;
-                    return;
+        if (Physics.Raycast(ray, out hit, raycastDistance))
+        {
+            if (hit.collider.CompareTag("Gather")) {
+                if (Input.GetKeyDown(KeyCode.E)){
+                    shownText = "Lantern collected";
+                    text.color = Color.magenta;
+                    LogGathering();
                 }
+                text.text = shownText;
+                return;
             }
-
-            text.text = "";
         }
+
+        text.text = "";
+    }
+
+    private void LogGathering()
+    {
+        TaskData task = new TaskData(
+            new PositionalData(
+                (int)environmentConfiguration.EnvironmentType,
+                gameObject.transform.position,
+                gameObject.transform.rotation
+            ),
+            "Gathering" // name of task
+        );
+        Recorder.RecordTaskData(task);
     }
 }
