@@ -619,6 +619,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba5a5f76114e2654f8c818862162ccd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  material: {fileID: 2100000, guid: 9483b6f0d06abe6498fa148a66c07b96, type: 2}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -900,7 +901,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 636fc37fa2592c0499c8a8ca41c8130a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mouseSenstivity: 300
   playerBody: {fileID: 1582923930}
 --- !u!114 &963194230
 MonoBehaviour:
@@ -1394,6 +1394,16 @@ PrefabInstance:
       propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1691340868527294204, guid: a474f5538f883a841b470d5aa4c2f80a,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6824554987382649490, guid: a474f5538f883a841b470d5aa4c2f80a,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a474f5538f883a841b470d5aa4c2f80a, type: 3}
 --- !u!1 &1355761736
@@ -1430,16 +1440,21 @@ MonoBehaviour:
   objects:
   - {fileID: 1986308318195784, guid: f6045a15e1065124680c92c504c8d7ea, type: 3}
   - {fileID: 1175661577396104, guid: 9b2afb2de81f7fa4bb4c6c9533ff3e7f, type: 3}
+  - {fileID: 1864972976023934, guid: c4a173ae0083fee4db746ecdf20ba032, type: 3}
   - {fileID: 1187100871979764, guid: b8ca6433e7a78e346904aef72892f856, type: 3}
+  - {fileID: 1065655044243356, guid: 20f64b4081161ef43b320aa975519fdc, type: 3}
   - {fileID: 1649925079310092, guid: 736e50b5fd21b1240b02444bc774d83e, type: 3}
   - {fileID: 1092110070509382, guid: 7f370a51edc99c440819f87ec0f00e2c, type: 3}
   - {fileID: 1891266665448334, guid: 67a0360629c18d741ac237d5197935cd, type: 3}
+  - {fileID: 1960440776389710, guid: 0450d19464994a4439f6c7dea52104b2, type: 3}
+  - {fileID: 1977925246162678, guid: 8b7b6b45c88df22498a9e20b7d7a34de, type: 3}
   - {fileID: 1203660441109236, guid: 07aab42f1eca6ef4887a7fa93ad8282b, type: 3}
+  - {fileID: 1721112587459618, guid: 2ed80e4af24778742a16837f6b64d172, type: 3}
   - {fileID: 1866083037941774, guid: 7fe8fb23b001d994f92ccc500f281cf8, type: 3}
   - {fileID: 1209769021331456, guid: 715b325acd44dfd42a1b236411075c6f, type: 3}
   - {fileID: 1786732080692216, guid: 46aa8b6d013691a43a624b2200d4519a, type: 3}
-  - {fileID: 1721112587459618, guid: 2ed80e4af24778742a16837f6b64d172, type: 3}
-  - {fileID: 1065655044243356, guid: 20f64b4081161ef43b320aa975519fdc, type: 3}
+  - {fileID: 1786647392387880, guid: 21006dba7e3f90042b36bf9b5f6af51e, type: 3}
+  - {fileID: 1814914059941812, guid: c7c726d17347cd44a8b6a3d3600f37b9, type: 3}
   landmarks: []
   gatherable: {fileID: 150698, guid: f4c62b1a746281e44800c9250dd3643c, type: 3}
   meshTag: SandFloor
@@ -1656,7 +1671,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -50, y: -50}
-  m_SizeDelta: {x: 500, y: 500}
+  m_SizeDelta: {x: 600, y: 600}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1496901624
 MonoBehaviour:
@@ -2097,26 +2112,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   layer: Ground
   objects:
-  - {fileID: 1056816346895226, guid: fce1307539b865c4d942dfa642eab7ec, type: 3}
-  - {fileID: 1153027382682948, guid: 7d227c3a7fa9cf54a8d07c8a5e34b64a, type: 3}
-  - {fileID: 1131628691654494, guid: 5c6ccde0684f68f4f9de1e388495c480, type: 3}
-  - {fileID: 1143307919750216, guid: 3dff328fdba649c44a1d608ec75217d7, type: 3}
-  - {fileID: 1763038635241144, guid: b6adf14e248ee014597da88e5b5cb4b8, type: 3}
-  - {fileID: 1817203163705728, guid: 030c083b63658d2409864330589d7c2e, type: 3}
-  - {fileID: 1977470886905136, guid: 31d5af46872794c47831f7a6da72a909, type: 3}
-  - {fileID: 1026519327573510, guid: df93f3d6378363547a6e517b28966afd, type: 3}
-  - {fileID: 1448558995247362, guid: de4ee8b58db0a0f4d96175ffd1f29120, type: 3}
-  - {fileID: 1977470886905136, guid: 31d5af46872794c47831f7a6da72a909, type: 3}
-  - {fileID: 1017275491852100, guid: cbb2baf7f26aed649a2393144227a562, type: 3}
-  - {fileID: 1575919079451628, guid: 89f0268b869809841b9a32b72053e107, type: 3}
-  - {fileID: 1697415565114782, guid: ab28e8006e210aa4480fe64bd6fa7208, type: 3}
-  - {fileID: 1237205094868938, guid: 2909343e8fc65984b82bff9fab8cf5d1, type: 3}
-  - {fileID: 1273699440398734, guid: 3959f9b79ac88ac4d8690e7e6c7e3ded, type: 3}
-  - {fileID: 1844933204605362, guid: 16784d6fbb71942438b159522cd5d5c3, type: 3}
+  - {fileID: 1785044199738478, guid: a6cd0c657da915144bd367d385c0fc31, type: 3}
+  - {fileID: 1646639913439324, guid: ac16a24c584766f4e905adc7db85b93d, type: 3}
+  - {fileID: 1378370071209536, guid: a60988b24f8ff094ba511054edf48a9d, type: 3}
+  - {fileID: 1350961368450940, guid: c6e50eec7153f5b45ac3917fb6cfd06a, type: 3}
+  - {fileID: 1879644038180034, guid: 3744e668ae9047e4b9590c326355161c, type: 3}
+  - {fileID: 1228088659953116, guid: 80c5916b9606ce646be16611d9a06d13, type: 3}
+  - {fileID: 1520711273483040, guid: 331560f2206dc024cb084301a19c05ad, type: 3}
+  - {fileID: 1742271052185720, guid: 30916da9dd66da74d8e831f29c0b250f, type: 3}
+  - {fileID: 1876599732148902, guid: 6ebfc6898dc70814c86bb78d43e72a9c, type: 3}
+  - {fileID: 1282495547358542, guid: fb63f2d87ad55dd42891f1e2dbfe660d, type: 3}
+  - {fileID: 1060771982902304, guid: abc98a3329f924b4680c86edde08968d, type: 3}
+  - {fileID: 1276862051916332, guid: 1be61187b5d765449be824463642cb0f, type: 3}
   landmarks: []
   gatherable: {fileID: 150698, guid: f4c62b1a746281e44800c9250dd3643c, type: 3}
   meshTag: ConcreteFloor
-  objectAmount: 5
+  objectAmount: 1
   terrainMaterial: {fileID: 2100000, guid: 1b20a390d157f314e8b9bb5dcd9a8c00, type: 2}
   heightCurve:
     serializedVersion: 2
@@ -2345,7 +2356,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
