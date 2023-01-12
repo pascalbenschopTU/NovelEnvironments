@@ -54,23 +54,17 @@ public class EnvironmentGenerator : MonoBehaviour
         int seed = ExperimentMetaData.Seed;
 
         meshGenerator = gameObject.AddComponent<MeshGenerator>();
+        meshGenerator.Initialize(layer, terrainMaterial, heightCurve, scale, octaves, lacunarity, seed, gradient);
         pathGenerator = gameObject.AddComponent<PathGenerator>();
         pathGenerator.Initialize(layer, landmarks, seed, terrainMaterial);
         objectGenerator = gameObject.AddComponent<ObjectGenerator>();
 
 
-        if((int)environmentConfiguration.NumberObjectsConfig == 0) {
-            meshGenerator.Initialize(layer, objects, landmarks, terrainMaterial, heightCurve, scale, octaves, lacunarity, seed, gradient);
+        if(environmentConfiguration.NumberObjectsConfig == ConfigType.Low) {
             objectGenerator.Initialize(layer, objects, seed, objectAmount, gatherable);
-
-        }
-
-        else {
-            meshGenerator.Initialize(layer, complexObjects, landmarks, terrainMaterial, heightCurve, scale, octaves, lacunarity, seed, gradient);
+        } else {
             objectGenerator.Initialize(layer, complexObjects, seed, objectAmount, gatherable);
         }
-
-//        Debug.Log((int)environmentConfiguration.NumberObjectsConfig);
 
         switch(gameObject.tag)
                 {
@@ -111,15 +105,13 @@ public class EnvironmentGenerator : MonoBehaviour
         pathGenerator.GeneratePaths(meshes);
         pathGenerator.GenerateLandmarks(meshes);
 
-        GameObject temp = new GameObject("EnvironmentObjects");
-        temp.transform.parent = transform;
 
         foreach(Mesh mesh in meshes)
         {
-            objectGenerator.GenerateObjects(mesh, temp);
+            objectGenerator.GenerateObjects(mesh);
             if (generateGatherables)
             {
-                objectGenerator.GenerateGatherables(mesh, temp);
+                objectGenerator.GenerateGatherables(mesh);
             }
         }
     }
