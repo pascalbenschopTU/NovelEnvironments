@@ -97,8 +97,8 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
-  m_LightingSettings: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: 7ed0b9b5295fea0488fedc26b0c43ae8, type: 2}
+  m_LightingSettings: {fileID: 4890085278179872738, guid: 5d156cc378777bd4ab0355d45788d342, type: 2}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -2130,7 +2130,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 636fc37fa2592c0499c8a8ca41c8130a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mouseSenstivity: 300
   playerBody: {fileID: 609870288}
 --- !u!81 &1965111781
 AudioListener:
