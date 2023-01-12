@@ -158,9 +158,11 @@ public class StartingPositionGenerator : MonoBehaviour
         Debug.Log("Time has run out!");
 
         Debug.Log("Logging data");
-        CsvUtils.PositionalDataToCsv(Recorder.recording);
-        CsvUtils.TaskDataToCsv(Recorder.tasks);
-
+        var directoryPath = Path.Join(Application.dataPath, $"ExperimentLogs_{ExperimentMetaData.ParticipantNumber}");
+        CsvUtils.PositionalDataToCsv(Recorder.recording, directoryPath);
+        CsvUtils.TaskDataToCsv(Recorder.tasks, directoryPath);
+        CsvUtils.LogExperimentConfig(directoryPath);
+        
         SceneManager.LoadScene("DefaultScene");
     }
 

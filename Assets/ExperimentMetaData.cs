@@ -23,4 +23,29 @@ public class ExperimentMetaData : MonoBehaviour
     public static bool ExperimentFinished = false;
     // attach the real log content or path to logging file for final dataset ?
     public static string Log="";
+
+    public static string ToJson()
+    {
+        var obj = new ExperimentConfig()
+        {
+            Seed = ExperimentMetaData.Seed,
+            TimeInEnvironment = ExperimentMetaData.TimeInEnvironment,
+            StartTime = ExperimentMetaData.StartTime.ToString("G"),
+            EndTime = ExperimentMetaData.EndTime.ToString("G"),
+            ParticipantNumber = ExperimentMetaData.ParticipantNumber,
+            ExperimentFinished = ExperimentMetaData.ExperimentFinished,
+        };
+        return JsonUtility.ToJson(obj);
+    }
 }
+[Serializable]
+class ExperimentConfig
+{
+    public int TimeInEnvironment;
+    public int Seed;
+    public string StartTime;
+    public string EndTime;
+    public int ParticipantNumber;
+    public bool ExperimentFinished;
+}
+
