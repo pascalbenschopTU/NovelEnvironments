@@ -632,6 +632,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba5a5f76114e2654f8c818862162ccd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  material: {fileID: 2100000, guid: 9483b6f0d06abe6498fa148a66c07b96, type: 2}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -1416,6 +1417,16 @@ PrefabInstance:
       propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1691340868527294204, guid: a474f5538f883a841b470d5aa4c2f80a,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6824554987382649490, guid: a474f5538f883a841b470d5aa4c2f80a,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a474f5538f883a841b470d5aa4c2f80a, type: 3}
 --- !u!1 &1355761736
@@ -1695,7 +1706,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -50, y: -50}
-  m_SizeDelta: {x: 500, y: 500}
+  m_SizeDelta: {x: 600, y: 600}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1496901624
 MonoBehaviour:
