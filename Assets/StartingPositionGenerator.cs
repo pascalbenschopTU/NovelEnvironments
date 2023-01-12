@@ -67,6 +67,7 @@ public class StartingPositionGenerator : MonoBehaviour
         setPlayerMiniMap();
         setPlayerFOV();
         TogglePlayerCamera();
+        ToggleLowInvolvement();
     }
 
     private void setPlayerMiniMap()
@@ -118,6 +119,14 @@ public class StartingPositionGenerator : MonoBehaviour
             {
                 photoCaptureScript.enabled = false;
             }
+        }
+    }
+
+    private void ToggleLowInvolvement()
+    {
+        if (environmentConfiguration.InteractionConfig == ConfigType.Low)
+        {
+            player.AddComponent<PlayerMovementReplayController>();
         }
     }
 
