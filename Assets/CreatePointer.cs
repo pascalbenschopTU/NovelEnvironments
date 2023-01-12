@@ -2,7 +2,9 @@ using UnityEngine;
 
 public class CreatePointer : MonoBehaviour
 {
-    GameObject player;
+    private GameObject player;
+
+    public Material material;
 
     // Start is called before the first frame update
     void Start()
@@ -20,8 +22,8 @@ public class CreatePointer : MonoBehaviour
         int[] trianglesArray = new int[3];
 
         VerticesArray[0] = player.transform.position + new Vector3(-size, 30, -size);
-        VerticesArray[1] = player.transform.position + new Vector3(size, 30, -size);
-        VerticesArray[2] = player.transform.position + new Vector3(0, 30, size + 1);
+        VerticesArray[2] = player.transform.position + new Vector3(size, 30, -size);
+        VerticesArray[1] = player.transform.position + new Vector3(0, 30, size + 1);
 
         trianglesArray[0] = 0;
         trianglesArray[1] = 1;
@@ -39,9 +41,9 @@ public class CreatePointer : MonoBehaviour
         go.AddComponent<MeshFilter>();
         go.AddComponent<MeshCollider>();
         go.AddComponent<MeshRenderer>();
-        go.GetComponent<MeshRenderer>().material = new Material(Shader.Find("Universal Render Pipeline/2D/Sprite-Lit-Default"));
+        go.GetComponent<MeshRenderer>().material = material;
         go.GetComponent<MeshRenderer>().material.color = color;
-        go.GetComponent<MeshFilter>().mesh = mesh;
+        go.GetComponent<MeshFilter>().sharedMesh = mesh;
         go.GetComponent<MeshCollider>().sharedMesh = mesh;
         go.GetComponent<MeshCollider>().enabled = true;
 
