@@ -22,16 +22,16 @@ public class EnvironmentGenerator : MonoBehaviour
 
     [SerializeField] private AnimationCurve heightCurve;
 
-    public int xMin;
-    public int zMin;
-
     public float scale;
     public int octaves;
     public float lacunarity;
 
     public Gradient gradient;
 
-    public int size = 400;
+    private int size = 1000;
+
+    private int xMin;
+    private int zMin;
 
     private bool generateGatherables = false;
 
@@ -47,11 +47,12 @@ public class EnvironmentGenerator : MonoBehaviour
     public void Initialize()
     {
         int seed = ExperimentMetaData.Seed;
+        xMin = zMin = -(size/2);
 
         meshGenerator = gameObject.AddComponent<MeshGenerator>();
         meshGenerator.Initialize(layer, objects, landmarks, terrainMaterial, heightCurve, scale, octaves, lacunarity, seed, gradient);
         pathGenerator = gameObject.AddComponent<PathGenerator>();
-        pathGenerator.Initialize(layer, landmarks, seed, terrainMaterial);
+        pathGenerator.Initialize(layer, landmarks, seed, terrainMaterial, size);
         objectGenerator = gameObject.AddComponent<ObjectGenerator>();
         objectGenerator.Initialize(layer, objects, seed, objectAmount, gatherable);
         Debug.Log(gameObject.tag);
@@ -77,17 +78,20 @@ public class EnvironmentGenerator : MonoBehaviour
                 }
 
 
-        meshes = new Mesh[4];
+        meshes = new Mesh[(size/200)*(size/200)];
     }
 
     public void createNewEnvironment()
     {
         Initialize();
 
-        meshes[index++] = meshGenerator.CreateNewMesh(xMin, zMin, meshTag);
-        meshes[index++] = meshGenerator.CreateNewMesh(xMin, zMin + size / 2, meshTag);
-        meshes[index++] = meshGenerator.CreateNewMesh(xMin + size / 2, zMin, meshTag);
-        meshes[index++] = meshGenerator.CreateNewMesh(xMin + size / 2, zMin + size / 2, meshTag);
+        for (int i = 0, x = 0; x < size; x += 200)
+        {
+            for (int z = 0; z < size; z += 200)
+            {
+                meshes[i++] = meshGenerator.CreateNewMesh(xMin+x, zMin+z, meshTag);
+            }
+        }
 
         createBorders();
 
