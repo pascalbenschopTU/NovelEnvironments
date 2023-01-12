@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class EnvironmentGenerator : MonoBehaviour
 {
+
+    private EnvironmentConfiguration environmentConfiguration;
     private MeshGenerator meshGenerator;
     private PathGenerator pathGenerator;
     private ObjectGenerator objectGenerator;
@@ -11,6 +13,7 @@ public class EnvironmentGenerator : MonoBehaviour
     public string layer = "Ground";
 
     public GameObject[] objects;
+    public GameObject[] complexObjects;
     public GameObject[] landmarks;
     public GameObject gatherable;
 
@@ -46,15 +49,28 @@ public class EnvironmentGenerator : MonoBehaviour
 
     public void Initialize()
     {
+        environmentConfiguration = ExperimentMetaData.currentEnvironment;
+
         int seed = ExperimentMetaData.Seed;
 
         meshGenerator = gameObject.AddComponent<MeshGenerator>();
-        meshGenerator.Initialize(layer, objects, landmarks, terrainMaterial, heightCurve, scale, octaves, lacunarity, seed, gradient);
         pathGenerator = gameObject.AddComponent<PathGenerator>();
         pathGenerator.Initialize(layer, landmarks, seed, terrainMaterial);
         objectGenerator = gameObject.AddComponent<ObjectGenerator>();
-        objectGenerator.Initialize(layer, objects, seed, objectAmount, gatherable);
-        Debug.Log(gameObject.tag);
+
+
+        if((int)environmentConfiguration.NumberObjectsConfig == 0) {
+            meshGenerator.Initialize(layer, objects, landmarks, terrainMaterial, heightCurve, scale, octaves, lacunarity, seed, gradient);
+            objectGenerator.Initialize(layer, objects, seed, objectAmount, gatherable);
+
+        }
+
+        else {
+            meshGenerator.Initialize(layer, complexObjects, landmarks, terrainMaterial, heightCurve, scale, octaves, lacunarity, seed, gradient);
+            objectGenerator.Initialize(layer, complexObjects, seed, objectAmount, gatherable);
+        }
+
+//        Debug.Log((int)environmentConfiguration.NumberObjectsConfig);
 
         switch(gameObject.tag)
                 {
