@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class EnvironmentGenerator : MonoBehaviour
 {
+
+    private EnvironmentConfiguration environmentConfiguration;
     private MeshGenerator meshGenerator;
     private PathGenerator pathGenerator;
     private ObjectGenerator objectGenerator;
@@ -11,6 +13,7 @@ public class EnvironmentGenerator : MonoBehaviour
     public string layer = "Ground";
 
     public GameObject[] objects;
+    public GameObject[] complexObjects;
     public GameObject[] landmarks;
     public GameObject gatherable;
 
@@ -46,15 +49,22 @@ public class EnvironmentGenerator : MonoBehaviour
 
     public void Initialize()
     {
+        environmentConfiguration = ExperimentMetaData.currentEnvironment;
+
         int seed = ExperimentMetaData.Seed;
 
         meshGenerator = gameObject.AddComponent<MeshGenerator>();
-        meshGenerator.Initialize(layer, objects, landmarks, terrainMaterial, heightCurve, scale, octaves, lacunarity, seed, gradient);
+        meshGenerator.Initialize(layer, terrainMaterial, heightCurve, scale, octaves, lacunarity, seed, gradient);
         pathGenerator = gameObject.AddComponent<PathGenerator>();
         pathGenerator.Initialize(layer, landmarks, seed, terrainMaterial);
         objectGenerator = gameObject.AddComponent<ObjectGenerator>();
-        objectGenerator.Initialize(layer, objects, seed, objectAmount, gatherable);
-        Debug.Log(gameObject.tag);
+
+
+        if(environmentConfiguration.NumberObjectsConfig == ConfigType.Low) {
+            objectGenerator.Initialize(layer, objects, seed, objectAmount, gatherable);
+        } else {
+            objectGenerator.Initialize(layer, complexObjects, seed, objectAmount, gatherable);
+        }
 
         switch(gameObject.tag)
                 {
@@ -95,15 +105,13 @@ public class EnvironmentGenerator : MonoBehaviour
         pathGenerator.GeneratePaths(meshes);
         pathGenerator.GenerateLandmarks(meshes);
 
-        GameObject temp = new GameObject("EnvironmentObjects");
-        temp.transform.parent = transform;
 
         foreach(Mesh mesh in meshes)
         {
-            objectGenerator.GenerateObjects(mesh, temp);
+            objectGenerator.GenerateObjects(mesh);
             if (generateGatherables)
             {
-                objectGenerator.GenerateGatherables(mesh, temp);
+                objectGenerator.GenerateGatherables(mesh);
             }
         }
     }
