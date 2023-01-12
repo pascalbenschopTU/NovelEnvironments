@@ -259,18 +259,31 @@ MonoBehaviour:
   layer: Ground
   objects:
   - {fileID: 1250690161900600, guid: e6f343cc46467004f811ce2ba3a3841b, type: 3}
-  - {fileID: 1983694637467298, guid: be44d0243648ece459799ac0d5d4a2a6, type: 3}
   - {fileID: 1377331622712542, guid: b9eb627f7bb4c1748829f3f01ce72b68, type: 3}
   - {fileID: 1550140418629916, guid: 3e07483cd9aa6a141bb9c8e2d2c2bdad, type: 3}
   - {fileID: 1020380390186232, guid: a1dee65b7ef7c344a97ff258503f49e7, type: 3}
   - {fileID: 1902742491923462, guid: b3d0e1c692a75b34d96fb84c9b431b64, type: 3}
-  - {fileID: 1296198054963878, guid: f76595434879f634c8b88f3cc4f08b2c, type: 3}
-  - {fileID: 1923948107188124, guid: f16d978b3d1fa984d82c01d30a1fb40a, type: 3}
   - {fileID: 1086353713108280, guid: 10dcade9ef34ab642846c4b889ac76e7, type: 3}
   - {fileID: 1643754901835350, guid: 8d8b11b2e2435cc4787335555d35714f, type: 3}
   - {fileID: 1335726306580732, guid: 23f312332b5cd5542ba196450880e89b, type: 3}
-  - {fileID: 1879388732584624, guid: ba2b67dbc790eb74f8a401c592dd619f, type: 3}
   - {fileID: 1004710975425532, guid: c0aa33e678586aa43a1a9254fdfdfb4d, type: 3}
+  complexObjects:
+  - {fileID: 1983694637467298, guid: be44d0243648ece459799ac0d5d4a2a6, type: 3}
+  - {fileID: 1879388732584624, guid: ba2b67dbc790eb74f8a401c592dd619f, type: 3}
+  - {fileID: 1086353713108280, guid: 10dcade9ef34ab642846c4b889ac76e7, type: 3}
+  - {fileID: 1643754901835350, guid: 8d8b11b2e2435cc4787335555d35714f, type: 3}
+  - {fileID: 1793648613423140, guid: 88cc729ed2bce0b458f679b575dab345, type: 3}
+  - {fileID: 1250690161900600, guid: e6f343cc46467004f811ce2ba3a3841b, type: 3}
+  - {fileID: 1983694637467298, guid: be44d0243648ece459799ac0d5d4a2a6, type: 3}
+  - {fileID: 1377331622712542, guid: b9eb627f7bb4c1748829f3f01ce72b68, type: 3}
+  - {fileID: 1630287520782172, guid: 3b703535d10b66844a909b8cd4b12fc5, type: 3}
+  - {fileID: 1550140418629916, guid: 3e07483cd9aa6a141bb9c8e2d2c2bdad, type: 3}
+  - {fileID: 1020380390186232, guid: a1dee65b7ef7c344a97ff258503f49e7, type: 3}
+  - {fileID: 1561439388646736, guid: db15def326817084cb719e1c5f999b99, type: 3}
+  - {fileID: 1902742491923462, guid: b3d0e1c692a75b34d96fb84c9b431b64, type: 3}
+  - {fileID: 1296198054963878, guid: f76595434879f634c8b88f3cc4f08b2c, type: 3}
+  - {fileID: 1923948107188124, guid: f16d978b3d1fa984d82c01d30a1fb40a, type: 3}
+  - {fileID: 1335726306580732, guid: 23f312332b5cd5542ba196450880e89b, type: 3}
   landmarks:
   - {fileID: 919132149155446097, guid: 0649b321e494e5c48a13c5a8bdec8a54, type: 3}
   - {fileID: 3377046667944978610, guid: 10d94be75d500154c8747f2417d28ba0, type: 3}
@@ -984,11 +997,21 @@ MonoBehaviour:
   objects:
   - {fileID: 1000011914158716, guid: 78af3a7aad589fa49b8fb946c9e57362, type: 3}
   - {fileID: 1000011147454354, guid: 01d2dd5255c308a4db25dbb77d9f65ea, type: 3}
-  - {fileID: 1000012936420096, guid: a6dbabfd6d3c8cb47b7243b0b8723af2, type: 3}
   - {fileID: 1086353713108280, guid: 10dcade9ef34ab642846c4b889ac76e7, type: 3}
   - {fileID: 1983694637467298, guid: be44d0243648ece459799ac0d5d4a2a6, type: 3}
   - {fileID: 1879388732584624, guid: ba2b67dbc790eb74f8a401c592dd619f, type: 3}
   - {fileID: 1004710975425532, guid: c0aa33e678586aa43a1a9254fdfdfb4d, type: 3}
+  complexObjects:
+  - {fileID: 1000011914158716, guid: 78af3a7aad589fa49b8fb946c9e57362, type: 3}
+  - {fileID: 1000011147454354, guid: 01d2dd5255c308a4db25dbb77d9f65ea, type: 3}
+  - {fileID: 1000012936420096, guid: a6dbabfd6d3c8cb47b7243b0b8723af2, type: 3}
+  - {fileID: 1086353713108280, guid: 10dcade9ef34ab642846c4b889ac76e7, type: 3}
+  - {fileID: 1983694637467298, guid: be44d0243648ece459799ac0d5d4a2a6, type: 3}
+  - {fileID: 1630287520782172, guid: 3b703535d10b66844a909b8cd4b12fc5, type: 3}
+  - {fileID: 1643754901835350, guid: 8d8b11b2e2435cc4787335555d35714f, type: 3}
+  - {fileID: 1004710975425532, guid: c0aa33e678586aa43a1a9254fdfdfb4d, type: 3}
+  - {fileID: 1630287520782172, guid: 3b703535d10b66844a909b8cd4b12fc5, type: 3}
+  - {fileID: 1879388732584624, guid: ba2b67dbc790eb74f8a401c592dd619f, type: 3}
   landmarks: []
   gatherable: {fileID: 150698, guid: f4c62b1a746281e44800c9250dd3643c, type: 3}
   meshTag: SnowFloor
@@ -1438,19 +1461,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   layer: Ground
   objects:
+  - {fileID: 1864972976023934, guid: c4a173ae0083fee4db746ecdf20ba032, type: 3}
+  - {fileID: 1187100871979764, guid: b8ca6433e7a78e346904aef72892f856, type: 3}
+  - {fileID: 1065655044243356, guid: 20f64b4081161ef43b320aa975519fdc, type: 3}
+  - {fileID: 1092110070509382, guid: 7f370a51edc99c440819f87ec0f00e2c, type: 3}
+  - {fileID: 1891266665448334, guid: 67a0360629c18d741ac237d5197935cd, type: 3}
+  - {fileID: 1960440776389710, guid: 0450d19464994a4439f6c7dea52104b2, type: 3}
+  - {fileID: 1203660441109236, guid: 07aab42f1eca6ef4887a7fa93ad8282b, type: 3}
+  - {fileID: 1866083037941774, guid: 7fe8fb23b001d994f92ccc500f281cf8, type: 3}
+  - {fileID: 1786732080692216, guid: 46aa8b6d013691a43a624b2200d4519a, type: 3}
+  - {fileID: 1786647392387880, guid: 21006dba7e3f90042b36bf9b5f6af51e, type: 3}
+  complexObjects:
   - {fileID: 1986308318195784, guid: f6045a15e1065124680c92c504c8d7ea, type: 3}
   - {fileID: 1175661577396104, guid: 9b2afb2de81f7fa4bb4c6c9533ff3e7f, type: 3}
   - {fileID: 1864972976023934, guid: c4a173ae0083fee4db746ecdf20ba032, type: 3}
   - {fileID: 1187100871979764, guid: b8ca6433e7a78e346904aef72892f856, type: 3}
+  - {fileID: 1960440776389710, guid: 0450d19464994a4439f6c7dea52104b2, type: 3}
+  - {fileID: 1977925246162678, guid: 8b7b6b45c88df22498a9e20b7d7a34de, type: 3}
+  - {fileID: 1891266665448334, guid: 67a0360629c18d741ac237d5197935cd, type: 3}
   - {fileID: 1065655044243356, guid: 20f64b4081161ef43b320aa975519fdc, type: 3}
   - {fileID: 1649925079310092, guid: 736e50b5fd21b1240b02444bc774d83e, type: 3}
   - {fileID: 1092110070509382, guid: 7f370a51edc99c440819f87ec0f00e2c, type: 3}
-  - {fileID: 1891266665448334, guid: 67a0360629c18d741ac237d5197935cd, type: 3}
-  - {fileID: 1960440776389710, guid: 0450d19464994a4439f6c7dea52104b2, type: 3}
-  - {fileID: 1977925246162678, guid: 8b7b6b45c88df22498a9e20b7d7a34de, type: 3}
   - {fileID: 1203660441109236, guid: 07aab42f1eca6ef4887a7fa93ad8282b, type: 3}
   - {fileID: 1721112587459618, guid: 2ed80e4af24778742a16837f6b64d172, type: 3}
   - {fileID: 1866083037941774, guid: 7fe8fb23b001d994f92ccc500f281cf8, type: 3}
+  - {fileID: 1209769021331456, guid: 715b325acd44dfd42a1b236411075c6f, type: 3}
   - {fileID: 1209769021331456, guid: 715b325acd44dfd42a1b236411075c6f, type: 3}
   - {fileID: 1786732080692216, guid: 46aa8b6d013691a43a624b2200d4519a, type: 3}
   - {fileID: 1786647392387880, guid: 21006dba7e3f90042b36bf9b5f6af51e, type: 3}
@@ -1840,11 +1875,11 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_audioClip: {fileID: 8300000, guid: 80d28371b9e51cea58bcbf2cbae4eeb4, type: 3}
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -1952,6 +1987,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 080c16323fca1724d82ccc613585fbaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  soundFX: {fileID: 1582923932}
 --- !u!1 &1901605668
 GameObject:
   m_ObjectHideFlags: 0
@@ -2113,10 +2149,17 @@ MonoBehaviour:
   layer: Ground
   objects:
   - {fileID: 1785044199738478, guid: a6cd0c657da915144bd367d385c0fc31, type: 3}
-  - {fileID: 1646639913439324, guid: ac16a24c584766f4e905adc7db85b93d, type: 3}
   - {fileID: 1378370071209536, guid: a60988b24f8ff094ba511054edf48a9d, type: 3}
-  - {fileID: 1350961368450940, guid: c6e50eec7153f5b45ac3917fb6cfd06a, type: 3}
   - {fileID: 1879644038180034, guid: 3744e668ae9047e4b9590c326355161c, type: 3}
+  - {fileID: 1228088659953116, guid: 80c5916b9606ce646be16611d9a06d13, type: 3}
+  - {fileID: 1742271052185720, guid: 30916da9dd66da74d8e831f29c0b250f, type: 3}
+  - {fileID: 1876599732148902, guid: 6ebfc6898dc70814c86bb78d43e72a9c, type: 3}
+  - {fileID: 1276862051916332, guid: 1be61187b5d765449be824463642cb0f, type: 3}
+  complexObjects:
+  - {fileID: 1378370071209536, guid: a60988b24f8ff094ba511054edf48a9d, type: 3}
+  - {fileID: 1646639913439324, guid: ac16a24c584766f4e905adc7db85b93d, type: 3}
+  - {fileID: 1785044199738478, guid: a6cd0c657da915144bd367d385c0fc31, type: 3}
+  - {fileID: 1350961368450940, guid: c6e50eec7153f5b45ac3917fb6cfd06a, type: 3}
   - {fileID: 1228088659953116, guid: 80c5916b9606ce646be16611d9a06d13, type: 3}
   - {fileID: 1520711273483040, guid: 331560f2206dc024cb084301a19c05ad, type: 3}
   - {fileID: 1742271052185720, guid: 30916da9dd66da74d8e831f29c0b250f, type: 3}

@@ -21,7 +21,7 @@ public class ObjectGenerator : MonoBehaviour
         this.prng = new System.Random(seed);
     }
 
-    public void GenerateObjects(Mesh mesh, GameObject temp)
+    public void GenerateObjects(Mesh mesh)
     {
         Vector3 startingPosition = new Vector3(30.0f, 1.0f, -20.0f);
         for (int i = 0; i < objects.Length; i++)
@@ -42,7 +42,7 @@ public class ObjectGenerator : MonoBehaviour
         }
     }
 
-    public void GenerateGatherables(Mesh mesh, GameObject temp)
+    public void GenerateGatherables(Mesh mesh)
     {
         Vector3 startingPosition = new Vector3(30.0f, 1.0f, -20.0f);
 
