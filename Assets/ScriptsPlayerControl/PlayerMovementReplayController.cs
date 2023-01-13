@@ -8,8 +8,8 @@ public class PlayerMovementReplayController : MonoBehaviour
 
     private List<PositionalData> replayData { get; set; }
     private float recordingInterval = 0.025f;
-    private float movementStep = 12.0f * 0.025f; // speed * recordingInterval
-    private float rotationStep = 1.0f;
+    private float movementStep = 12.0f * 0.025f; // max movement per interval = speed * recordingInterval
+    private float rotationStep = 2.0f; // max rotation per interval
     private int index = 0;
     
     // Use this for initialization
