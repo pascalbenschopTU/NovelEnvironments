@@ -16,6 +16,7 @@ namespace ScriptsMainMenu
             Debug.Log("PAUSE");
             pauseMenu.SetActive(true);
             pauseMenuSettings.SetActive(false);
+            PhotoCapture.isActive = false;
             Time.timeScale = 0f;
             Cursor.lockState = CursorLockMode.None;
 
@@ -27,6 +28,7 @@ namespace ScriptsMainMenu
             Debug.Log("RESUME");
             pauseMenu.SetActive(false);
             pauseMenuSettings.SetActive(false);
+            PhotoCapture.isActive = true;
             Time.timeScale = 1f;
             Cursor.lockState = CursorLockMode.Locked;
 
