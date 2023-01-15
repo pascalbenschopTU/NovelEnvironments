@@ -31,7 +31,7 @@ public class EnvironmentGenerator : MonoBehaviour
 
     public Gradient gradient;
 
-    private int size = 1000;
+    private int size = 400;
 
     private int xMin;
     private int zMin;
@@ -39,7 +39,6 @@ public class EnvironmentGenerator : MonoBehaviour
     private bool generateGatherables = false;
 
     private Mesh[] meshes;
-    private int index = 0;
 
     [SerializeField] private AudioSource AudioSrc = default;
     [SerializeField] private AudioClip Environment1 = default;

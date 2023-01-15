@@ -21,22 +21,49 @@ public class ObjectGenerator : MonoBehaviour
         this.prng = new System.Random(seed);
     }
 
+    bool isOnTerrain(Vector3 vertex, GameObject go)
+    {
+        Vector3 heightV = vertex + Vector3.up*100;
+
+        Vector3 extents = go.GetComponent<MeshCollider>().sharedMesh.bounds.extents;
+        Vector3 x = Vector3.right * extents.x;
+        Vector3 z = Vector3.forward * extents.z;
+
+        Vector3[] points = {heightV, heightV-x-z, heightV-x+z, heightV+x-z, heightV+x+z};
+
+        for (int i = 0; i < points.Length; i++){
+            RaycastHit[] hits = Physics.RaycastAll(points[i], Vector3.down*110, 110.0F);
+
+            for (int j = 0; j < hits.Length; j++) {
+                if (hits[j].collider.name == "PathMesh")
+                    return false;
+            }
+
+            if (Physics.Linecast(vertex+Vector3.down*10, vertex + Vector3.up*100))
+                return false;
+        }
+
+        return true;
+    }
+
     public void GenerateObjects(Mesh mesh)
     {
         Vector3 startingPosition = new Vector3(30.0f, 1.0f, -20.0f);
         for (int i = 0; i < objects.Length; i++)
         {
             // Generate #amount instances of objects[i] 
-            for (int j = 0; j < amount; j++)
+            int j = 0;
+            while (j < amount)
             {
                 int verticeIndex = prng.Next(0, mesh.vertices.Length);
                 Vector3 vertice = mesh.vertices[verticeIndex];
 
-                if ((vertice.x > startingPosition.x+5 || vertice.x < startingPosition.x-5) && (vertice.z > startingPosition.z+5 || vertice.z < startingPosition.z-5))
+                if ((vertice.x > startingPosition.x+5 || vertice.x < startingPosition.x-5) && (vertice.z > startingPosition.z+5 || vertice.z < startingPosition.z-5) && isOnTerrain(vertice, objects[i]))
                 {
                     GameObject objectToSpawn = objects[i];
                     objectToSpawn.layer = LayerMask.NameToLayer(layer);
                     Instantiate(objectToSpawn, vertice, Quaternion.identity);
+                    j++;
                 }
             }
         }
