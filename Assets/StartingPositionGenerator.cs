@@ -158,6 +158,7 @@ public class StartingPositionGenerator : MonoBehaviour
 
     private void StartTimer()
     {
+        GameTime.RestartGameTime();
         StartCoroutine(CountDown());
     }
 
@@ -169,6 +170,8 @@ public class StartingPositionGenerator : MonoBehaviour
         Debug.Log("Logging data");
         CsvUtils.PositionalDataToCsv(Recorder.recording);
         CsvUtils.TaskDataToCsv(Recorder.tasks);
+
+        GameTime.AddGameTime();
 
         SceneManager.LoadScene("DefaultScene");
     }
