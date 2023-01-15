@@ -111,7 +111,7 @@ public class EnvironmentGenerator : MonoBehaviour
 
         foreach(Mesh mesh in meshes)
         {
-            objectGenerator.GenerateObjects(mesh);
+            objectGenerator.GenerateObjects(mesh, pathGenerator.getSpawn());
             if (generateGatherables)
             {
                 objectGenerator.GenerateGatherables(mesh);
