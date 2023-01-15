@@ -30,8 +30,7 @@ namespace ScriptsMainMenu
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
 
-            ExperimentMetaData.EndTime = DateTime.Now;
-            SetGameTime(ExperimentMetaData.StartTime, ExperimentMetaData.EndTime);
+            SetGameTime(GameTime.TotalGameTime);
             SetDistanceWalked(0);
             SetLandmarksFound(0, 10);
             SetPicturesTaken(0);
@@ -51,10 +50,9 @@ namespace ScriptsMainMenu
             }
         }
 
-        private void SetGameTime(DateTime start, DateTime finish)
+        private void SetGameTime(int gameTime)
         {
-            var gameTime = finish - start;
-            ResultsGameTime.text = $"{gameTime.Minutes} m : {gameTime.Seconds} s";
+            ResultsGameTime.text = $"{(int)(gameTime / 60)} m : {gameTime % 60} s";
         }
 
         private void SetDistanceWalked(int distance)

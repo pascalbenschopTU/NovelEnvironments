@@ -14,9 +14,6 @@ public class ExperimentMetaData : MonoBehaviour
     public static int TimeInEnvironment = 20;
 
     public static int Seed = 100;
-
-    public static DateTime StartTime = DateTime.Now;
-    public static DateTime EndTime = DateTime.Now;
     
     public static int ParticipantNumber = 0;
 
