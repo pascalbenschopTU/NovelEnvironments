@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class Aggregate
 {
-    private static float inf = float.PositiveInfinity;
-
     public static float CalculateDistance(Dictionary<int, List<PositionalData>> positionalDatas)
     {
         float totalDistance = 0.0f;

@@ -67,6 +67,7 @@ public class StartingPositionGenerator : MonoBehaviour
         setPlayerMiniMap();
         setPlayerFOV();
         TogglePlayerCamera();
+        ToggleLowInvolvement();
     }
 
     private void setPlayerMiniMap()
@@ -121,6 +122,14 @@ public class StartingPositionGenerator : MonoBehaviour
         }
     }
 
+    private void ToggleLowInvolvement()
+    {
+        if (environmentConfiguration.InteractionConfig == ConfigType.Low)
+        {
+            player.AddComponent<PlayerMovementReplayController>();
+        }
+    }
+
     private void selectNextEnvironment()
     {
         chosenEnvironment = environments[(int)environmentConfiguration.EnvironmentType];
@@ -149,6 +158,7 @@ public class StartingPositionGenerator : MonoBehaviour
 
     private void StartTimer()
     {
+        GameTime.RestartGameTime();
         StartCoroutine(CountDown());
     }
 
@@ -161,6 +171,8 @@ public class StartingPositionGenerator : MonoBehaviour
         var directoryPath = Path.Join(Application.dataPath, $"ExperimentLogs_{ExperimentMetaData.ParticipantNumber}");
         CsvUtils.SavePositionalDataToCsv(Recorder.recording, directoryPath);
         CsvUtils.SaveTaskDataToCsv(Recorder.tasks, directoryPath);
+
+        GameTime.AddGameTime();
 
         SceneManager.LoadScene("DefaultScene");
     }

@@ -165,4 +165,46 @@ public class CsvUtils : MonoBehaviour
             Directory.CreateDirectory(dirPath);
         }
     }
+
+
+    public static Dictionary<int, List<PositionalData>> PositionalReplayDataFromCsv(string delimiter = ";")
+    {
+        CreateReplayLogsDirectoryIfNotExists();
+        string path = $"{Application.dataPath}/ReplayData/movement.csv";
+
+        if (!File.Exists(path))
+        {
+            return null;
+        }
+
+        var dict = new Dictionary<int, List<PositionalData>>();
+        using var reader = new StreamReader(path);
+        while (!reader.EndOfStream)
+        {
+            var line = reader.ReadLine();
+            if (line == null) continue;
+
+            var values = line.Split(delimiter);
+            PositionalData data = PositionalData.FromCSV(values);
+            if (dict.ContainsKey(data.environment_id))
+            {
+                dict[data.environment_id].Add(data);
+            }
+            else
+            {
+                dict.Add(data.environment_id, new List<PositionalData> { data });
+            }
+        }
+
+        return dict;
+    }
+
+    private static void CreateReplayLogsDirectoryIfNotExists()
+    {
+        var dirPath = Application.dataPath + $"/ReplayData/";
+        if (!Directory.Exists(dirPath))
+        {
+            Directory.CreateDirectory(dirPath);
+        }
+    }
 }

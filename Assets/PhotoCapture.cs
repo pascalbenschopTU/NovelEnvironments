@@ -9,6 +9,10 @@ public class PhotoCapture : MonoBehaviour
 {
     private EnvironmentConfiguration environmentConfiguration;
 
+    public AudioSource soundFX;
+
+    public static bool isActive = true;
+
     private Texture2D screenCapture;
 
     private GameObject player;
@@ -92,8 +96,9 @@ public class PhotoCapture : MonoBehaviour
 
     private void Update()
     {
-        if (UnityEngine.Input.GetMouseButtonDown(0))
+        if (UnityEngine.Input.GetMouseButtonDown(0) && isActive)
         {
+            soundFX.Play();
             StartCoroutine(CapturePhoto());
         }
     }

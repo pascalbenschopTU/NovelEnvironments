@@ -6,9 +6,6 @@ public class MeshGenerator : MonoBehaviour
 {
     private string layer;
 
-    private GameObject[] objects;
-    private GameObject[] landMarks;
-
     private Material terrainMaterial;
 
     private AnimationCurve heightCurve;
@@ -28,11 +25,9 @@ public class MeshGenerator : MonoBehaviour
     private float maxTerrainHeight;
 
 
-    public void Initialize(string layer, GameObject[] objects, GameObject[] landMarks, Material terrainMaterial, AnimationCurve heightCurve, float scale, int octaves, float lacunarity, int seed, Gradient gradient)
+    public void Initialize(string layer, Material terrainMaterial, AnimationCurve heightCurve, float scale, int octaves, float lacunarity, int seed, Gradient gradient)
     {
         this.layer = layer;
-        this.objects = objects;
-        this.landMarks = landMarks;
         this.terrainMaterial = terrainMaterial;
         this.heightCurve = heightCurve;
         this.xSize = 200;
