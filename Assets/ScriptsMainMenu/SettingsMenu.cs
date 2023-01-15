@@ -210,6 +210,11 @@ namespace ScriptsMainMenu
             }
         }
 
+        public void SaveInstructionValue(string value)
+        {
+            PlayerPrefs.SetString("InstructionSetting", value);
+        }
+
         public void SaveConfigs()
         {
             PlayerPrefs.Save();
