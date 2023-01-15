@@ -159,10 +159,9 @@ public class StartingPositionGenerator : MonoBehaviour
 
         Debug.Log("Logging data");
         var directoryPath = Path.Join(Application.dataPath, $"ExperimentLogs_{ExperimentMetaData.ParticipantNumber}");
-        CsvUtils.PositionalDataToCsv(Recorder.recording, directoryPath);
-        CsvUtils.TaskDataToCsv(Recorder.tasks, directoryPath);
-        CsvUtils.LogExperimentConfig(directoryPath);
-        
+        CsvUtils.SavePositionalDataToCsv(Recorder.recording, directoryPath);
+        CsvUtils.SaveTaskDataToCsv(Recorder.tasks, directoryPath);
+
         SceneManager.LoadScene("DefaultScene");
     }
 

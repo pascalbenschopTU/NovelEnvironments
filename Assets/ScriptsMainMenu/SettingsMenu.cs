@@ -132,7 +132,7 @@ namespace ScriptsMainMenu
             experimentSelectionDropdown.ClearOptions();
             if (PlayerPrefs.HasKey("SelectedFile"))
             {
-                EnvironmentConfigurations = CsvUtils.EnvironmentConfigsFromCsv(PlayerPrefs.GetString("SelectedFile"));
+                EnvironmentConfigurations = CsvUtils.LoadEnvironmentConfigsFromCsv(PlayerPrefs.GetString("SelectedFile"));
                 if (EnvironmentConfigurations.Count == 0)
                 {
                     ClearExperimentFile();
