@@ -93,22 +93,43 @@ public class ObjectGenerator : MonoBehaviour
         }
     }
 
-    public void GenerateGatherables(Mesh mesh)
+    public void GenerateGatherables(List<(Vector3 start, Vector3 end)> paths)
     {
-        Vector3 startingPosition = new Vector3(30.0f, 1.0f, -20.0f);
+        List<Vector3> starts = new List<Vector3>();
+        int pathIndex = prng.Next(0, paths.Count);
+        (Vector3 start, Vector3 end) = paths[pathIndex];
+        starts.Add(start);
 
-        for (int i = 0; i < 3; i++){
-            int vertIndex = prng.Next(0, mesh.vertices.Length);
-            Vector3 vert = mesh.vertices[vertIndex];
+        for (int i = 0; i < 20; i++){
 
-            if ((vert.x > startingPosition.x+5 || vert.x < startingPosition.x-5) && (vert.z > startingPosition.z+5 || vert.z < startingPosition.z-5))
-            {
-                GameObject gatherableCopy = gatherable;
-                gatherableCopy.layer = LayerMask.NameToLayer(layer);
-                gatherableCopy.transform.localScale = new Vector3(4, 4, 4);
-                gatherableCopy.tag = "Gather";
-                Instantiate(gatherableCopy, vert, Quaternion.identity);
+            while (starts.Contains(paths[pathIndex].start)) {
+                pathIndex = prng.Next(0, paths.Count);
+                (start, end) = paths[pathIndex];
             }
+
+            starts.Add(start);
+
+            Vector3 dist = end - start;
+            float len = (float)prng.NextDouble()*0.7f;
+            Vector3 pointOnPath = start + dist*0.15f + dist*len;
+            Vector3 perp = new Vector3(dist.z, 0, -dist.x);
+            int shift = (prng.Next(0, 1)*2-1)*4;
+            Vector3 spawn = pointOnPath + perp.normalized*shift + Vector3.up*100;
+
+            RaycastHit[] hits = Physics.RaycastAll(spawn, Vector3.down, 150.0F);
+
+            for (int j = 0; j < hits.Length; j++) {
+                if (hits[j].collider.name == "Mesh"){
+                    spawn = hits[j].point;
+                    break;
+                }
+            }
+
+            GameObject gatherableCopy = gatherable;
+            gatherableCopy.layer = LayerMask.NameToLayer(layer);
+            gatherableCopy.transform.localScale = new Vector3(4, 4, 4);
+            gatherableCopy.tag = "Gather";
+            Instantiate(gatherableCopy, spawn, Quaternion.identity);
         }
     }
 }
