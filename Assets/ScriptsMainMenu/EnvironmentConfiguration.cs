@@ -36,7 +36,7 @@ public class EnvironmentConfiguration
     {
         return NumberObjectsConfig switch
         {
-            ConfigType.Low => 20,
+            ConfigType.Low => 40,
             ConfigType.High => 50,
             _ => 0
         };

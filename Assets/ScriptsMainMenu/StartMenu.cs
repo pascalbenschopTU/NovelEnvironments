@@ -103,8 +103,8 @@ namespace ScriptsMainMenu
                 ExperimentMetaData.ParticipantNumber = _participantNumber;
                 ExperimentMetaData.Environments = list;
                 ExperimentMetaData.TimeInEnvironment = PlayerPrefs.GetInt("TimeSetting");
-                ExperimentMetaData.StartTime = DateTime.Now;
                 ExperimentMetaData.Index = 0;
+                GameTime.TotalGameTime = 0;
                 
                 // DeleteLogsOnStartNewGame(_participantNumber);
                 Recorder.ResetRecordings();

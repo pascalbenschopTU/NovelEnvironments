@@ -11,7 +11,6 @@ public class Gathering : MonoBehaviour
     private enum UpDown { Down = -1, Start = 0, Up = 1 };
     private Text text;
     string shownText = "Press E to collect lantern";
-    private UpDown textChanged = UpDown.Start;
     float raycastDistance = 5;
 
     void Start()

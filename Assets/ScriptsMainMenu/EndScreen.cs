@@ -30,7 +30,6 @@ namespace ScriptsMainMenu
             // TODO get all the data from the run
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
-
             ExperimentMetaData.EndTime = DateTime.Now;
             
             var directoryPath = Path.Join(Application.dataPath, $"ExperimentLogs_{ExperimentMetaData.ParticipantNumber}");
@@ -70,7 +69,6 @@ namespace ScriptsMainMenu
                 LoadEndScreen();
             }
         }
-
         private TimeSpan CalculateGameTime(DateTime start, DateTime finish)
         {
             var gameTime = finish - start;

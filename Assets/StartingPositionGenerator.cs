@@ -64,6 +64,7 @@ public class StartingPositionGenerator : MonoBehaviour
         setPlayerMiniMap();
         setPlayerFOV();
         TogglePlayerCamera();
+        ToggleLowInvolvement();
     }
 
     private void setPlayerMiniMap()
@@ -118,6 +119,15 @@ public class StartingPositionGenerator : MonoBehaviour
         }
     }
 
+
+    private void ToggleLowInvolvement()
+    {
+        if (environmentConfiguration.InteractionConfig == ConfigType.Low)
+        {
+            player.AddComponent<PlayerMovementReplayController>();
+        }
+    }
+
     private void SelectNextEnvironment()
     {
         chosenEnvironment = environments[(int)environmentConfiguration.EnvironmentType];
@@ -146,6 +156,7 @@ public class StartingPositionGenerator : MonoBehaviour
 
     private void StartTimer()
     {
+        GameTime.RestartGameTime();
         StartCoroutine(CountDown());
     }
 
@@ -156,6 +167,8 @@ public class StartingPositionGenerator : MonoBehaviour
         Debug.Log("Logging data");
         
         ExperimentMetaData.Index++;
+
+        GameTime.AddGameTime();
 
         SceneManager.LoadScene("DefaultScene");
     }
