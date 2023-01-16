@@ -32,14 +32,19 @@ namespace ScriptsMainMenu
             Cursor.visible = true;
 
             ExperimentMetaData.EndTime = DateTime.Now;
-            var gameTime = CalculateGameTime(ExperimentMetaData.StartTime, ExperimentMetaData.EndTime);
-            var distance = CalculateDistanceWalked();
-            var numLandmarks = CalculateLandmarksFound();
-            var picturesTaken = CalculatePicturesTaken();
-            var objectsPickedUp = CalculateObjectsPickedUp();
-            var roamingEntropy = CalculateRoamingEntropy();
             
             var directoryPath = Path.Join(Application.dataPath, $"ExperimentLogs_{ExperimentMetaData.ParticipantNumber}");
+            directoryPath = Path.Join(directoryPath, $"{ExperimentMetaData.EndTime:dd-MM-yyyy_hh-mm-ss}");
+            
+            CsvUtils.SavePositionalDataToCsv(Recorder.recording, directoryPath);
+            CsvUtils.SaveTaskDataToCsv(Recorder.tasks, directoryPath);
+
+            var gameTime = CalculateGameTime(ExperimentMetaData.StartTime, ExperimentMetaData.EndTime);
+            var distance = CalculateDistanceWalked(directoryPath);
+            var numLandmarks = CalculateLandmarksFound(directoryPath);
+            var picturesTaken = CalculatePicturesTaken(directoryPath);
+            var objectsPickedUp = CalculateObjectsPickedUp(directoryPath);
+            var roamingEntropy = CalculateRoamingEntropy(directoryPath);
             CsvUtils.SaveExperimentData(directoryPath, new ExperimentData
             {
                 DistanceWalked = distance,
@@ -72,10 +77,10 @@ namespace ScriptsMainMenu
             ResultsGameTime.text = $"{gameTime.Minutes} m : {gameTime.Seconds} s";
             return gameTime;
         }
-        private float CalculateDistanceWalked()
+        private float CalculateDistanceWalked(string directoryName)
         {
             var distance = 0f;
-            Dictionary<int, List<PositionalData>> positionalData = CsvUtils.LoadPositionalDataFromCsv();
+            Dictionary<int, List<PositionalData>> positionalData = CsvUtils.LoadPositionalDataFromCsv(directoryName);
             if (positionalData != null && positionalData.Count > 0)
             {
                 distance = (int)Aggregate.CalculateDistance(positionalData);
@@ -84,7 +89,7 @@ namespace ScriptsMainMenu
             ResultsDistanceWalked.text = $"{distance} m";
             return distance;
         }
-        private int CalculateLandmarksFound()
+        private int CalculateLandmarksFound(string directoryName)
         {
             if (ExperimentMetaData.Environments == null)
             {
@@ -94,7 +99,7 @@ namespace ScriptsMainMenu
 
             var count = 0;
 
-            Dictionary<int, List<TaskData>> tasks = CsvUtils.LoadTaskDataFromCsv();
+            Dictionary<int, List<TaskData>> tasks = CsvUtils.LoadTaskDataFromCsv(directoryName);
             if (tasks != null && tasks.Count > 0)
             {
                 count = tasks.SelectMany(pair => pair.Value).Where(taskdata => taskdata.task == "Landmark").Count();
@@ -103,7 +108,7 @@ namespace ScriptsMainMenu
             ResultsLandmarksFound.text = $"{count}";
             return count;
         }
-        private int CalculatePicturesTaken()
+        private int CalculatePicturesTaken(string directoryName)
         {
             if (ExperimentMetaData.Environments == null)
             {
@@ -121,7 +126,7 @@ namespace ScriptsMainMenu
             ResultsPicturesTakenObject.SetActive(true);
             var count = 0;
 
-            Dictionary<int, List<TaskData>> tasks = CsvUtils.LoadTaskDataFromCsv();
+            Dictionary<int, List<TaskData>> tasks = CsvUtils.LoadTaskDataFromCsv(directoryName);
             if (tasks != null && tasks.Count > 0)
             {
                 count = tasks.SelectMany(pair => pair.Value).Count(taskData => taskData.task == "Picture");
@@ -130,7 +135,7 @@ namespace ScriptsMainMenu
             ResultsPicturesTaken.text = $"{count}";
             return count;
         }
-        private int CalculateObjectsPickedUp()
+        private int CalculateObjectsPickedUp(string directoryName)
         {
             if (ExperimentMetaData.Environments == null)
             {
@@ -148,7 +153,7 @@ namespace ScriptsMainMenu
 
             var count = 0;
 
-            Dictionary<int, List<TaskData>> tasks = CsvUtils.LoadTaskDataFromCsv();
+            Dictionary<int, List<TaskData>> tasks = CsvUtils.LoadTaskDataFromCsv(directoryName);
             if (tasks != null && tasks.Count > 0)
             {
                 count = tasks.SelectMany(pair => pair.Value).Count(taskData => taskData.task == "Gathering");
@@ -157,7 +162,7 @@ namespace ScriptsMainMenu
             ResultsObjectsPickedUp.text = $"{count}";
             return count;
         }
-        private int CalculateRoamingEntropy()
+        private int CalculateRoamingEntropy(string directoryName)
         {
             return -1;
         }

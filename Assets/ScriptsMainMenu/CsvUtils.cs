@@ -39,11 +39,10 @@ public class CsvUtils : MonoBehaviour
 
         return dict;
     }
-    public static Dictionary<int, List<TaskData>> LoadTaskDataFromCsv(string delimiter = ";")
+    public static Dictionary<int, List<TaskData>> LoadTaskDataFromCsv(string directoryName, string delimiter = ";")
     {
-        var path = $"{Application.dataPath}/ExperimentLogs_{ExperimentMetaData.ParticipantNumber}";
-        CreateExperimentLogsDirectoryIfNotExists(path);
-        path = $"{Application.dataPath}/ExperimentLogs_{ExperimentMetaData.ParticipantNumber}/TaskData.csv";
+        CreateExperimentLogsDirectoryIfNotExists(directoryName);
+        var path = Path.Join(directoryName, "TaskData.csv");
         
         if (!File.Exists(path))
         {
@@ -71,11 +70,10 @@ public class CsvUtils : MonoBehaviour
 
         return dict;
     }
-    public static Dictionary<int, List<PositionalData>> LoadPositionalDataFromCsv(string delimiter = ";")
+    public static Dictionary<int, List<PositionalData>> LoadPositionalDataFromCsv(string directoryName, string delimiter = ";")
     {
-        var path = $"{Application.dataPath}/ExperimentLogs_{ExperimentMetaData.ParticipantNumber}";
-        CreateExperimentLogsDirectoryIfNotExists(path);
-        path = $"{Application.dataPath}/ExperimentLogs_{ExperimentMetaData.ParticipantNumber}/MovementData.csv";
+        CreateExperimentLogsDirectoryIfNotExists(directoryName);
+        var path = Path.Join(directoryName, "MovementData.csv");
 
         if (!File.Exists(path))
         {
@@ -116,7 +114,7 @@ public class CsvUtils : MonoBehaviour
     public static bool SavePositionalDataToCsv(List<PositionalData> recording, string directoryPath)
     {
         CreateExperimentLogsDirectoryIfNotExists(directoryPath);
-        var path = Path.Join(directoryPath, "MovementData.csv");
+        var path = Path.Join(directoryPath, $"MovementData.csv");
         using var writer = new StreamWriter(path, append: true);
         foreach (PositionalData data in recording)
         {
@@ -129,7 +127,7 @@ public class CsvUtils : MonoBehaviour
     {
         CreateExperimentLogsDirectoryIfNotExists(directoryPath);
 
-        var path = Path.Join(directoryPath, "TaskData.csv");
+        var path = Path.Join(directoryPath, $"TaskData.csv");
         using var writer = new StreamWriter(path, append: true);
         foreach (TaskData data in tasks)
         {

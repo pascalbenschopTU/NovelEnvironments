@@ -106,7 +106,8 @@ namespace ScriptsMainMenu
                 ExperimentMetaData.StartTime = DateTime.Now;
                 ExperimentMetaData.Index = 0;
                 
-                DeleteLogsOnStartNewGame(_participantNumber);
+                // DeleteLogsOnStartNewGame(_participantNumber);
+                Recorder.ResetRecordings();
 
                 Debug.Log($"Starting with id: {_experimentId}");
                 Cursor.lockState = CursorLockMode.Locked;

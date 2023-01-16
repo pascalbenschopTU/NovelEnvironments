@@ -44,11 +44,8 @@ public class StartingPositionGenerator : MonoBehaviour
 
         InitializePlayer();
         InitializeEnvironments();
-        
-        selectNextEnvironment();
+        SelectNextEnvironment();
         StartTimer();
-
-        ExperimentMetaData.Index += 1;
     }
 
     private void InitializeEnvironments()
@@ -121,7 +118,7 @@ public class StartingPositionGenerator : MonoBehaviour
         }
     }
 
-    private void selectNextEnvironment()
+    private void SelectNextEnvironment()
     {
         chosenEnvironment = environments[(int)environmentConfiguration.EnvironmentType];
 
@@ -156,11 +153,9 @@ public class StartingPositionGenerator : MonoBehaviour
     {
         yield return new WaitForSeconds(ExperimentMetaData.TimeInEnvironment);
         Debug.Log("Time has run out!");
-
         Debug.Log("Logging data");
-        var directoryPath = Path.Join(Application.dataPath, $"ExperimentLogs_{ExperimentMetaData.ParticipantNumber}");
-        CsvUtils.SavePositionalDataToCsv(Recorder.recording, directoryPath);
-        CsvUtils.SaveTaskDataToCsv(Recorder.tasks, directoryPath);
+        
+        ExperimentMetaData.Index++;
 
         SceneManager.LoadScene("DefaultScene");
     }
