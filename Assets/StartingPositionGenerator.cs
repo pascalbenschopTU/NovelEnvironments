@@ -44,11 +44,8 @@ public class StartingPositionGenerator : MonoBehaviour
 
         InitializePlayer();
         InitializeEnvironments();
-        
-        selectNextEnvironment();
+        SelectNextEnvironment();
         StartTimer();
-
-        ExperimentMetaData.Index += 1;
     }
 
     private void InitializeEnvironments()
@@ -122,6 +119,7 @@ public class StartingPositionGenerator : MonoBehaviour
         }
     }
 
+
     private void ToggleLowInvolvement()
     {
         if (environmentConfiguration.InteractionConfig == ConfigType.Low)
@@ -130,7 +128,7 @@ public class StartingPositionGenerator : MonoBehaviour
         }
     }
 
-    private void selectNextEnvironment()
+    private void SelectNextEnvironment()
     {
         chosenEnvironment = environments[(int)environmentConfiguration.EnvironmentType];
 
@@ -166,10 +164,9 @@ public class StartingPositionGenerator : MonoBehaviour
     {
         yield return new WaitForSeconds(ExperimentMetaData.TimeInEnvironment);
         Debug.Log("Time has run out!");
-
         Debug.Log("Logging data");
-        CsvUtils.PositionalDataToCsv(Recorder.recording);
-        CsvUtils.TaskDataToCsv(Recorder.tasks);
+        
+        ExperimentMetaData.Index++;
 
         GameTime.AddGameTime();
 

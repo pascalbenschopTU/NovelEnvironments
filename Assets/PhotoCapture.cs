@@ -141,7 +141,7 @@ public class PhotoCapture : MonoBehaviour
     {
         TaskData task = new TaskData(
             new PositionalData(
-                (int)environmentConfiguration.EnvironmentType, 
+                ExperimentMetaData.Index, 
                 player.transform.position, 
                 player.transform.rotation
             ), 
