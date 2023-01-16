@@ -15,7 +15,7 @@ public class Gathering : MonoBehaviour
     string baseText = "Press E to Collect Lantern ";
     string shownText;
     float raycastDistance = 5;
-    int itemsToCollect = 3;
+    int itemsToCollect = 6;
     int itemsCollected = 0;
 
     void Start()
