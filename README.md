@@ -1,4 +1,12 @@
-# NovelEnvironments
+# Novel Environments
+This is the repository for the Novel Environments game in Unity.
+
+## Project Setup
+This folder contains the assets used in the Novel Environments game, these assets should be placed in a Unity project. 
+
+Furthermore the Universal Render Pipeline is used, this can be downloaded from the Unity Package Manager. The Universal Render Pipeline should be applied on all materials to avoid weird artifacts. In `Edit` -> `Project Settings` under `Graphics`, the Scriptable Render Pipeline should be set with the UniversalRenderPipelineAsset.
+
+In `File` -> `Build Settings...` the Scenes In Build (in order) should be MainMenu, DefaultScene, EnvironmentScene.
 
 ## Parameter Implementation
 All parameters are first defined in `EnvironmentConfiguration.cs`, the `ConfigType` defines the level of each parameter.
@@ -13,7 +21,6 @@ Based on the chosen environment from the current EnvironmentConfiguration, the `
 
 
 ## File storage
-
 All data is stored in folders that are in the folder defined by 'Application.dataPath'.
 
 ### Logging
