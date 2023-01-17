@@ -6,12 +6,13 @@ using UnityEngine.Events;
 
 public class OnCollisionLoadScene : MonoBehaviour
 {
-	public int startingEnvironment = 1;
-
+	[SerializeField] private string SceneToLoad = "EnvironmentScene";
+	[SerializeField] private LoadingScreenManager LoadingScreenManager;
+	
     void OnTriggerEnter(Collider other) {
 		if(other.gameObject.CompareTag("Player")) {
 			Debug.Log("Entered Area Scene");
-			SceneManager.LoadScene("EnvironmentScene");
+			LoadingScreenManager.LoadScene(SceneToLoad);
 		}
 	}
 }

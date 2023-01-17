@@ -17,6 +17,8 @@ namespace ScriptsMainMenu
         [SerializeField]
         private SettingsMenu SettingsMenu;
 
+        [SerializeField] private LoadingScreenManager LoadingScreenManager;
+
         [SerializeField]
         private float ErrorTextTimeout;
         private int _participantNumber;
@@ -111,7 +113,7 @@ namespace ScriptsMainMenu
 
                 Debug.Log($"Starting with id: {_experimentId}");
                 Cursor.lockState = CursorLockMode.Locked;
-                SceneManager.LoadScene(1);
+                LoadingScreenManager.LoadSceneWait("DefaultScene", 1.5f);
             }
             else
             {
