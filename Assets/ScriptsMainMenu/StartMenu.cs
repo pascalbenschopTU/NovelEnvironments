@@ -112,7 +112,7 @@ namespace ScriptsMainMenu
                 Recorder.ResetRecordings();
 
                 Debug.Log($"Starting with id: {_experimentId}");
-                // Cursor.lockState = CursorLockMode.Locked;
+                Cursor.lockState = CursorLockMode.Locked;
                 LoadingScreenManager.LoadScene(1);
             }
             else
