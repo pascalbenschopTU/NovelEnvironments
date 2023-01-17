@@ -1,14 +1,19 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using UnityEngine;
 
 public class CsvUtils : MonoBehaviour
 {
     // CSV Format: type, texture, movingobjects, interaction, fov, map
-    public static Dictionary<int,List<EnvironmentConfiguration>> EnvironmentConfigsFromCsv(string path, string delimiter = ";")
+    public static Dictionary<int,List<EnvironmentConfiguration>> LoadEnvironmentConfigsFromCsv(string path, string delimiter = ";")
     {
         var dict = new Dictionary<int,List<EnvironmentConfiguration>>();
+        if (!File.Exists(path))
+        {
+            return dict;
+        }
         using var reader = new StreamReader(path);
         while (!reader.EndOfStream)
         {
@@ -17,6 +22,11 @@ public class CsvUtils : MonoBehaviour
 
             var values = line.Split(delimiter);
             var conf = EnvironmentConfiguration.FromCsv(values);
+            if (conf == null)
+            {
+                Debug.Log("Config was not in the right format!");
+                return new Dictionary<int, List<EnvironmentConfiguration>>();
+            }
             if (dict.ContainsKey(conf.ExperimentId))
             {
                 dict[conf.ExperimentId].Add(conf);
@@ -29,22 +39,41 @@ public class CsvUtils : MonoBehaviour
 
         return dict;
     }
-
-    public static bool EnvironmentConfigsToCsv(Dictionary<int,List<EnvironmentConfiguration>> configurations, string path)
+    public static Dictionary<int, List<TaskData>> LoadTaskDataFromCsv(string directoryName, string delimiter = ";")
     {
-        using var writer = new StreamWriter(path);
-        foreach (var config in configurations.SelectMany(pair => pair.Value)) // is like double for loop
+        CreateExperimentLogsDirectoryIfNotExists(directoryName);
+        var path = Path.Join(directoryName, "TaskData.csv");
+        
+        if (!File.Exists(path))
         {
-            writer.WriteLine(config.ToCsv());
+            return null;
         }
 
-        return true;
-    }
+        var dict = new Dictionary<int, List<TaskData>>();
+        using var reader = new StreamReader(path);
+        while (!reader.EndOfStream)
+        {
+            var line = reader.ReadLine();
+            if (line == null) continue;
 
-    public static Dictionary<int, List<PositionalData>> PositionalDataFromCsv(string delimiter = ";")
+            var values = line.Split(delimiter);
+            TaskData data = TaskData.FromCSV(values);
+            if (dict.ContainsKey(data.environment_id))
+            {
+                dict[data.environment_id].Add(data);
+            }
+            else
+            {
+                dict.Add(data.environment_id, new List<TaskData> { data });
+            }
+        }
+
+        return dict;
+    }
+    public static Dictionary<int, List<PositionalData>> LoadPositionalDataFromCsv(string directoryName, string delimiter = ";")
     {
-        CreateExperimentLogsDirectoryIfNotExists();
-        string path = $"{Application.dataPath}/ExperimentLogs_{ExperimentMetaData.ParticipantNumber}/movement.csv";
+        CreateExperimentLogsDirectoryIfNotExists(directoryName);
+        var path = Path.Join(directoryName, "MovementData.csv");
 
         if (!File.Exists(path))
         {
@@ -72,11 +101,20 @@ public class CsvUtils : MonoBehaviour
 
         return dict;
     }
-
-    public static bool PositionalDataToCsv(List<PositionalData> recording)
+    public static bool SaveEnvironmentConfigsToCsv(Dictionary<int,List<EnvironmentConfiguration>> configurations, string path)
     {
-        CreateExperimentLogsDirectoryIfNotExists();
-        string path = $"{Application.dataPath}/ExperimentLogs_{ExperimentMetaData.ParticipantNumber}/movement.csv";
+        using var writer = new StreamWriter(path);
+        foreach (var config in configurations.SelectMany(pair => pair.Value)) // is like double for loop
+        {
+            writer.WriteLine(config.ToCsv());
+        }
+
+        return true;
+    }
+    public static bool SavePositionalDataToCsv(List<PositionalData> recording, string directoryPath)
+    {
+        CreateExperimentLogsDirectoryIfNotExists(directoryPath);
+        var path = Path.Join(directoryPath, $"MovementData.csv");
         using var writer = new StreamWriter(path, append: true);
         foreach (PositionalData data in recording)
         {
@@ -85,42 +123,11 @@ public class CsvUtils : MonoBehaviour
 
         return true;
     }
-
-    public static Dictionary<int, List<TaskData>> TaskDataFromCsv(string delimiter = ";")
+    public static bool SaveTaskDataToCsv(List<TaskData> tasks, string directoryPath)
     {
-        CreateExperimentLogsDirectoryIfNotExists();
-        string path = $"{Application.dataPath}/ExperimentLogs_{ExperimentMetaData.ParticipantNumber}/tasks.csv";
-        if (!File.Exists(path))
-        {
-            return null;
-        }
+        CreateExperimentLogsDirectoryIfNotExists(directoryPath);
 
-        var dict = new Dictionary<int, List<TaskData>>();
-        using var reader = new StreamReader(path);
-        while (!reader.EndOfStream)
-        {
-            var line = reader.ReadLine();
-            if (line == null) continue;
-
-            var values = line.Split(delimiter);
-            TaskData data = TaskData.FromCSV(values);
-            if (dict.ContainsKey(data.environment_id))
-            {
-                dict[data.environment_id].Add(data);
-            }
-            else
-            {
-                dict.Add(data.environment_id, new List<TaskData> { data });
-            }
-        }
-
-        return dict;
-    }
-
-    public static bool TaskDataToCsv(List<TaskData> tasks)
-    {
-        CreateExperimentLogsDirectoryIfNotExists();
-        string path = $"{Application.dataPath}/ExperimentLogs_{ExperimentMetaData.ParticipantNumber}/tasks.csv";
+        var path = Path.Join(directoryPath, $"TaskData.csv");
         using var writer = new StreamWriter(path, append: true);
         foreach (TaskData data in tasks)
         {
@@ -129,10 +136,28 @@ public class CsvUtils : MonoBehaviour
 
         return true;
     }
-
-    private static void CreateExperimentLogsDirectoryIfNotExists()
+    public static bool SaveExperimentData(string directoryPath, ExperimentData experimentData)
     {
-        var dirPath = Application.dataPath + $"/ExperimentLogs_{ExperimentMetaData.ParticipantNumber}/";
+        if (!Directory.Exists(directoryPath))
+        {
+            return false;
+        }
+        // save experiment results in json file
+        var jsonData = ExperimentMetaData.ToJson(experimentData);
+        File.WriteAllText(Path.Join(directoryPath, "ExperimentMetaData.json"), jsonData);
+        
+        // save used environment configurations in csv file
+        var csvString = new StringBuilder();
+        foreach (var config in ExperimentMetaData.Environments)
+        {
+            csvString.Append($"{config.ToCsv()}\n");
+        }
+        File.WriteAllText(Path.Join(directoryPath, "EnvironmentConfigurations.csv"), csvString.ToString());
+        
+        return true;
+    }
+    private static void CreateExperimentLogsDirectoryIfNotExists(string dirPath)
+    {
         if (!Directory.Exists(dirPath))
         {
             Directory.CreateDirectory(dirPath);

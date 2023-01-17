@@ -11,6 +11,8 @@ public class PhotoCapture : MonoBehaviour
 
     public AudioSource soundFX;
 
+    public static bool isActive = true;
+
     private Texture2D screenCapture;
 
     private GameObject player;
@@ -94,7 +96,7 @@ public class PhotoCapture : MonoBehaviour
 
     private void Update()
     {
-        if (UnityEngine.Input.GetMouseButtonDown(0))
+        if (UnityEngine.Input.GetMouseButtonDown(0) && isActive)
         {
             soundFX.Play();
             StartCoroutine(CapturePhoto());
@@ -139,7 +141,7 @@ public class PhotoCapture : MonoBehaviour
     {
         TaskData task = new TaskData(
             new PositionalData(
-                (int)environmentConfiguration.EnvironmentType, 
+                ExperimentMetaData.Index, 
                 player.transform.position, 
                 player.transform.rotation
             ), 

@@ -72,6 +72,11 @@ public class PathGenerator : MonoBehaviour
         return spawn;
     }
 
+    public List<(Vector3 start, Vector3 end)> getPaths()
+    {
+        return paths;
+    }
+
     private void GeneratePolygon(Vector3 start, Vector3 end, int startAngle, int totalEdges, int edgesToDraw) 
     {
         Polygon polygon = new Polygon();
@@ -240,7 +245,6 @@ public class PathGenerator : MonoBehaviour
     {
         Vector3 heightV = vertex + Vector3.up*100;
         RaycastHit hit;
-        int layerMask = 1 << 8;
 
         if (Physics.Linecast(heightV, heightV + Vector3.down*150, out hit)) {
             heightV = hit.point;/*
@@ -261,10 +265,10 @@ public class PathGenerator : MonoBehaviour
 
         Vector3 perp = new Vector3(dist.z, 0, -dist.x).normalized*pathScale;
 
-        int len = (int)(dist.z/normDist.z);
+        int len = (int)((dist.z+normDist.z)/normDist.z);
 
         if (dist.x != 0.0f)
-            len = (int)(dist.x/normDist.x);
+            len = (int)((dist.x+normDist.x)/normDist.x);
         
         return (normDist, len);
     }
@@ -340,7 +344,7 @@ public class PathGenerator : MonoBehaviour
 
     void createMeshGO()
     {
-        GameObject go = new GameObject("Mesh");
+        GameObject go = new GameObject("PathMesh");
 
         go.AddComponent<MeshFilter>();
         go.AddComponent<MeshCollider>();

@@ -39,7 +39,7 @@ public class LookDirection : MonoBehaviour
     {
         TaskData task = new TaskData(
             new PositionalData(
-                (int)environmentConfiguration.EnvironmentType,
+                ExperimentMetaData.Index,
                 target.transform.position,
                 target.transform.rotation
             ),

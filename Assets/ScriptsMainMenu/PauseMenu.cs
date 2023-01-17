@@ -10,13 +10,17 @@ namespace ScriptsMainMenu
         private GameObject pauseMenu;        [SerializeField] 
         private GameObject pauseMenuSettings;
         private bool _paused;
-    
+
         public void Pause()
         {
             Debug.Log("PAUSE");
             pauseMenu.SetActive(true);
             pauseMenuSettings.SetActive(false);
+            PhotoCapture.isActive = false;
             Time.timeScale = 0f;
+
+            GameTime.AddGameTime();
+                
             Cursor.lockState = CursorLockMode.None;
 
             _paused = true;
@@ -27,7 +31,11 @@ namespace ScriptsMainMenu
             Debug.Log("RESUME");
             pauseMenu.SetActive(false);
             pauseMenuSettings.SetActive(false);
+            PhotoCapture.isActive = true;
             Time.timeScale = 1f;
+
+            GameTime.RestartGameTime();
+
             Cursor.lockState = CursorLockMode.Locked;
 
             _paused = false;
