@@ -9,6 +9,7 @@ public class StartingPositionGenerator : MonoBehaviour
 {
     public EnvironmentConfiguration environmentConfiguration;
 
+    [SerializeField] private LoadingScreenManager LoadingScreenManager;
     private GameObject chosenEnvironment;
 
     private GameObject[] environments;
@@ -28,7 +29,7 @@ public class StartingPositionGenerator : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
             ExperimentMetaData.ExperimentFinished = true;
-            SceneManager.LoadScene("MainMenu");
+            LoadingScreenManager.LoadScene("MainMenu");
             return;
         }
 
@@ -170,7 +171,7 @@ public class StartingPositionGenerator : MonoBehaviour
 
         GameTime.AddGameTime();
 
-        SceneManager.LoadScene("DefaultScene");
+        LoadingScreenManager.LoadSceneWait("DefaultScene", 1.5f);
     }
 
 }

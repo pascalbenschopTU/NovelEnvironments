@@ -14,15 +14,25 @@ public class SetText : MonoBehaviour
             EnvironmentConfiguration environmentConfiguration = ExperimentMetaData.Environments[ExperimentMetaData.Index];
             switch (gameObject.name)
             {
-                case "Text (TMP) Instruction":
+                case "Text (TMP) Instructions":
+                    string text = "";
                     if (PlayerPrefs.HasKey("InstructionSetting"))
                     {
-                        mText.text = "\n" + PlayerPrefs.GetString("InstructionSetting");
+                        text += PlayerPrefs.GetString("InstructionSetting");
                     }
                     else
                     {
-                        mText.text = "Walk through the gate to go to the next environment";
+                        text += "Walk through the gate to go to the next environment";
                     }
+                    if (environmentConfiguration.CameraTask)
+                    {
+                        text += "\n\nIn the environment you can take pictures"; 
+                    }
+                    if (environmentConfiguration.PickupTask)
+                    {
+                        text += "\n\nIn the environment you can pick up lanterns";
+                    }
+                    mText.text = text;
                     break;
                 case "Text (TMP) ControlsCamera":
                     if (environmentConfiguration.CameraTask)
@@ -51,7 +61,7 @@ public class SetText : MonoBehaviour
         // Last time in the default scene
         else
         {
-            if (gameObject.name == "Text (TMP) Instruction")
+            if (gameObject.name == "Text (TMP) Instructions")
             {
                 mText.text = "Walk through the gate to finish the game";
             }
