@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1202863149135574779}
   - component: {fileID: 3987263335588610609}
   - component: {fileID: 2347518077699120823}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Windmill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29,6 +29,7 @@ Transform:
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -40,7 +41,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3194572283127358436}
-  m_Mesh: {fileID: -112859248700104106, guid: d6def51f900d30b49881eea9d658c2e5, type: 3}
+  m_Mesh: {fileID: -112859248700104106, guid: ef8bebf3ee154c915b17658bbf12c973, type: 3}
 --- !u!23 &3987263335588610609
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -52,6 +53,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -95,4 +97,4 @@ MeshCollider:
   serializedVersion: 4
   m_Convex: 1
   m_CookingOptions: -1
-  m_Mesh: {fileID: -112859248700104106, guid: d6def51f900d30b49881eea9d658c2e5, type: 3}
+  m_Mesh: {fileID: -112859248700104106, guid: ef8bebf3ee154c915b17658bbf12c973, type: 3}
