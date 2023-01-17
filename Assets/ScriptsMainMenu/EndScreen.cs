@@ -38,7 +38,7 @@ namespace ScriptsMainMenu
             CsvUtils.SavePositionalDataToCsv(Recorder.recording, directoryPath);
             CsvUtils.SaveTaskDataToCsv(Recorder.tasks, directoryPath);
 
-            var gameTime = CalculateGameTime(ExperimentMetaData.StartTime, ExperimentMetaData.EndTime);
+            var gameTime = CalculateGameTime(GameTime.TotalGameTime);
             var distance = CalculateDistanceWalked(directoryPath);
             var numLandmarks = CalculateLandmarksFound(directoryPath);
             var picturesTaken = CalculatePicturesTaken(directoryPath);
@@ -69,11 +69,11 @@ namespace ScriptsMainMenu
                 LoadEndScreen();
             }
         }
-        private TimeSpan CalculateGameTime(DateTime start, DateTime finish)
+        private TimeSpan CalculateGameTime(int GameTimeInSeconds)
         {
-            var gameTime = finish - start;
-            ResultsGameTime.text = $"{gameTime.Minutes} m : {gameTime.Seconds} s";
-            return gameTime;
+            TimeSpan totalGameTime = new TimeSpan(GameTimeInSeconds / 3600, GameTimeInSeconds / 60, GameTimeInSeconds % 60);
+            ResultsGameTime.text = $"{totalGameTime.Minutes} m : {totalGameTime.Seconds} s";
+            return totalGameTime;
         }
         private float CalculateDistanceWalked(string directoryName)
         {

@@ -72,6 +72,11 @@ public class PathGenerator : MonoBehaviour
         return spawn;
     }
 
+    public List<(Vector3 start, Vector3 end)> getPaths()
+    {
+        return paths;
+    }
+
     private void GeneratePolygon(Vector3 start, Vector3 end, int startAngle, int totalEdges, int edgesToDraw) 
     {
         Polygon polygon = new Polygon();
