@@ -113,7 +113,7 @@ namespace ScriptsMainMenu
 
                 Debug.Log($"Starting with id: {_experimentId}");
                 Cursor.lockState = CursorLockMode.Locked;
-                LoadingScreenManager.LoadScene(1);
+                LoadingScreenManager.LoadSceneWait("DefaultScene", 1.5f);
             }
             else
             {

@@ -28,48 +28,41 @@ public class LoadingScreenManager : MonoBehaviour
         LoadingScreenPanel.SetActive(true);
         StartCoroutine(LoadSceneAsync(SceneManager.LoadSceneAsync(sceneId)));
     }
-    
-    // private IEnumerator UpdateLoadingTextAsync()
-    // {
-    //     while (loading)
-    //     {
-    //         Debug.Log("Update ");
-    //         dots++;
-    //         dots %= MaxDots;
-    //         StartCoroutine(UpdateLoadingText());
-    //     }
-    //
-    //     yield return null;
-    // }
-    // private IEnumerator UpdateLoadingText()
-    // {
-    //     var text = new StringBuilder();
-    //     text.Append("Loading ");
-    //     for (var i = 0; i < dots; i++)
-    //     {
-    //         text.Append(".");
-    //     }
-    //
-    //     LoadingText.text = text.ToString();
-    //     yield return new WaitForSeconds(TickRate);
-    // }
 
-    private IEnumerator LoadSceneAsync(AsyncOperation loadingOperation)
+    public void LoadSceneWait(string sceneName, float waitFor=2.0f)
+    {
+        LoadingScreenPanel.SetActive(true);
+        StartCoroutine(LoadSceneAsyncWait(sceneName, waitFor));
+    }
+    private IEnumerator LoadSceneAsync(AsyncOperation loadingOperation, float waitFor=0.0f)
     {
         loading = true;
+
         while (!loadingOperation.isDone)
         {
             yield return null;
         }        
     }
+    
+    private IEnumerator LoadSceneAsyncWait(string sceneName, float waitFor=0.0f)
+    {
+        loading = true;
+
+        if (waitFor > 0.0f)
+        {
+            yield return new WaitForSeconds(waitFor);
+        }
+
+        var loadingOperation = SceneManager.LoadSceneAsync(sceneName);
+        while (!loadingOperation.isDone)
+        {
+            yield return new WaitForSeconds(0.5f);
+        }        
+    }
 
     private void OnEnable()
     {
-        Debug.Log("???????????????????????");
         loading = true;
-        // lastTimestamp = 0f;
-        // dots = 0;
-        // StartCoroutine(UpdateLoadingTextAsync());
     }
 
     private void OnDisable()

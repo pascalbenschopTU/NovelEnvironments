@@ -171,7 +171,7 @@ public class StartingPositionGenerator : MonoBehaviour
 
         GameTime.AddGameTime();
 
-        LoadingScreenManager.LoadScene("DefaultScene");
+        LoadingScreenManager.LoadSceneWait("DefaultScene", 1.5f);
     }
 
 }
