@@ -8,7 +8,7 @@ public class SetText : MonoBehaviour
 
     public TMP_Text mText;
     
-    // Start is called before the first frame update
+    // Set text for instructions in Default Environment
     void Start()
     {
         EnvironmentConfiguration environmentConfiguration = ExperimentMetaData.Environments[ExperimentMetaData.Index];
