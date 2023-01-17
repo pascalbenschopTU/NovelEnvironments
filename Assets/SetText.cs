@@ -11,11 +11,35 @@ public class SetText : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (PlayerPrefs.HasKey("InstructionSetting")) {
-            mText.text = "\n" + PlayerPrefs.GetString("InstructionSetting");
-        }
-        else {
-           mText.text = "Walk through the gate to go to the next environment"; 
+        EnvironmentConfiguration environmentConfiguration = ExperimentMetaData.Environments[ExperimentMetaData.Index];
+        switch(gameObject.name) 
+        {
+            case "Text (TMP) Instruction":
+                if (PlayerPrefs.HasKey("InstructionSetting")) {
+                    mText.text = "\n" + PlayerPrefs.GetString("InstructionSetting");
+                }
+                else {
+                mText.text = "Walk through the gate to go to the next environment"; 
+                }
+                break;
+            case "Text (TMP) ControlsCamera":
+                if(environmentConfiguration.CameraTask) {
+                    mText.enabled = true;
+                }
+                else {
+                    mText.enabled = false;
+                }      
+                break;
+            case "Text (TMP) ControlsCollecting":
+                if(environmentConfiguration.PickupTask) {
+                    mText.enabled = true;
+                }
+                else {
+                    mText.enabled = false;
+                }   
+                break;
+            default:
+                break;
         }
     }
 }
