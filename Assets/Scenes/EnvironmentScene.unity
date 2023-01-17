@@ -97,10 +97,8 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 112000000, guid: 079ce2a9ad4a82842a15d99dc8cd928e,
-    type: 2}
-  m_LightingSettings: {fileID: 4890085278179872738, guid: 2694a7e60111a9e419050d7fc3a698c5,
-    type: 2}
+  m_LightingDataAsset: {fileID: 112000000, guid: 079ce2a9ad4a82842a15d99dc8cd928e, type: 2}
+  m_LightingSettings: {fileID: 4890085278179872738, guid: 2694a7e60111a9e419050d7fc3a698c5, type: 2}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -315,8 +313,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  xMin: -200
-  zMin: -200
   scale: 100
   octaves: 5
   lacunarity: 2
@@ -349,7 +345,6 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 5
     m_NumAlphaKeys: 2
-  size: 400
   AudioSrc: {fileID: 355603887}
   Environment1: {fileID: 8300000, guid: 3f07c97c6aa80c06bbaec0e03177d7da, type: 3}
   Environment2: {fileID: 8300000, guid: 9f1c507196b7107a099f73eb04ee97c8, type: 3}
@@ -379,7 +374,7 @@ AudioSource:
   m_GameObject: {fileID: 355603884}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: b034f917aa5b0254c81e1698d52c825d, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 0.6
@@ -1041,8 +1036,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  xMin: -200
-  zMin: -200
   scale: 100
   octaves: 5
   lacunarity: 1
@@ -1075,7 +1068,6 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
-  size: 400
   AudioSrc: {fileID: 1117622807}
   Environment1: {fileID: 8300000, guid: 3f07c97c6aa80c06bbaec0e03177d7da, type: 3}
   Environment2: {fileID: 8300000, guid: 9f1c507196b7107a099f73eb04ee97c8, type: 3}
@@ -1090,7 +1082,7 @@ AudioSource:
   m_GameObject: {fileID: 1117622804}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: b034f917aa5b0254c81e1698d52c825d, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -1332,98 +1324,79 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1417411105984877967, guid: a474f5538f883a841b470d5aa4c2f80a,
-        type: 3}
+    - target: {fileID: 1417411105984877967, guid: a474f5538f883a841b470d5aa4c2f80a, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1417411105984877967, guid: a474f5538f883a841b470d5aa4c2f80a,
-        type: 3}
+    - target: {fileID: 1417411105984877967, guid: a474f5538f883a841b470d5aa4c2f80a, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1417411106231021673, guid: a474f5538f883a841b470d5aa4c2f80a,
-        type: 3}
+    - target: {fileID: 1417411106231021673, guid: a474f5538f883a841b470d5aa4c2f80a, type: 3}
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1417411106231021673, guid: a474f5538f883a841b470d5aa4c2f80a,
-        type: 3}
+    - target: {fileID: 1417411106231021673, guid: a474f5538f883a841b470d5aa4c2f80a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1417411106231021673, guid: a474f5538f883a841b470d5aa4c2f80a,
-        type: 3}
+    - target: {fileID: 1417411106231021673, guid: a474f5538f883a841b470d5aa4c2f80a, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1417411106231021673, guid: a474f5538f883a841b470d5aa4c2f80a,
-        type: 3}
+    - target: {fileID: 1417411106231021673, guid: a474f5538f883a841b470d5aa4c2f80a, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1417411106231021673, guid: a474f5538f883a841b470d5aa4c2f80a,
-        type: 3}
+    - target: {fileID: 1417411106231021673, guid: a474f5538f883a841b470d5aa4c2f80a, type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 1417411106231021673, guid: a474f5538f883a841b470d5aa4c2f80a,
-        type: 3}
+    - target: {fileID: 1417411106231021673, guid: a474f5538f883a841b470d5aa4c2f80a, type: 3}
       propertyPath: m_LocalRotation.x
       value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: 1417411106231021673, guid: a474f5538f883a841b470d5aa4c2f80a,
-        type: 3}
+    - target: {fileID: 1417411106231021673, guid: a474f5538f883a841b470d5aa4c2f80a, type: 3}
       propertyPath: m_LocalRotation.y
       value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: 1417411106231021673, guid: a474f5538f883a841b470d5aa4c2f80a,
-        type: 3}
+    - target: {fileID: 1417411106231021673, guid: a474f5538f883a841b470d5aa4c2f80a, type: 3}
       propertyPath: m_LocalRotation.z
       value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: 1417411106231021673, guid: a474f5538f883a841b470d5aa4c2f80a,
-        type: 3}
+    - target: {fileID: 1417411106231021673, guid: a474f5538f883a841b470d5aa4c2f80a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1417411106231021673, guid: a474f5538f883a841b470d5aa4c2f80a,
-        type: 3}
+    - target: {fileID: 1417411106231021673, guid: a474f5538f883a841b470d5aa4c2f80a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1417411106231021673, guid: a474f5538f883a841b470d5aa4c2f80a,
-        type: 3}
+    - target: {fileID: 1417411106231021673, guid: a474f5538f883a841b470d5aa4c2f80a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1417411106231021675, guid: a474f5538f883a841b470d5aa4c2f80a,
-        type: 3}
+    - target: {fileID: 1417411106231021675, guid: a474f5538f883a841b470d5aa4c2f80a, type: 3}
       propertyPath: m_Name
       value: PauseMenu (1)
       objectReference: {fileID: 0}
-    - target: {fileID: 1417411106682123956, guid: a474f5538f883a841b470d5aa4c2f80a,
-        type: 3}
+    - target: {fileID: 1417411106682123956, guid: a474f5538f883a841b470d5aa4c2f80a, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1417411106682123956, guid: a474f5538f883a841b470d5aa4c2f80a,
-        type: 3}
+    - target: {fileID: 1417411106682123956, guid: a474f5538f883a841b470d5aa4c2f80a, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1417411106682123956, guid: a474f5538f883a841b470d5aa4c2f80a,
-        type: 3}
+    - target: {fileID: 1417411106682123956, guid: a474f5538f883a841b470d5aa4c2f80a, type: 3}
       propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1691340868527294204, guid: a474f5538f883a841b470d5aa4c2f80a,
-        type: 3}
+    - target: {fileID: 1691340868527294204, guid: a474f5538f883a841b470d5aa4c2f80a, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6824554987382649490, guid: a474f5538f883a841b470d5aa4c2f80a,
-        type: 3}
+    - target: {fileID: 6824554987382649490, guid: a474f5538f883a841b470d5aa4c2f80a, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
@@ -1519,8 +1492,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  xMin: -200
-  zMin: -200
   scale: 100
   octaves: 5
   lacunarity: 1
@@ -1553,7 +1524,6 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 5
     m_NumAlphaKeys: 2
-  size: 400
   AudioSrc: {fileID: 1355761739}
   Environment1: {fileID: 8300000, guid: 3f07c97c6aa80c06bbaec0e03177d7da, type: 3}
   Environment2: {fileID: 8300000, guid: 9f1c507196b7107a099f73eb04ee97c8, type: 3}
@@ -1583,7 +1553,7 @@ AudioSource:
   m_GameObject: {fileID: 1355761736}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: b034f917aa5b0254c81e1698d52c825d, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 0.6
@@ -1874,7 +1844,7 @@ AudioSource:
   m_GameObject: {fileID: 1582923928}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: b034f917aa5b0254c81e1698d52c825d, type: 2}
   m_audioClip: {fileID: 8300000, guid: 80d28371b9e51cea58bcbf2cbae4eeb4, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -2029,7 +1999,7 @@ AudioSource:
   m_GameObject: {fileID: 1901605668}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: b034f917aa5b0254c81e1698d52c825d, type: 2}
   m_audioClip: {fileID: 8300000, guid: 3f07c97c6aa80c06bbaec0e03177d7da, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -2196,8 +2166,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  xMin: -200
-  zMin: -200
   scale: 100
   octaves: 5
   lacunarity: 1
@@ -2230,7 +2198,6 @@ MonoBehaviour:
     m_Mode: 1
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
-  size: 400
   AudioSrc: {fileID: 1939442655}
   Environment1: {fileID: 8300000, guid: 3f07c97c6aa80c06bbaec0e03177d7da, type: 3}
   Environment2: {fileID: 8300000, guid: 9f1c507196b7107a099f73eb04ee97c8, type: 3}
@@ -2260,7 +2227,7 @@ AudioSource:
   m_GameObject: {fileID: 1939442652}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: b034f917aa5b0254c81e1698d52c825d, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 0.6
