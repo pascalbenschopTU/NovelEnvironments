@@ -1022,7 +1022,18 @@ MonoBehaviour:
   - {fileID: 1004710975425532, guid: c0aa33e678586aa43a1a9254fdfdfb4d, type: 3}
   - {fileID: 1630287520782172, guid: 3b703535d10b66844a909b8cd4b12fc5, type: 3}
   - {fileID: 1879388732584624, guid: ba2b67dbc790eb74f8a401c592dd619f, type: 3}
-  landmarks: []
+  landmarks:
+  - {fileID: 6168357766534588000, guid: ee21998f11acbec418dff52eb5ecfde4, type: 3}
+  - {fileID: 8252821846288497176, guid: 958ebaba05daaea408218354ec7b8995, type: 3}
+  - {fileID: 7190989728183158723, guid: 1b9e59d5bb6f48643b2067fd21e8c7b7, type: 3}
+  - {fileID: 5922884322662716909, guid: 0224e7bbe5b06f74fa47bed3adcde6cd, type: 3}
+  - {fileID: 3194572283127358436, guid: dadc5d356bf1d214bb2e29c57c636430, type: 3}
+  - {fileID: 2651489086107281793, guid: 5c3bd99615643bd4c93c3866cb13d40b, type: 3}
+  - {fileID: 2032747138085375153, guid: 9acd46bf5bf85774e88502a8be84d200, type: 3}
+  - {fileID: 4017959717926633342, guid: 3ee41b4affb3dc94586979509002914b, type: 3}
+  - {fileID: 6542989572093223389, guid: 7b49a02daa39e0041826bab1cd740999, type: 3}
+  - {fileID: 5788123003525832337, guid: 918ca8ce04e69de4c953d61ff03bd365, type: 3}
+  - {fileID: 1687696578583648148, guid: c357c9df5bbccec4b829a6e9dc3759c9, type: 3}
   gatherable: {fileID: 150698, guid: f4c62b1a746281e44800c9250dd3643c, type: 3}
   meshTag: SnowFloor
   objectAmount: 20
