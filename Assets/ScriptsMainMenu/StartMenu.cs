@@ -107,8 +107,10 @@ namespace ScriptsMainMenu
                 ExperimentMetaData.TimeInEnvironment = PlayerPrefs.GetInt("TimeSetting");
                 ExperimentMetaData.Index = 0;
                 GameTime.TotalGameTime = 0;
+                ExperimentMetaData.StartTime = DateTime.Now;
+                var directoryPath = Path.Join(Application.dataPath, $"ExperimentLogs_{ExperimentMetaData.ParticipantNumber}");
+                ExperimentMetaData.LogDirectory = Path.Join(directoryPath, $"{ExperimentMetaData.StartTime:dd-MM-yyyy_hh-mm-ss}");
                 
-                // DeleteLogsOnStartNewGame(_participantNumber);
                 Recorder.ResetRecordings();
 
                 Debug.Log($"Starting with id: {_experimentId}");
@@ -148,11 +150,6 @@ namespace ScriptsMainMenu
             }
 
             Recorder.ResetRecordings();
-        }
-
-        public void QuitGame()
-        {
-            Application.Quit();
         }
     }
 }

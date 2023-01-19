@@ -24,6 +24,7 @@ namespace ScriptsMainMenu
         [SerializeField] private Toggle ModuloToggle;
         [SerializeField] private TMP_InputField SeedInputField;
         [SerializeField] private Toggle SeedToggle;
+        [SerializeField] private Toggle EndScreenToggle;
     
         [SerializeField] private GameObject ButtonChooseFile;
         [SerializeField] private GameObject ButtonChangeFile;
@@ -175,6 +176,7 @@ namespace ScriptsMainMenu
             
             if(!PlayerPrefs.HasKey("FullScreenSetting")) PlayerPrefs.SetInt("FullScreenSetting",1);
             if(!PlayerPrefs.HasKey("ModuloActiveSetting")) PlayerPrefs.SetInt("ModuloActiveSetting",1);
+            if(!PlayerPrefs.HasKey("EndScreenActiveSetting")) PlayerPrefs.SetInt("EndScreenActiveSetting",1);
             if(!PlayerPrefs.HasKey("ModuloSetting")) PlayerPrefs.SetInt("ModuloSetting",10);
             if(!PlayerPrefs.HasKey("SeedActiveSetting")) PlayerPrefs.SetInt("SeedActiveSetting",0);
             if(!PlayerPrefs.HasKey("SeedSetting")) PlayerPrefs.SetInt("SeedSetting",100);
@@ -188,7 +190,7 @@ namespace ScriptsMainMenu
             ModuloToggle.isOn = Convert.ToBoolean(PlayerPrefs.GetInt("ModuloActiveSetting"));
             ToggleSeedActive(Convert.ToBoolean(PlayerPrefs.GetInt("SeedActiveSetting")));
             SeedToggle.isOn = Convert.ToBoolean(PlayerPrefs.GetInt("SeedActiveSetting"));
-
+            EndScreenToggle.isOn = Convert.ToBoolean(PlayerPrefs.GetInt("EndScreenActiveSetting"));
             
             TimeInput.text = $"{PlayerPrefs.GetInt("TimeSetting")}";
         
@@ -220,6 +222,10 @@ namespace ScriptsMainMenu
         {
             Screen.fullScreen = value;
             PlayerPrefs.SetInt("FullScreenSetting", Convert.ToInt32(value));
+        }
+        public void ToggleShowEndScreenData(bool active)
+        {
+            PlayerPrefs.SetInt("EndScreenActiveSetting", Convert.ToInt32(active));
         }
         public void ToggleModuloActive(bool active)
         {
