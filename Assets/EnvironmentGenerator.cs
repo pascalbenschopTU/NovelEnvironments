@@ -65,32 +65,14 @@ public class EnvironmentGenerator : MonoBehaviour
         objectGenerator = gameObject.AddComponent<ObjectGenerator>();
 
 
-        if(environmentConfiguration.NumberObjectsConfig == ConfigType.Low) {
+        if (environmentConfiguration.NumberObjectsConfig == ConfigType.Low)
+        {
             objectGenerator.Initialize(layer, objects, seed, objectAmount, gatherable);
-        } else {
+        }
+        else
+        {
             objectGenerator.Initialize(layer, complexObjects, seed, objectAmount, gatherable);
         }
-
-        switch(gameObject.tag)
-                {
-                    case "Environment1":
-                        AudioSrc.PlayOneShot(Environment1);
-                        break;
-                    case "Environment2":
-                        AudioSrc.PlayOneShot(Environment2);
-                        break;
-                    case "Environment3":
-                        AudioSrc.PlayOneShot(Environment3);
-                        break;
-                    case "Environment4":
-                        AudioSrc.PlayOneShot(Environment4);
-                        break;
-                    // default:
-                    //     AudioSrc.PlayOneShot(Environment4);
-                    //     break;
-
-                }
-
 
         meshes = new Mesh[(size/200)*(size/200)];
     }
@@ -122,6 +104,29 @@ public class EnvironmentGenerator : MonoBehaviour
         if (generateGatherables)
         {
             objectGenerator.GenerateGatherables(pathGenerator.getPaths());
+        }
+
+        PlaySound();
+    }
+
+    private void PlaySound()
+    {
+        switch (gameObject.tag)
+        {
+            case "Environment1":
+                AudioSrc.PlayOneShot(Environment1);
+                break;
+            case "Environment2":
+                AudioSrc.PlayOneShot(Environment2);
+                break;
+            case "Environment3":
+                AudioSrc.PlayOneShot(Environment3);
+                break;
+            case "Environment4":
+                AudioSrc.PlayOneShot(Environment4);
+                break;
+            default:
+                break;
         }
     }
 
