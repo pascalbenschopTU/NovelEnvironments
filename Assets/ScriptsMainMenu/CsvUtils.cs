@@ -151,7 +151,7 @@ public class CsvUtils : MonoBehaviour
             return false;
         }
         // save experiment results in json file
-        var jsonData = ExperimentMetaData.ToJson(experimentData);
+        string jsonData = ExperimentMetaData.ToJson(experimentData);
         File.WriteAllText(Path.Join(directoryPath, "ExperimentMetaData.json"), jsonData);
         
         // save used environment configurations in csv file
