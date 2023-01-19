@@ -1,8 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
-using System.IO;
+using System.Linq;
 
 public class Recorder : MonoBehaviour
 {
@@ -45,7 +43,7 @@ public class Recorder : MonoBehaviour
                 data
             };
         }
-        else if (data != null && !tasks.Contains(data))
+        else if (data != null && !tasks.Any(task => task.Equals(data)))
         {
             tasks.Add(data);
         } 

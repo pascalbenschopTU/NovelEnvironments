@@ -17,12 +17,11 @@ public class AreaTracker : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if ((transform.position - player.position).sqrMagnitude < 100.0f)
-		{
+        if ((transform.position - player.position).sqrMagnitude < 250.0f)
+        {
             Vector3 directionToMe = transform.position - playerCamera.position;
             if (Vector3.Angle(playerCamera.forward, directionToMe) < 45.0f)
-			{
-                Debug.Log("Spotted a landmark");
+            {
                 LogSeenLandmark();
             }
         }
@@ -37,7 +36,7 @@ public class AreaTracker : MonoBehaviour
                 transform.position,
                 transform.rotation
             ),
-            "Seen Landmark " + transform.name // name of task
+            "Seen Landmark " + transform.name.Replace("(Clone)", string.Empty) // name of landmark
         );
         Recorder.RecordTaskData(task);
     }
