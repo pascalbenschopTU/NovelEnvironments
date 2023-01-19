@@ -25,21 +25,20 @@ public class EnvironmentGenerator : MonoBehaviour
 
     [SerializeField] private AnimationCurve heightCurve;
 
-    public int xMin;
-    public int zMin;
-
     public float scale;
     public int octaves;
     public float lacunarity;
 
     public Gradient gradient;
 
-    public int size = 400;
+    private int size = 600;
+
+    private int xMin;
+    private int zMin;
 
     private bool generateGatherables = false;
 
     private Mesh[] meshes;
-    private int index = 0;
 
     [SerializeField] private AudioSource AudioSrc = default;
     [SerializeField] private AudioClip Environment1 = default;
@@ -52,11 +51,12 @@ public class EnvironmentGenerator : MonoBehaviour
         environmentConfiguration = ExperimentMetaData.currentEnvironment;
 
         int seed = ExperimentMetaData.Seed;
+        xMin = zMin = -(size/2);
 
         meshGenerator = gameObject.AddComponent<MeshGenerator>();
         meshGenerator.Initialize(layer, terrainMaterial, heightCurve, scale, octaves, lacunarity, seed, gradient);
         pathGenerator = gameObject.AddComponent<PathGenerator>();
-        pathGenerator.Initialize(layer, landmarks, seed, terrainMaterial);
+        pathGenerator.Initialize(layer, landmarks, seed, terrainMaterial, size);
         objectGenerator = gameObject.AddComponent<ObjectGenerator>();
 
 
@@ -87,17 +87,20 @@ public class EnvironmentGenerator : MonoBehaviour
                 }
 
 
-        meshes = new Mesh[4];
+        meshes = new Mesh[(size/200)*(size/200)];
     }
 
     public void createNewEnvironment()
     {
         Initialize();
 
-        meshes[index++] = meshGenerator.CreateNewMesh(xMin, zMin, meshTag);
-        meshes[index++] = meshGenerator.CreateNewMesh(xMin, zMin + size / 2, meshTag);
-        meshes[index++] = meshGenerator.CreateNewMesh(xMin + size / 2, zMin, meshTag);
-        meshes[index++] = meshGenerator.CreateNewMesh(xMin + size / 2, zMin + size / 2, meshTag);
+        for (int i = 0, x = 0; x < size; x += 200)
+        {
+            for (int z = 0; z < size; z += 200)
+            {
+                meshes[i++] = meshGenerator.CreateNewMesh(xMin+x, zMin+z, meshTag);
+            }
+        }
 
         createBorders();
 
@@ -108,11 +111,12 @@ public class EnvironmentGenerator : MonoBehaviour
 
         foreach(Mesh mesh in meshes)
         {
-            objectGenerator.GenerateObjects(mesh);
-            if (generateGatherables)
-            {
-                objectGenerator.GenerateGatherables(mesh);
-            }
+            objectGenerator.GenerateObjects(mesh, pathGenerator.getSpawn());
+        }
+        
+        if (generateGatherables)
+        {
+            objectGenerator.GenerateGatherables(pathGenerator.getPaths());
         }
     }
 
@@ -128,7 +132,7 @@ public class EnvironmentGenerator : MonoBehaviour
 
     private void createBorders()
     {
-        int offSetFromOutside = 30;
+        int offSetFromOutside = 0;
         int halfOffSetFromOutside = offSetFromOutside / 2;
 
         // Create width borders
@@ -138,14 +142,14 @@ public class EnvironmentGenerator : MonoBehaviour
         {
             GameObject border = GameObject.CreatePrimitive(PrimitiveType.Cube);
 
-            border.transform.localScale = new Vector3(size - offSetFromOutside, size - offSetFromOutside, 1);
+            border.transform.localScale = new Vector3(size - offSetFromOutside, 100, 1);
 
             if (i == 0)
                 border.transform.position = new Vector3(xMin + xOffset, 0, zMin + halfOffSetFromOutside);
             if (i == 1)
                 border.transform.position = new Vector3(xMin + xOffset, 0, zMin + zOffset - halfOffSetFromOutside);
 
-            border.GetComponent<MeshRenderer>().enabled = false;
+            border.GetComponent<Renderer>().material.color = gradient.Evaluate(0.25f);
             border.transform.name = "Width border " + (i + 1);
             border.transform.parent = transform;
         }
@@ -158,14 +162,14 @@ public class EnvironmentGenerator : MonoBehaviour
         {
             GameObject border = GameObject.CreatePrimitive(PrimitiveType.Cube);
 
-            border.transform.localScale = new Vector3(1, size - offSetFromOutside, size - offSetFromOutside);
+            border.transform.localScale = new Vector3(1, 100, size - offSetFromOutside);
 
             if (i == 0)
                 border.transform.position = new Vector3(xMin + halfOffSetFromOutside, 0, zMin + zOffset);
             if (i == 1)
                 border.transform.position = new Vector3(xMin + xOffset - halfOffSetFromOutside, 0, zMin + zOffset);
 
-            border.GetComponent<MeshRenderer>().enabled = false;
+            border.GetComponent<Renderer>().material.color = gradient.Evaluate(0.25f);
             border.transform.name = "Length border " + (i + 1);
             border.transform.parent = transform;
         }

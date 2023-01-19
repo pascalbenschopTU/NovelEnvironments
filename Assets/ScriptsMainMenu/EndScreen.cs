@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using TMPro;
 using UnityEngine;
@@ -29,13 +30,31 @@ namespace ScriptsMainMenu
             // TODO get all the data from the run
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
-
             ExperimentMetaData.EndTime = DateTime.Now;
-            SetGameTime(ExperimentMetaData.StartTime, ExperimentMetaData.EndTime);
-            SetDistanceWalked(0);
-            SetLandmarksFound(0, 10);
-            SetPicturesTaken(0);
-            SetObjectsPickedUp(0, 10);
+            
+            var directoryPath = Path.Join(Application.dataPath, $"ExperimentLogs_{ExperimentMetaData.ParticipantNumber}");
+            directoryPath = Path.Join(directoryPath, $"{ExperimentMetaData.EndTime:dd-MM-yyyy_hh-mm-ss}");
+            
+            CsvUtils.SavePositionalDataToCsv(Recorder.recording, directoryPath);
+            CsvUtils.SaveTaskDataToCsv(Recorder.tasks, directoryPath);
+
+            var gameTime = CalculateGameTime(GameTime.TotalGameTime);
+            var distance = CalculateDistanceWalked(directoryPath);
+            var numLandmarks = CalculateLandmarksFound(directoryPath);
+            var picturesTaken = CalculatePicturesTaken(directoryPath);
+            var objectsPickedUp = CalculateObjectsPickedUp(directoryPath);
+            var roamingEntropy = CalculateRoamingEntropy(directoryPath);
+            CsvUtils.SaveExperimentData(directoryPath, new ExperimentData
+            {
+                DistanceWalked = distance,
+                LandmarksFound = numLandmarks,
+                LandmarksFoundMax = -1,
+                PicturesTaken = picturesTaken,
+                GameTime = gameTime.ToString(),
+                ObjectsPickedUp = objectsPickedUp,
+                ObjectsPickedUpMax = -1,
+                RoamingEntropy = roamingEntropy 
+            });
         }
 
         public void OnContinue()
@@ -50,101 +69,100 @@ namespace ScriptsMainMenu
                 LoadEndScreen();
             }
         }
-
-        private void SetGameTime(DateTime start, DateTime finish)
+        private TimeSpan CalculateGameTime(int GameTimeInSeconds)
         {
-            var gameTime = finish - start;
-            ResultsGameTime.text = $"{gameTime.Minutes} m : {gameTime.Seconds} s";
+            TimeSpan totalGameTime = new TimeSpan(GameTimeInSeconds / 3600, GameTimeInSeconds / 60, GameTimeInSeconds % 60);
+            ResultsGameTime.text = $"{totalGameTime.Minutes} m : {totalGameTime.Seconds} s";
+            return totalGameTime;
         }
-
-        private void SetDistanceWalked(int distance)
+        private float CalculateDistanceWalked(string directoryName)
         {
-            distance = 0;
-            
-            Dictionary<int, List<PositionalData>> positionalData = CsvUtils.PositionalDataFromCsv();
+            var distance = 0f;
+            Dictionary<int, List<PositionalData>> positionalData = CsvUtils.LoadPositionalDataFromCsv(directoryName);
             if (positionalData != null && positionalData.Count > 0)
             {
                 distance = (int)Aggregate.CalculateDistance(positionalData);
             }
 
             ResultsDistanceWalked.text = $"{distance} m";
+            return distance;
         }
-
-        private void SetLandmarksFound(int value, int max = -1)
+        private int CalculateLandmarksFound(string directoryName)
         {
             if (ExperimentMetaData.Environments == null)
             {
                 ResultsPicturesTakenObject.SetActive(false);
-                return;
+                return 0;
             }
 
             var count = 0;
 
-            Dictionary<int, List<TaskData>> tasks = CsvUtils.TaskDataFromCsv();
+            Dictionary<int, List<TaskData>> tasks = CsvUtils.LoadTaskDataFromCsv(directoryName);
             if (tasks != null && tasks.Count > 0)
             {
                 count = tasks.SelectMany(pair => pair.Value).Where(taskdata => taskdata.task == "Landmark").Count();
             }
 
             ResultsLandmarksFound.text = $"{count}";
+            return count;
         }
-
-        private void SetPicturesTaken(int value)
+        private int CalculatePicturesTaken(string directoryName)
         {
             if (ExperimentMetaData.Environments == null)
             {
                 ResultsPicturesTakenObject.SetActive(false);
-                return;
+                return 0;
             }
             var taskActive = ExperimentMetaData.Environments.Any(env => env.CameraTask);
 
-            if (taskActive)
-            {
-                ResultsPicturesTakenObject.SetActive(true);
-
-                var count = 0;
-
-                Dictionary<int, List<TaskData>> tasks = CsvUtils.TaskDataFromCsv();
-                if (tasks != null && tasks.Count > 0)
-                {
-                    count = tasks.SelectMany(pair => pair.Value).Where(taskdata => taskdata.task == "Picture").Count();
-                }
-
-                ResultsPicturesTaken.text = $"{count}";
-            }
-            else
+            if (!taskActive)
             {
                 ResultsPicturesTakenObject.SetActive(false);
+                return 0;
             }
+
+            ResultsPicturesTakenObject.SetActive(true);
+            var count = 0;
+
+            Dictionary<int, List<TaskData>> tasks = CsvUtils.LoadTaskDataFromCsv(directoryName);
+            if (tasks != null && tasks.Count > 0)
+            {
+                count = tasks.SelectMany(pair => pair.Value).Count(taskData => taskData.task == "Picture");
+            }
+
+            ResultsPicturesTaken.text = $"{count}";
+            return count;
         }
-        
-        private void SetObjectsPickedUp(int value, int max = -1)
+        private int CalculateObjectsPickedUp(string directoryName)
         {
             if (ExperimentMetaData.Environments == null)
             {
                 ResultsObjectsPickedUpObject.SetActive(false);
-                return;
+                return 0;
             }
             var taskActive = ExperimentMetaData.Environments.Any(env => env.PickupTask);
 
-            if (taskActive)
-            {
-                ResultsObjectsPickedUpObject.SetActive(true);
-
-                var count = 0;
-
-                Dictionary<int, List<TaskData>> tasks = CsvUtils.TaskDataFromCsv();
-                if (tasks != null && tasks.Count > 0)
-                {
-                    count = tasks.SelectMany(pair => pair.Value).Where(taskdata => taskdata.task == "Gathering").Count();
-                }
-
-                ResultsObjectsPickedUp.text = $"{count}";
-            }
-            else
+            if (!taskActive)
             {
                 ResultsObjectsPickedUpObject.SetActive(false);
+                return 0;
             }
+            ResultsObjectsPickedUpObject.SetActive(true);
+
+            var count = 0;
+
+            Dictionary<int, List<TaskData>> tasks = CsvUtils.LoadTaskDataFromCsv(directoryName);
+            if (tasks != null && tasks.Count > 0)
+            {
+                count = tasks.SelectMany(pair => pair.Value).Count(taskData => taskData.task == "Gathering");
+            }
+
+            ResultsObjectsPickedUp.text = $"{count}";
+            return count;
+        }
+        private int CalculateRoamingEntropy(string directoryName)
+        {
+            return -1;
         }
     }
 }

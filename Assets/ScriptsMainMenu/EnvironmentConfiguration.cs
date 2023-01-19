@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 public enum ConfigType
@@ -17,6 +18,7 @@ public enum EnvironmentType
     Snow = 3
 }
 
+[Serializable]
 public class EnvironmentConfiguration
 {
     public ConfigType NumberObjectsConfig { get; set; }
@@ -93,19 +95,31 @@ public class EnvironmentConfiguration
 
     public static EnvironmentConfiguration FromCsv(string[] csvColumns)
     {
-        return new EnvironmentConfiguration()
+        if (csvColumns.Length != 10)
         {
-            ExperimentId = int.Parse(csvColumns[0]),
-            Index = int.Parse(csvColumns[1]),
-            EnvironmentType = StringToEnvironment(csvColumns[2]),
-            NumberObjectsConfig = StringToConfig(csvColumns[3]),
-            MovingObjectConfig = StringToConfig(csvColumns[4]),
-            InteractionConfig = StringToConfig(csvColumns[5]),
-            RDConfig = StringToConfig(csvColumns[6]),
-            MapConfig = StringToConfig(csvColumns[7]),
-            CameraTask = bool.Parse(csvColumns[8]),
-            PickupTask = bool.Parse(csvColumns[9])
-        };
+            return null;
+        }
+
+        try
+        {
+            return new EnvironmentConfiguration()
+            {
+                ExperimentId = int.Parse(csvColumns[0]),
+                Index = int.Parse(csvColumns[1]),
+                EnvironmentType = StringToEnvironment(csvColumns[2]),
+                NumberObjectsConfig = StringToConfig(csvColumns[3]),
+                MovingObjectConfig = StringToConfig(csvColumns[4]),
+                InteractionConfig = StringToConfig(csvColumns[5]),
+                RDConfig = StringToConfig(csvColumns[6]),
+                MapConfig = StringToConfig(csvColumns[7]),
+                CameraTask = bool.Parse(csvColumns[8]),
+                PickupTask = bool.Parse(csvColumns[9])
+            };
+        }
+        catch (Exception)
+        {
+            return null;
+        }
     }
     public static EnvironmentType StringToEnvironment(string input)
     {

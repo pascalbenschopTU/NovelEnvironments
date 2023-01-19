@@ -9,6 +9,7 @@ public class StartingPositionGenerator : MonoBehaviour
 {
     public EnvironmentConfiguration environmentConfiguration;
 
+    [SerializeField] private LoadingScreenManager LoadingScreenManager;
     private GameObject chosenEnvironment;
 
     private GameObject[] environments;
@@ -28,7 +29,7 @@ public class StartingPositionGenerator : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
             ExperimentMetaData.ExperimentFinished = true;
-            SceneManager.LoadScene("MainMenu");
+            LoadingScreenManager.LoadScene("MainMenu");
             return;
         }
 
@@ -44,11 +45,8 @@ public class StartingPositionGenerator : MonoBehaviour
 
         InitializePlayer();
         InitializeEnvironments();
-        
-        selectNextEnvironment();
+        SelectNextEnvironment();
         StartTimer();
-
-        ExperimentMetaData.Index += 1;
     }
 
     private void InitializeEnvironments()
@@ -67,6 +65,7 @@ public class StartingPositionGenerator : MonoBehaviour
         setPlayerMiniMap();
         setPlayerFOV();
         TogglePlayerCamera();
+        ToggleLowInvolvement();
     }
 
     private void setPlayerMiniMap()
@@ -121,7 +120,16 @@ public class StartingPositionGenerator : MonoBehaviour
         }
     }
 
-    private void selectNextEnvironment()
+
+    private void ToggleLowInvolvement()
+    {
+        if (environmentConfiguration.InteractionConfig == ConfigType.Low)
+        {
+            player.AddComponent<PlayerMovementReplayController>();
+        }
+    }
+
+    private void SelectNextEnvironment()
     {
         chosenEnvironment = environments[(int)environmentConfiguration.EnvironmentType];
 
@@ -149,6 +157,7 @@ public class StartingPositionGenerator : MonoBehaviour
 
     private void StartTimer()
     {
+        GameTime.RestartGameTime();
         StartCoroutine(CountDown());
     }
 
@@ -156,12 +165,13 @@ public class StartingPositionGenerator : MonoBehaviour
     {
         yield return new WaitForSeconds(ExperimentMetaData.TimeInEnvironment);
         Debug.Log("Time has run out!");
-
         Debug.Log("Logging data");
-        CsvUtils.PositionalDataToCsv(Recorder.recording);
-        CsvUtils.TaskDataToCsv(Recorder.tasks);
+        
+        ExperimentMetaData.Index++;
 
-        SceneManager.LoadScene("DefaultScene");
+        GameTime.AddGameTime();
+
+        LoadingScreenManager.LoadSceneWait("DefaultScene", 1.5f);
     }
 
 }

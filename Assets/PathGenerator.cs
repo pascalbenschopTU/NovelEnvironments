@@ -27,6 +27,7 @@ public class PathGenerator : MonoBehaviour
     int numOfLandmarks = 6;
     int maxLength = 1500;
     int totalLength = 0;
+    int size = 0;
     private int pathWidth = 8;
     private float pathScale = 0.4f;
     int vertIndex = 0, triVertIndex = 0, triIndex = 0, verticesCount = 0;
@@ -35,11 +36,13 @@ public class PathGenerator : MonoBehaviour
     List<Vector3> landMarkCoords;
     Material mat;
 
-    public void Initialize(string layer, GameObject[] landmarks, int seed, Material mat)
+    public void Initialize(string layer, GameObject[] landmarks, int seed, Material mat, int size)
     {
         this.layer = layer;
         this.landmarks = landmarks;
         this.seed = seed;
+        this.size = size;
+        this.maxLength = size*4;
         this.prng = new System.Random(seed);
         this.paths = new List<(Vector3, Vector3)>();
         this.pathPolys = new List<Polygon>();
@@ -61,7 +64,7 @@ public class PathGenerator : MonoBehaviour
         Vector3 height = getHeigthVertex(vertex + move);
 
         landMarkCoords.Add(height);
-        System.Console.WriteLine("vertex: {0} move: {1} height: {2} a {3} ai {4} fullAng {5}", vertex, move, height, a, ai, fullAng);
+        //System.Console.WriteLine("vertex: {0} move: {1} height: {2} a {3} ai {4} fullAng {5}", vertex, move, height, a, ai, fullAng);
     }
 
     public Vector3 getSpawn()
@@ -69,94 +72,99 @@ public class PathGenerator : MonoBehaviour
         return spawn;
     }
 
+    public List<(Vector3 start, Vector3 end)> getPaths()
+    {
+        return paths;
+    }
+
     private void GeneratePolygon(Vector3 start, Vector3 end, int startAngle, int totalEdges, int edgesToDraw) 
     {
-            int baseLength = 30;
-            Polygon polygon = new Polygon();
-            polygon.Initialize(totalEdges);
+        Polygon polygon = new Polygon();
+        polygon.Initialize(totalEdges);
 
-            int innerAngle = ((totalEdges-2)*180) / totalEdges;
-            int outerAngle = 180 - innerAngle;
-            int range = outerAngle / 4;
-            int lenrange = 20;
-            
-            int randAngle = 0, angleInc = 50, randLength = 0, length = 40;
-
-            int angle = startAngle;
-            Vector3 oldpos = start, newpos = start;
-            polygon.addVertex(start);
-
-            for (int i = 0; i < edgesToDraw-1; i++) {
-
-                oldpos = newpos;
-                newpos += new Vector3(Mathf.Cos(angle * Mathf.Deg2Rad)*length, 0, Mathf.Sin(angle * Mathf.Deg2Rad)*length);
-                
-                paths.Add((oldpos, newpos));
-                polygon.addVertex(newpos);
-
-                neighbors.Add(newpos, oldpos);
-                outerEnds.Add(newpos, angle % 360);
-                pathEnds.Add((newpos, angle % 360));
-
-                if (!Intersections.ContainsKey(oldpos))
-                    Intersections.Add(oldpos, (angle % 360, 180-angleInc % 360));
-
-                totalLength += length;
-                System.Console.WriteLine("path length: {0} length: {1}", totalLength, length);
+        int innerAngle = ((totalEdges-2)*180) / totalEdges;
+        int outerAngle = 180 - innerAngle;
+        int range = outerAngle / 4;
+        int baseLength = (int)(size/12);
+        int lenrange = (int)(size/20);
         
-                if (i % 2 == 0) {
-                    randAngle = prng.Next(0, range);
-                    randLength = prng.Next(0, lenrange);
+        int randAngle = 0, angleInc = 50, randLength = 0, length = baseLength+(int)(lenrange/2);
 
-                    angleInc = (outerAngle + randAngle);
-                    length = baseLength + randLength;
-                } else{
-                    angleInc = (outerAngle - randAngle);
-                    length = baseLength + lenrange - randLength;
-                }
-                angle += angleInc;
-            }
+        int angle = startAngle;
+        Vector3 oldpos = start, newpos = start;
+        polygon.addVertex(start);
 
-            Vector3 newEnd = end;
-            paths.Add((newpos, newEnd));
+        for (int i = 0; i < edgesToDraw-1; i++) {
 
-            int newAngle = (int)(Mathf.Atan2(end.z - newpos.z, end.x - newpos.x) * Mathf.Rad2Deg);
-            int oldAngle = Intersections[oldpos].a-180;
-            Intersections.Add(newpos, (newAngle, oldAngle-newAngle));
-
-            totalLength += (int)Vector3.Distance(newpos, newEnd);
-            System.Console.WriteLine("path length: {0} length: {1} newAngle: {2} oldAngle: {3}", totalLength, length, newAngle, oldAngle);
-
-            if (start == end) {
-                neighbors.Add(end, newpos);
-                pathEnds.Add((end, angle));
-                Intersections[end] = (startAngle, newAngle+180-startAngle);
-                //polygon.print();
-                return;
-            }
-
-            AddLandMarkCoords(start);
-            AddLandMarkCoords(end);
-
-            outerEnds.Remove(start);
-            outerEnds.Remove(end);
-
-            for (int i = 0; i <= totalEdges-edgesToDraw; i++) {
-                polygon.addVertex(newEnd);
-                newpos = newEnd;
-                newEnd = neighbors[newEnd];
-
-                neighbors[newpos] = oldpos;
-
-                oldpos = newpos;
-            }
+            oldpos = newpos;
+            newpos += new Vector3(Mathf.Cos(angle * Mathf.Deg2Rad)*length, 0, Mathf.Sin(angle * Mathf.Deg2Rad)*length);
             
+            paths.Add((oldpos, newpos));
+            polygon.addVertex(newpos);
+
+            neighbors.Add(newpos, oldpos);
+            outerEnds.Add(newpos, angle % 360);
+            pathEnds.Add((newpos, angle % 360));
+
+            if (!Intersections.ContainsKey(oldpos))
+                Intersections.Add(oldpos, (angle % 360, 180-angleInc % 360));
+
+            totalLength += length;
+            //System.Console.WriteLine("path length: {0} length: {1}", totalLength, length);
+    
+            if (i % 2 == 0) {
+                randAngle = prng.Next(0, range);
+                randLength = prng.Next(0, lenrange);
+
+                angleInc = (outerAngle + randAngle);
+                length = baseLength + randLength;
+            } else{
+                angleInc = (outerAngle - randAngle);
+                length = baseLength + lenrange - randLength;
+            }
+            angle += angleInc;
+        }
+
+        Vector3 newEnd = end;
+        paths.Add((newpos, newEnd));
+
+        int newAngle = (int)(Mathf.Atan2(end.z - newpos.z, end.x - newpos.x) * Mathf.Rad2Deg);
+        int oldAngle = Intersections[oldpos].a-180;
+        Intersections.Add(newpos, (newAngle, oldAngle-newAngle));
+
+        totalLength += (int)Vector3.Distance(newpos, newEnd);
+        //System.Console.WriteLine("path length: {0} length: {1} newAngle: {2} oldAngle: {3}", totalLength, length, newAngle, oldAngle);
+
+        if (start == end) {
+            neighbors.Add(end, newpos);
+            pathEnds.Add((end, angle));
+            Intersections[end] = (startAngle, newAngle+180-startAngle);
             //polygon.print();
+            return;
+        }
+
+        AddLandMarkCoords(start);
+        AddLandMarkCoords(end);
+
+        outerEnds.Remove(start);
+        outerEnds.Remove(end);
+
+        for (int i = 0; i <= totalEdges-edgesToDraw; i++) {
+            polygon.addVertex(newEnd);
+            newpos = newEnd;
+            newEnd = neighbors[newEnd];
+
+            neighbors[newpos] = oldpos;
+
+            oldpos = newpos;
+        }
+        
+        //polygon.print();
     }
 
     void GenerateExtraEndpoints(Vector3 start)
     {
-        int j = -1, length = 0, baseLength = 40, randLength = 0, lenrange = 2*(maxLength - numOfLandmarks*baseLength - totalLength)/numOfLandmarks;
+        int j = -1, length = 0, baseLength = (int)(size/10), randLength = 0, lenrange = 2*(maxLength - numOfLandmarks*baseLength - totalLength)/numOfLandmarks;
 
         foreach(Vector3 outerVertex in outerEnds.Keys)
         {
@@ -181,8 +189,7 @@ public class PathGenerator : MonoBehaviour
 
     public void GenerateLandmarkCoords(Mesh[] meshes, int centerx, int centerz) 
     {
-        this.spawn = getHeigthVertex(new Vector3(30, 0, -20)) + Vector3.up*1.5f;
-        System.Console.WriteLine("spawn: {0}", spawn);
+        this.spawn = getHeigthVertex(new Vector3((int)(size/12), 0, -(int)(size/20))) + Vector3.up*1.5f;
         Vector3 start = spawn;
 
         int totalEdges = 6;
@@ -233,14 +240,13 @@ public class PathGenerator : MonoBehaviour
         
         UpdateMesh();
         createMeshGO();
-        System.Console.WriteLine("vertsize: {0} trisize: {1} verticesCount: {2}", vertices.Length, triangles.Length, verticesCount);
+        //System.Console.WriteLine("vertsize: {0} trisize: {1} verticesCount: {2}", vertices.Length, triangles.Length, verticesCount);
     }
 
     Vector3 getHeigthVertex(Vector3 vertex)
     {
         Vector3 heightV = vertex + Vector3.up*100;
         RaycastHit hit;
-        int layerMask = 1 << 8;
 
         if (Physics.Linecast(heightV, heightV + Vector3.down*150, out hit)) {
             heightV = hit.point;/*
@@ -261,10 +267,10 @@ public class PathGenerator : MonoBehaviour
 
         Vector3 perp = new Vector3(dist.z, 0, -dist.x).normalized*pathScale;
 
-        int len = (int)(dist.z/normDist.z);
+        int len = (int)((dist.z+normDist.z)/normDist.z);
 
         if (dist.x != 0.0f)
-            len = (int)(dist.x/normDist.x);
+            len = (int)((dist.x+normDist.x)/normDist.x);
         
         return (normDist, len);
     }
@@ -340,7 +346,7 @@ public class PathGenerator : MonoBehaviour
 
     void createMeshGO()
     {
-        GameObject go = new GameObject("Mesh");
+        GameObject go = new GameObject("PathMesh");
 
         go.AddComponent<MeshFilter>();
         go.AddComponent<MeshCollider>();
