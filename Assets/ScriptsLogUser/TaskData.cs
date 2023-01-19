@@ -17,6 +17,10 @@ public class TaskData : PositionalData{
         this.task = task;
     }
 
+    public new static string GetHeader()
+    {
+        return PositionalData.GetHeader() + ";Task";
+    }
 
     public new string ToCSV()
     {

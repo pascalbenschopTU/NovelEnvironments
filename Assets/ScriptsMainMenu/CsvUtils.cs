@@ -51,6 +51,8 @@ public class CsvUtils : MonoBehaviour
 
         var dict = new Dictionary<int, List<TaskData>>();
         using var reader = new StreamReader(path);
+
+        reader.ReadLine(); // Header
         while (!reader.EndOfStream)
         {
             var line = reader.ReadLine();
@@ -82,6 +84,8 @@ public class CsvUtils : MonoBehaviour
 
         var dict = new Dictionary<int, List<PositionalData>>();
         using var reader = new StreamReader(path);
+
+        reader.ReadLine(); // Header
         while (!reader.EndOfStream)
         {
             var line = reader.ReadLine();
@@ -116,6 +120,8 @@ public class CsvUtils : MonoBehaviour
         CreateExperimentLogsDirectoryIfNotExists(directoryPath);
         var path = Path.Join(directoryPath, $"MovementData.csv");
         using var writer = new StreamWriter(path, append: true);
+
+        writer.WriteLine(PositionalData.GetHeader());
         foreach (PositionalData data in recording)
         {
             writer.WriteLine(data.ToCSV());
@@ -129,6 +135,8 @@ public class CsvUtils : MonoBehaviour
 
         var path = Path.Join(directoryPath, $"TaskData.csv");
         using var writer = new StreamWriter(path, append: true);
+
+        writer.WriteLine(TaskData.GetHeader());
         foreach (TaskData data in tasks)
         {
             writer.WriteLine(data.ToCSV());
