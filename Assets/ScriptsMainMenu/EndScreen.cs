@@ -100,7 +100,7 @@ namespace ScriptsMainMenu
             Dictionary<int, List<TaskData>> tasks = CsvUtils.LoadTaskDataFromCsv(directoryName);
             if (tasks != null && tasks.Count > 0)
             {
-                count = tasks.SelectMany(pair => pair.Value).Where(taskdata => taskdata.task == "Landmark").Count();
+                count = tasks.SelectMany(pair => pair.Value).Where(taskdata => taskdata.task.Contains("Landmark")).Count();
             }
 
             ResultsLandmarksFound.text = $"{count}";
