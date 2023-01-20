@@ -24,6 +24,7 @@ public class StartingPositionGenerator : MonoBehaviour
     void OnEnable()
     {
         if (ExperimentMetaData.Index >= ExperimentMetaData.Environments.Count)
+        // if (ExperimentMetaData.Index >= 0)
         {
             Debug.Log("Experiment finished");
             Cursor.lockState = CursorLockMode.None;
@@ -166,7 +167,6 @@ public class StartingPositionGenerator : MonoBehaviour
     {
         yield return new WaitForSeconds(ExperimentMetaData.TimeInEnvironment);
         Debug.Log("Time has run out!");
-        Debug.Log("Logging data");
 
         Recorder.StopRecording();
         GameTime.AddGameTime();

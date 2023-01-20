@@ -13,8 +13,8 @@
 .idea
 *.csproj
 *.sln
-*.png
-*.png.meta
+#*.png
+#*.png.meta
 *.csv
 *.csv.meta
 /Assets/Low-Poly Style Nature
