@@ -10,8 +10,25 @@ public class ObjectGenerator : MonoBehaviour
     private GameObject gatherable;
     private int seed;
     private int amount;
+    private int[] amountPerObject;
     System.Random prng;
     
+    public void Initialize(string layer, GameObject[] objects, int seed, int[] amountSpawnedPerObject, GameObject gatherable)
+    {
+        this.layer = layer;
+        this.objects = objects;
+        this.objectNames = new string[objects.Length+1];
+        this.seed = seed;
+        this.amountPerObject = amountSpawnedPerObject;
+        this.gatherable = gatherable;
+        this.prng = new System.Random(seed);
+
+        objectNames[0] = "PathMesh";
+        for (int i = 0; i < objects.Length; i++) {
+            objectNames[i+1] = objects[i].GetComponentInChildren<MeshFilter>().name;
+        }
+    }
+
     public void Initialize(string layer, GameObject[] objects, int seed, int amount, GameObject gatherable)
     {
         this.layer = layer;
@@ -77,6 +94,47 @@ public class ObjectGenerator : MonoBehaviour
 
             int j = 0;
             while (j < objectAmount)
+            {
+                int verticeIndex = prng.Next(0, mesh.vertices.Length);
+                Vector3 vertice = mesh.vertices[verticeIndex];
+
+                if ((vertice.x > spawn.x+5 || vertice.x < spawn.x-5) && (vertice.z > spawn.z+5 || vertice.z < spawn.z-5) && isOnTerrain(vertice, center, extents))
+                {
+                    GameObject objectToSpawn = objects[i];
+                    objectToSpawn.layer = LayerMask.NameToLayer(layer);
+                    Instantiate(objectToSpawn, vertice, Quaternion.identity);
+                    
+                    j++;
+                }
+            }
+        }
+    }
+
+    public void GenerateObjectsWithSpawnCount(Mesh mesh, Vector3 spawn)
+    {
+        if(amountPerObject == null || (amountPerObject.Length != objects.Length)) {
+            GenerateObjects(mesh, spawn);
+            Debug.Log("amountPerObject not inititialized");
+            return;
+        }
+        Debug.Log("Count Count!!");
+        for (int i = 0; i < objects.Length; i++)
+        {
+            // Generate #amount instances of objects[i] 
+            int testVerticeIndex = prng.Next(0, mesh.vertices.Length);
+            Vector3 testVertice = mesh.vertices[testVerticeIndex];
+
+            GameObject objectBounds = objects[i];
+            objectBounds.layer = LayerMask.NameToLayer(layer);
+            GameObject newgo = Instantiate(objectBounds, testVertice, Quaternion.identity);
+            Bounds bounds = newgo.GetComponentInChildren<Renderer>().bounds;
+            Vector3 center = bounds.center-testVertice;
+            Vector3 extents = bounds.extents;
+            Destroy(newgo);
+            // int amount = Mathf.Min((int)(150/(extents.x + extents.z)), amountPerObject[i]);
+
+            int j = 0;
+            while (j < amountPerObject[i])
             {
                 int verticeIndex = prng.Next(0, mesh.vertices.Length);
                 Vector3 vertice = mesh.vertices[verticeIndex];

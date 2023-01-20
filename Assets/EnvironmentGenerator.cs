@@ -20,6 +20,7 @@ public class EnvironmentGenerator : MonoBehaviour
     public string meshTag;
 
     public int objectAmount;
+    public int[] spawnCountPerObject;
 
     public Material terrainMaterial;
 
@@ -59,8 +60,10 @@ public class EnvironmentGenerator : MonoBehaviour
         pathGenerator.Initialize(layer, landmarks, seed, terrainMaterial, size);
         objectGenerator = gameObject.AddComponent<ObjectGenerator>();
 
-
-        if(environmentConfiguration.NumberObjectsConfig == ConfigType.Low) {
+        if(spawnCountPerObject != null && spawnCountPerObject.Length > 0){
+            objectGenerator.Initialize(layer, complexObjects, seed, spawnCountPerObject, gatherable);
+        }
+        else if(environmentConfiguration.NumberObjectsConfig == ConfigType.Low) {
             objectGenerator.Initialize(layer, objects, seed, objectAmount, gatherable);
         } else {
             objectGenerator.Initialize(layer, complexObjects, seed, objectAmount, gatherable);
@@ -111,7 +114,13 @@ public class EnvironmentGenerator : MonoBehaviour
 
         foreach(Mesh mesh in meshes)
         {
-            objectGenerator.GenerateObjects(mesh, pathGenerator.getSpawn());
+            if(spawnCountPerObject != null && spawnCountPerObject.Length > 0) {
+                objectGenerator.GenerateObjectsWithSpawnCount(mesh, pathGenerator.getSpawn());
+                Debug.Log("SpawnCount per Object");
+            }
+            else {
+                objectGenerator.GenerateObjects(mesh, pathGenerator.getSpawn());
+            }
         }
         
         if (generateGatherables)
