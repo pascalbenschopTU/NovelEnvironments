@@ -158,6 +158,7 @@ public class StartingPositionGenerator : MonoBehaviour
 
     private void StartTimer()
     {
+        Recorder.StartRecording();
         GameTime.RestartGameTime();
         StartCoroutine(CountDown());
     }
@@ -166,10 +167,11 @@ public class StartingPositionGenerator : MonoBehaviour
     {
         yield return new WaitForSeconds(ExperimentMetaData.TimeInEnvironment);
         Debug.Log("Time has run out!");
-        
-        ExperimentMetaData.Index++;
 
+        Recorder.StopRecording();
         GameTime.AddGameTime();
+
+        ExperimentMetaData.Index++;
 
         LoadingScreenManager.LoadSceneWait("DefaultScene", 1.5f);
     }
