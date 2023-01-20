@@ -8,6 +8,22 @@ Furthermore the Universal Render Pipeline is used, this can be downloaded from t
 
 In `File` -> `Build Settings...` the Scenes In Build (in order) should be MainMenu, DefaultScene, EnvironmentScene.
 
+## Layers and Tags
+The additional layers used are:
+1. Ground
+2. PlayerPointer
+
+The additional tags used are:
+1. GrassFloor
+2. SandFloor
+3. ConcreteFloor
+4. SnowFloor
+5. Environment1
+6. Environment2
+7. Environment3
+8. Environment4
+
+
 ## Parameter Implementation
 All parameters are first defined in `EnvironmentConfiguration.cs`, the `ConfigType` defines the level of each parameter.
 The list of EnvironmentConfigurations for each environment in an experiment are stored in `ExperimentMetaData.cs`.

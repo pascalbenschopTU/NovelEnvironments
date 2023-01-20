@@ -215,7 +215,9 @@ public class PathGenerator : MonoBehaviour
                 objectToSpawn.layer = LayerMask.NameToLayer(layer);
 
                 vertice.y -= 3;
-                Instantiate(objectToSpawn, vertice, Quaternion.Euler(new Vector3(-90, 0, 0)));
+//                Instantiate(objectToSpawn, vertice, Quaternion.Euler(new Vector3(-90, 0, 0)));
+                Instantiate(objectToSpawn, vertice, Quaternion.identity);
+
             }
         }
     }
