@@ -28,6 +28,7 @@ namespace ScriptsMainMenu
                 MainMenu.SetActive(false);
                 FinishScreen.SetActive(true);
             }
+            
         }
 
     }

@@ -163,8 +163,6 @@ public class CsvUtils : MonoBehaviour
             Directory.CreateDirectory(dirPath);
         }
     }
-
-
     public static Dictionary<int, List<PositionalData>> PositionalReplayDataFromCsv(string delimiter = ";")
     {
         CreateReplayLogsDirectoryIfNotExists();
@@ -196,7 +194,6 @@ public class CsvUtils : MonoBehaviour
 
         return dict;
     }
-
     private static void CreateReplayLogsDirectoryIfNotExists()
     {
         var dirPath = Application.dataPath + $"/ReplayData/";
