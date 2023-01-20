@@ -97,6 +97,8 @@ namespace ScriptsMainMenu
         
         private void ShowPicturesTaken(string srcDir)
         {
+            ButtonBack.gameObject.SetActive(false);
+            ButtonForward.gameObject.SetActive(false);
             if (!Directory.Exists(srcDir) || !ExperimentMetaData.Environments.Any(env => env.CameraTask))
             {
                 return;
@@ -104,7 +106,7 @@ namespace ScriptsMainMenu
             var pictures = new List<Texture2D>();
             imageObjects = new List<Image>();
             imageContainers = new List<GameObject>();
-            
+
             var files = Directory.GetFiles(srcDir);
             foreach (var file in files)
             {
@@ -149,12 +151,7 @@ namespace ScriptsMainMenu
                 }
                 ButtonForward.gameObject.SetActive(true);
             }
-            else
-            {
-                ButtonForward.gameObject.SetActive(false);
-            }
-            
-            ButtonBack.gameObject.SetActive(false);
+
             imageContainers[0].SetActive(true);
         }
 
