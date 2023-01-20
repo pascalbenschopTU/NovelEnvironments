@@ -1,6 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Rendering.Universal;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 public class EnvironmentGenerator : MonoBehaviour
 {
@@ -22,6 +25,8 @@ public class EnvironmentGenerator : MonoBehaviour
     public int objectAmount;
 
     public Material terrainMaterial;
+
+    public Material wallMaterial;
 
     [SerializeField] private AnimationCurve heightCurve;
 
@@ -60,32 +65,14 @@ public class EnvironmentGenerator : MonoBehaviour
         objectGenerator = gameObject.AddComponent<ObjectGenerator>();
 
 
-        if(environmentConfiguration.NumberObjectsConfig == ConfigType.Low) {
+        if (environmentConfiguration.NumberObjectsConfig == ConfigType.Low)
+        {
             objectGenerator.Initialize(layer, objects, seed, objectAmount, gatherable);
-        } else {
+        }
+        else
+        {
             objectGenerator.Initialize(layer, complexObjects, seed, objectAmount, gatherable);
         }
-
-        switch(gameObject.tag)
-                {
-                    case "Environment1":
-                        AudioSrc.PlayOneShot(Environment1);
-                        break;
-                    case "Environment2":
-                        AudioSrc.PlayOneShot(Environment2);
-                        break;
-                    case "Environment3":
-                        AudioSrc.PlayOneShot(Environment3);
-                        break;
-                    case "Environment4":
-                        AudioSrc.PlayOneShot(Environment4);
-                        break;
-                    // default:
-                    //     AudioSrc.PlayOneShot(Environment4);
-                    //     break;
-
-                }
-
 
         meshes = new Mesh[(size/200)*(size/200)];
     }
@@ -102,7 +89,7 @@ public class EnvironmentGenerator : MonoBehaviour
             }
         }
 
-        createBorders();
+        CreateBorders();
 
         pathGenerator.GenerateLandmarkCoords(meshes, xMin + size / 2, zMin + size / 2);
         pathGenerator.GeneratePaths(meshes);
@@ -118,6 +105,29 @@ public class EnvironmentGenerator : MonoBehaviour
         {
             objectGenerator.GenerateGatherables(pathGenerator.getPaths());
         }
+
+        PlaySound();
+    }
+
+    private void PlaySound()
+    {
+        switch (gameObject.tag)
+        {
+            case "Environment1":
+                AudioSrc.PlayOneShot(Environment1);
+                break;
+            case "Environment2":
+                AudioSrc.PlayOneShot(Environment2);
+                break;
+            case "Environment3":
+                AudioSrc.PlayOneShot(Environment3);
+                break;
+            case "Environment4":
+                AudioSrc.PlayOneShot(Environment4);
+                break;
+            default:
+                break;
+        }
     }
 
     public Vector3 getSpawnPoint()
@@ -130,9 +140,9 @@ public class EnvironmentGenerator : MonoBehaviour
         generateGatherables = true;
     }
 
-    private void createBorders()
+    private void CreateBorders()
     {
-        int offSetFromOutside = 0;
+        int offSetFromOutside = 20;
         int halfOffSetFromOutside = offSetFromOutside / 2;
 
         // Create width borders
@@ -149,7 +159,7 @@ public class EnvironmentGenerator : MonoBehaviour
             if (i == 1)
                 border.transform.position = new Vector3(xMin + xOffset, 0, zMin + zOffset - halfOffSetFromOutside);
 
-            border.GetComponent<Renderer>().material.color = gradient.Evaluate(0.25f);
+            border.GetComponent<Renderer>().material = wallMaterial;
             border.transform.name = "Width border " + (i + 1);
             border.transform.parent = transform;
         }
@@ -169,7 +179,7 @@ public class EnvironmentGenerator : MonoBehaviour
             if (i == 1)
                 border.transform.position = new Vector3(xMin + xOffset - halfOffSetFromOutside, 0, zMin + zOffset);
 
-            border.GetComponent<Renderer>().material.color = gradient.Evaluate(0.25f);
+            border.GetComponent<Renderer>().material = wallMaterial;
             border.transform.name = "Length border " + (i + 1);
             border.transform.parent = transform;
         }
