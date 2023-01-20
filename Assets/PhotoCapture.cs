@@ -125,13 +125,13 @@ public class PhotoCapture : MonoBehaviour
     private void SavePhoto()
     {
         byte[] bytes = screenCapture.EncodeToPNG();
-        var dirPath = Application.dataPath + "/Pictures/";
+        var dirPath = Path.Join(ExperimentMetaData.LogDirectory, "pictures");
         if (!Directory.Exists(dirPath))
         {
             Directory.CreateDirectory(dirPath);
         }
 
-        string path = dirPath + System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss") + ".png";
+        var path = Path.Join(dirPath , $"{DateTime.Now:yyyy-MM-dd_HH-mm-ss}.png");
         File.WriteAllBytes(path, bytes);
 
         LogPicture();
