@@ -27,9 +27,15 @@ namespace ScriptsMainMenu
             {
                 MainMenu.SetActive(false);
                 FinishScreen.SetActive(true);
+                var script = FinishScreen.GetComponent<EndScreen>();
+                script.ShowEndScreen();
             }
             
         }
-
+        
+        public void QuitGame()
+        {
+            Application.Quit();
+        }
     }
 }

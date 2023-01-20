@@ -4,37 +4,45 @@ using System.IO;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace ScriptsMainMenu
 {
     public class EndScreen : MonoBehaviour
     {
-        [SerializeField]
-        private GameObject ResultsPicturesTakenObject;
-        [SerializeField]
-        private GameObject ResultsObjectsPickedUpObject;
-        [SerializeField]
-        private TextMeshProUGUI ResultsGameTime;
-        [SerializeField]
-        private TextMeshProUGUI ResultsDistanceWalked;
-        [SerializeField]
-        private TextMeshProUGUI ResultsLandmarksFound;
-        [SerializeField]
-        private TextMeshProUGUI ResultsPicturesTaken;
-        [SerializeField]
-        private TextMeshProUGUI ResultsObjectsPickedUp;
+        [SerializeField] private GameObject EmptyEndScreen;
+        [SerializeField] private GameObject DataEndScreen;
+        
+        [SerializeField] private GameObject ResultsPicturesTakenObject;
+        [SerializeField] private GameObject ResultsObjectsPickedUpObject;
+        [SerializeField] private TextMeshProUGUI ResultsGameTime;
+        [SerializeField] private TextMeshProUGUI ResultsDistanceWalked;
+        [SerializeField] private TextMeshProUGUI ResultsLandmarksFound;
+        [SerializeField] private TextMeshProUGUI ResultsPicturesTaken;
+        [SerializeField] private TextMeshProUGUI ResultsObjectsPickedUp;
+        
+        [SerializeField] private GameObject ImageContainerList;
+        [SerializeField] private GameObject ImageContainerPrefab;
+        [SerializeField] private Image EmptyImagePrefab;
 
+        [SerializeField] private Button ButtonBack;
+        [SerializeField] private Button ButtonForward;
+
+        private int pageIndex;
+        private int totalPages;
+        private List<GameObject> imageContainers;
+        private List<Image> imageObjects;
+        
         public void LoadEndScreen()
         {
             // this method needs data from the run and the run configuration which is stored in the ExperimentMetaData
             // TODO get all the data from the run
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
+            var showData = Convert.ToBoolean(PlayerPrefs.GetInt("EndScreenActiveSetting"));
             ExperimentMetaData.EndTime = DateTime.Now;
-            
-            var directoryPath = Path.Join(Application.dataPath, $"ExperimentLogs_{ExperimentMetaData.ParticipantNumber}");
-            directoryPath = Path.Join(directoryPath, $"{ExperimentMetaData.EndTime:dd-MM-yyyy_hh-mm-ss}");
-            
+
+            var directoryPath = ExperimentMetaData.LogDirectory;
             CsvUtils.SavePositionalDataToCsv(Recorder.recording, directoryPath);
             CsvUtils.SaveTaskDataToCsv(Recorder.tasks, directoryPath);
 
@@ -55,6 +63,14 @@ namespace ScriptsMainMenu
                 ObjectsPickedUpMax = -1,
                 RoamingEntropy = roamingEntropy 
             });
+            
+            // hide or show data
+            EmptyEndScreen.SetActive(!showData);
+            DataEndScreen.SetActive(showData);
+            if (showData)
+            {
+                ShowPicturesTaken(Path.Join(directoryPath, "pictures"));
+            }
         }
 
         public void OnContinue()
@@ -62,7 +78,84 @@ namespace ScriptsMainMenu
             ExperimentMetaData.ExperimentFinished = false;
         }
 
-        private void OnEnable()
+        public void PicturesShowNextPage()
+        {
+            imageContainers[pageIndex].SetActive(false);
+            pageIndex++;
+            imageContainers[pageIndex].SetActive(true);
+            ButtonForward.gameObject.SetActive(pageIndex < totalPages - 1);
+            ButtonBack.gameObject.SetActive(true);
+        }
+        public void PicturesShowPreviousPage()
+        {
+            imageContainers[pageIndex].SetActive(false);
+            pageIndex--;
+            imageContainers[pageIndex].SetActive(true);
+            ButtonBack.gameObject.SetActive(pageIndex > 0);
+            ButtonForward.gameObject.SetActive(true);
+        }
+        
+        private void ShowPicturesTaken(string srcDir)
+        {
+            ButtonBack.gameObject.SetActive(false);
+            ButtonForward.gameObject.SetActive(false);
+            if (!Directory.Exists(srcDir) || !ExperimentMetaData.Environments.Any(env => env.CameraTask))
+            {
+                return;
+            }
+            var pictures = new List<Texture2D>();
+            imageObjects = new List<Image>();
+            imageContainers = new List<GameObject>();
+
+            var files = Directory.GetFiles(srcDir);
+            foreach (var file in files)
+            {
+                if (file.Contains(".meta"))
+                {
+                    continue;
+                }
+                var bytes = File.ReadAllBytes(file);
+                var pic = new Texture2D(Screen.width, Screen.height, TextureFormat.RGB24, false);
+                if (pic.LoadImage(bytes))
+                {
+                    pictures.Add(pic);
+                }
+            }
+
+            totalPages = Mathf.RoundToInt(Mathf.Floor(pictures.Count / 4f)) + 1;
+            pageIndex = 0;
+            for (int i = 0; i < totalPages; i++)
+            {
+                imageContainers.Add(Instantiate(ImageContainerPrefab, new Vector3(0,0,0), Quaternion.identity, ImageContainerList.transform));
+                imageContainers[i].SetActive(false);
+                imageContainers[i].transform.localPosition = new Vector3(0, 0, 0);
+            }
+
+            for (var i = 0; i < pictures.Count; i++)
+            {
+                var index = Mathf.RoundToInt(Mathf.Floor(i / 4f));
+                var sprite = Sprite.Create(pictures[i], new Rect(0, 0, Screen.width, Screen.height),
+                    new Vector2(0.5f, 0.5f), 1f);
+                var obj = Instantiate(sprite, new Vector3(0, 0, 0), Quaternion.identity, imageContainers[index].transform);
+                var img = Instantiate(EmptyImagePrefab, new Vector3(0, 0, 0), Quaternion.identity, imageContainers[index].transform);
+                img.sprite = obj;
+                img.transform.localPosition = new Vector3(i % 4 * 340 - 515, 0, 0);
+                imageObjects.Add(img);
+            }
+
+            if (imageContainers.Count > 1)
+            {
+                for (var i = 1; i < imageContainers.Count; i++)
+                {
+                    imageContainers[i].gameObject.SetActive(false);
+                }
+                ButtonForward.gameObject.SetActive(true);
+            }
+
+            imageContainers[0].SetActive(true);
+        }
+
+        public void ShowEndScreen()
         {
             if(ExperimentMetaData.ExperimentFinished)
             {
@@ -117,7 +210,7 @@ namespace ScriptsMainMenu
 
             if (!taskActive)
             {
-                ResultsPicturesTakenObject.SetActive(false);
+                ResultsPicturesTaken.text = "---";
                 return 0;
             }
 
@@ -144,7 +237,7 @@ namespace ScriptsMainMenu
 
             if (!taskActive)
             {
-                ResultsObjectsPickedUpObject.SetActive(false);
+                ResultsObjectsPickedUp.text = "---";
                 return 0;
             }
             ResultsObjectsPickedUpObject.SetActive(true);
