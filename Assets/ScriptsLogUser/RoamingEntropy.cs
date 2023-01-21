@@ -1,19 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
 using UnityEngine;
-using UnityEngine.Windows;
+using UnityEngine.Internal;
+using Directory = UnityEngine.Windows.Directory;
 
 namespace ScriptsLogUser
 {
     public class RoamingEntropy : MonoBehaviour
     {
-        [SerializeField] private float EnvironmentSize;
-        [SerializeField] private float AreaSizeFactorFromMeters;
+        [SerializeField][Range(10,10000)] private float EnvironmentSize;
+        [SerializeField][Range(0.1f,100.0f)] private float AreaSizeFactorFromMeters;
 
         private Dictionary<int, List<PositionalData>> positionalData;
         private Dictionary<int, Array2D> roamingEntropies;
 
-        private Array2D convolutionKernel = new Array2D(new[]
+        private Array2D convolutionKernel = new (new[]
         {
             0.0f,0.0f,0.0f,0.0f,1e-05f,1e-05f,0.0f,0.0f,0.0f,0.0f,
             0.0f,0.0f,2e-05f,0.00011f,0.00031f,0.00031f,0.00011f,2e-05f,0.0f,0.0f,
@@ -36,32 +40,45 @@ namespace ScriptsLogUser
 
             roamingEntropies = new Dictionary<int, Array2D>();
             positionalData = CsvUtils.LoadPositionalDataFromCsv(logDirectory);
+            // var results = new List<RoamingEntropyResult>();
             
             foreach (var id in positionalData.Keys)
             {
-                CalculateRoamingEntropyPerEnv(id);
+                var res = CalculateRoamingEntropyPerEnv(id);
+                res.ToCsv(Path.Join(logDirectory, $"RoamingEntropy_Env_{id}.csv"));
+                // results.Add(new RoamingEntropyResult
+                // {
+                //     
+                // });
             }
         }
 
-        private void CalculateRoamingEntropyPerEnv(int environmentId)
+        private Array2D CalculateRoamingEntropyPerEnv(int environmentId)
         {
             var data = positionalData[environmentId];
             var envWidth = Mathf.RoundToInt(EnvironmentSize * AreaSizeFactorFromMeters);
-            Debug.Log(envWidth);
-            var array2D = new Array2D(envWidth * envWidth, envWidth, envWidth);
-
+            var array2D = new Array2D(envWidth, envWidth);
             foreach (var pos in data)
             {
-                var x = Mathf.RoundToInt(pos.position.x * AreaSizeFactorFromMeters);
-                var y = Mathf.RoundToInt(pos.position.y * AreaSizeFactorFromMeters);
+                var x = Mathf.RoundToInt(Mathf.Floor(pos.position.x * AreaSizeFactorFromMeters + envWidth / 2));
+                var y = Mathf.RoundToInt(Mathf.Floor(pos.position.z * AreaSizeFactorFromMeters + envWidth / 2));
                 array2D.Set(array2D.Get(x, y) + 1.0f, x, y);
             }
-
-            var entropy = array2D.PerformConvolution(convolutionKernel);
+            return array2D.PerformConvolution(convolutionKernel);
         }
     }
 }
 
+// [Serializable]
+// public class RoamingEntropyResult
+// {
+//     public int ParticipantNumber = 0;
+//     public EnvironmentType EnvironmentType = EnvironmentType.Forest;
+//     public int EnvironmentIndex = 0;
+//     public float ExplorationRate = 0.0f;
+//     public float DistanceWalked = 0.0f;
+//     public float HighestRevisitScore = 0.0f;
+// }
 class Array2D
 {
     private float[] rawArray;
@@ -69,33 +86,54 @@ class Array2D
     private int width;
     private int height;
     
-    public Array2D(int size, int width, int height)
+    public Array2D(int width, int height)
     {
+        size = width * height;
         rawArray = new float[size];
-        size = this.size;
-        height = this.height;
-        width = this.width;
+        this.height = height;
+        this.width = width;
     }
 
     public Array2D(float[] data, int width, int height)
     {
         rawArray = data;
-        size = data.Length;
-        width = this.width;
-        height = this.height;
+        this.size = width*height;
+        this.width = width;
+        this.height = height;
     }
 
     public void Set(float value, int x, int y)
     {
-        if (x * y < size)
+        if (x < width && y < height)
         {
-            rawArray[y * x + x] = value;
+            rawArray[y * width + x] = value;
         }
     }
 
     public float Get(int x, int y)
     {
-        return x * y >= size ? 0.0f : rawArray[y * x + x];
+        return x < width && y < height ? rawArray[y * width + x] : 0.0f;
+    }
+
+    public void ToCsv(string path)
+    {
+        Debug.Log("ToCsv...");
+        using var writer = new StreamWriter(path);
+        var csv = new List<string>();
+        for (int x = 0; x < width; x++)
+        {
+            var line = new StringBuilder();
+            for (int y = 0; y < height; y++)
+            {
+                line.Append($"{Get(x, y)};");
+            }
+            line.Remove(line.Length-1, 1);
+            csv.Add(line.ToString());
+        }
+        foreach (var l in csv)
+        {
+            writer.WriteLine(l);
+        }
     }
 
     public Array2D PerformConvolution(Array2D kernel)
@@ -104,7 +142,7 @@ class Array2D
         {
             return null;
         }
-        var result = new Array2D(size, width, height);
+        var result = new Array2D(width, height);
         for (var srcX = kernel.width / 2; srcX < width - kernel.width / 2; srcX++)
         {
             for (var srcY = kernel.height / 2; srcY < height - kernel.height; srcY++)
@@ -127,6 +165,6 @@ class Array2D
             }
         }
 
-        return result / kernel.size;
+        return result;
     }
 }

@@ -8,7 +8,6 @@ using UnityEngine.UI;
 public class EnvironmentTabManager : MonoBehaviour
 {
     public TMP_Dropdown EnvironmentTypeDropdown;
-    public ToggleGroupAdv TextureToggleGroup;
     public ToggleGroupAdv MovingObjectsToggleGroup;
     public ToggleGroupAdv InteractionToggleGroup;
     public ToggleGroupAdv RDToggleGroup;
@@ -28,8 +27,7 @@ public class EnvironmentTabManager : MonoBehaviour
         // update ui elements
         UpdateID(configuration.Index);
         EnvironmentTypeDropdown.value = (int)_environmentConfiguration.EnvironmentType;
-        UpdateToggleGroup(TextureToggleGroup, _environmentConfiguration.NumberObjectsConfig);
-        UpdateToggleGroup(MovingObjectsToggleGroup, _environmentConfiguration.MovingObjectConfig);
+        UpdateToggleGroup(MovingObjectsToggleGroup, _environmentConfiguration.ComplexObjectConfig);
         UpdateToggleGroup(InteractionToggleGroup, _environmentConfiguration.InteractionConfig);
         UpdateToggleGroup(RDToggleGroup, _environmentConfiguration.RDConfig);
         UpdateToggleGroup(MapToggleGroup, _environmentConfiguration.MapConfig);
@@ -57,15 +55,10 @@ public class EnvironmentTabManager : MonoBehaviour
         // Debug.Log($"Updated Env type to {type}");
         _environmentConfiguration.EnvironmentType = (EnvironmentType)type;
     }
-    public void UpdateNumberObjectConfig(ConfigType config)
-    {
-        // Debug.Log($"Updated Number Object config to {config} in Experiment {_environmentConfiguration.Index}");
-        _environmentConfiguration.NumberObjectsConfig = config;
-    }
-    public void UpdateMovingObjectsConfig(ConfigType config)
+    public void UpdateComplexObjectsConfig(ConfigType config)
     {
         // Debug.Log($"Updated Moving Object config to {config}");
-        _environmentConfiguration.MovingObjectConfig = config;
+        _environmentConfiguration.ComplexObjectConfig = config;
     }
     public void UpdateInteractionConfig(ConfigType config)
     {
@@ -93,12 +86,11 @@ public class EnvironmentTabManager : MonoBehaviour
         _environmentConfiguration = new EnvironmentConfiguration();
         _toggleGroups = new List<ToggleGroupAdv>
         {
-            TextureToggleGroup, MovingObjectsToggleGroup, InteractionToggleGroup, RDToggleGroup, MapToggleGroup
+            MovingObjectsToggleGroup, InteractionToggleGroup, RDToggleGroup, MapToggleGroup
         };
         _toggleCallbacks = new List<Action<ConfigType>>
         {
-            (config) => UpdateNumberObjectConfig(config),
-            (config) => UpdateMovingObjectsConfig(config),
+            (config) => UpdateComplexObjectsConfig(config),
             (config) => UpdateInteractionConfig(config),
             (config) => UpdateRDConfig(config),
             (config) => UpdateMapConfig(config),

@@ -50,10 +50,8 @@ public class ExperimentData
 {
     public float DistanceWalked;
     public int LandmarksFound;
-    public int LandmarksFoundMax;
     public int PicturesTaken;
     public int ObjectsPickedUp;
-    public int ObjectsPickedUpMax;
     public string GameTime;
     public float RoamingEntropy = 0.0f;
 }

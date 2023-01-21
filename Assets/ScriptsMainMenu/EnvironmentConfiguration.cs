@@ -21,8 +21,7 @@ public enum EnvironmentType
 [Serializable]
 public class EnvironmentConfiguration
 {
-    public ConfigType NumberObjectsConfig { get; set; }
-    public ConfigType MovingObjectConfig { get; set; }
+    public ConfigType ComplexObjectConfig { get; set; }
     public ConfigType InteractionConfig { get; set; }
     public ConfigType RDConfig { get; set; }
     public ConfigType MapConfig { get; set; }
@@ -31,19 +30,10 @@ public class EnvironmentConfiguration
     public int ExperimentId { get; set; }
     public bool PickupTask { get; set; }
     public bool CameraTask { get; set; }
-
-    public int GetNumberObjectsConfigValue()
+    
+    public int GetComplexObjectsConfigValue()
     {
-        return NumberObjectsConfig switch
-        {
-            ConfigType.Low => 40,
-            ConfigType.High => 50,
-            _ => 0
-        };
-    }
-    public int GetMovingObjectsConfigValue()
-    {
-        return MovingObjectConfig switch
+        return ComplexObjectConfig switch
         {
             ConfigType.Low => 10,
             ConfigType.High => 50,
@@ -64,8 +54,7 @@ public class EnvironmentConfiguration
     {
         ExperimentId = 0;
         Index = 0;
-        NumberObjectsConfig = ConfigType.Low;
-        MovingObjectConfig = ConfigType.Low;
+        ComplexObjectConfig = ConfigType.Low;
         InteractionConfig = ConfigType.Low;
         RDConfig = ConfigType.Low;
         MapConfig = ConfigType.Low;
@@ -79,8 +68,7 @@ public class EnvironmentConfiguration
         return $"ExperimentId: {ExperimentId}\n" +
                $"Index: {Index}\n" +
                $"Type config: {EnvironmentType}\n" +
-               $"Texture config: {NumberObjectsConfig}\n" +
-               $"MovingObject config: {MovingObjectConfig}\n" +
+               $"ComplexObject config: {ComplexObjectConfig}\n" +
                $"Interaction config: {InteractionConfig}\n" +
                $"RD config: {RDConfig}\n" +
                $"Map config: {MapConfig}\n" +
@@ -90,12 +78,12 @@ public class EnvironmentConfiguration
 
     public string ToCsv()
     {
-        return $"{ExperimentId};{Index};{EnvironmentType};{NumberObjectsConfig};{MovingObjectConfig};{InteractionConfig};{RDConfig};{MapConfig};{CameraTask};{PickupTask}";
+        return $"{ExperimentId};{Index};{EnvironmentType};{ComplexObjectConfig};{InteractionConfig};{RDConfig};{MapConfig};{CameraTask};{PickupTask}";
     }
 
     public static EnvironmentConfiguration FromCsv(string[] csvColumns)
     {
-        if (csvColumns.Length != 10)
+        if (csvColumns.Length != 9)
         {
             return null;
         }
@@ -107,13 +95,12 @@ public class EnvironmentConfiguration
                 ExperimentId = int.Parse(csvColumns[0]),
                 Index = int.Parse(csvColumns[1]),
                 EnvironmentType = StringToEnvironment(csvColumns[2]),
-                NumberObjectsConfig = StringToConfig(csvColumns[3]),
-                MovingObjectConfig = StringToConfig(csvColumns[4]),
-                InteractionConfig = StringToConfig(csvColumns[5]),
-                RDConfig = StringToConfig(csvColumns[6]),
-                MapConfig = StringToConfig(csvColumns[7]),
-                CameraTask = bool.Parse(csvColumns[8]),
-                PickupTask = bool.Parse(csvColumns[9])
+                ComplexObjectConfig = StringToConfig(csvColumns[3]),
+                InteractionConfig = StringToConfig(csvColumns[4]),
+                RDConfig = StringToConfig(csvColumns[5]),
+                MapConfig = StringToConfig(csvColumns[6]),
+                CameraTask = bool.Parse(csvColumns[7]),
+                PickupTask = bool.Parse(csvColumns[8])
             };
         }
         catch (Exception)

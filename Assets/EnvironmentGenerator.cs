@@ -65,7 +65,7 @@ public class EnvironmentGenerator : MonoBehaviour
         objectGenerator = gameObject.AddComponent<ObjectGenerator>();
 
 
-        if (environmentConfiguration.NumberObjectsConfig == ConfigType.Low)
+        if (environmentConfiguration.ComplexObjectConfig == ConfigType.Low)
         {
             objectGenerator.Initialize(layer, objects, seed, objectAmount, gatherable);
         }
