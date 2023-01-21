@@ -16,7 +16,7 @@ public class ExperimentMetaData : MonoBehaviour
     public static int ParticipantNumber = 0;
     public static bool ExperimentFinished = false;
     // attach the real log content or path to logging file for final dataset ?
-    public static string Log="";
+    public static string LogDirectory="";
 
     public static string ToJson(ExperimentData experimentData)
     {

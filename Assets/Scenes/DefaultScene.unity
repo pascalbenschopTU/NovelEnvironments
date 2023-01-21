@@ -1495,7 +1495,6 @@ GameObject:
   - component: {fileID: 609870287}
   - component: {fileID: 609870286}
   - component: {fileID: 609870285}
-  - component: {fileID: 609870284}
   - component: {fileID: 609870289}
   m_Layer: 0
   m_Name: Player
@@ -1504,20 +1503,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &609870284
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 609870283}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f723cc8e78a9e754eb2c6161e6e19ac8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerCamera: {fileID: 1965111778}
-  target: {fileID: 0}
 --- !u!82 &609870285
 AudioSource:
   m_ObjectHideFlags: 0

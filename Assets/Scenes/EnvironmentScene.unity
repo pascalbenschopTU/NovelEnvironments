@@ -308,6 +308,7 @@ MonoBehaviour:
   objectAmount: 50
   spawnCountPerObject: 320000003200000032000000320000003200000032000000320000003200000032000000320000003200000032000000320000003200000032000000320000003200000032000000320000003200000032000000320000003200000032000000
   terrainMaterial: {fileID: 2100000, guid: 1b20a390d157f314e8b9bb5dcd9a8c00, type: 2}
+  wallMaterial: {fileID: 2100000, guid: 7acf1bb27b0202d4197510ab8b1dbcd3, type: 2}
   heightCurve:
     serializedVersion: 2
     m_Curve:
@@ -382,7 +383,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &355603887
 AudioSource:
@@ -393,7 +394,8 @@ AudioSource:
   m_GameObject: {fileID: 355603884}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: b034f917aa5b0254c81e1698d52c825d,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 0.6
@@ -523,7 +525,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &481062164
 GameObject:
@@ -741,7 +743,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 71.771, y: -7.314, z: -639.397}
 --- !u!114 &705507996
 MonoBehaviour:
@@ -829,7 +831,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &963194225
 GameObject:
@@ -994,7 +996,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1117622806
 MonoBehaviour:
@@ -1050,6 +1052,7 @@ MonoBehaviour:
   objectAmount: 20
   spawnCountPerObject: 140000001e0000000a0000000a0000000a0000000a0000000a0000000a0000000a0000000a0000000a0000000a000000c8000000030000001400000014000000
   terrainMaterial: {fileID: 2100000, guid: 1b20a390d157f314e8b9bb5dcd9a8c00, type: 2}
+  wallMaterial: {fileID: 2100000, guid: 7acf1bb27b0202d4197510ab8b1dbcd3, type: 2}
   heightCurve:
     serializedVersion: 2
     m_Curve:
@@ -1120,7 +1123,8 @@ AudioSource:
   m_GameObject: {fileID: 1117622804}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: b034f917aa5b0254c81e1698d52c825d,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -1519,6 +1523,7 @@ MonoBehaviour:
   objectAmount: 10
   spawnCountPerObject: 
   terrainMaterial: {fileID: 2100000, guid: 1b20a390d157f314e8b9bb5dcd9a8c00, type: 2}
+  wallMaterial: {fileID: 2100000, guid: 7acf1bb27b0202d4197510ab8b1dbcd3, type: 2}
   heightCurve:
     serializedVersion: 2
     m_Curve:
@@ -1604,7 +1609,8 @@ AudioSource:
   m_GameObject: {fileID: 1355761736}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: b034f917aa5b0254c81e1698d52c825d,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 0.6
@@ -1776,7 +1782,6 @@ GameObject:
   - component: {fileID: 1582923929}
   - component: {fileID: 1582923931}
   - component: {fileID: 1582923932}
-  - component: {fileID: 1582923933}
   - component: {fileID: 1582923936}
   m_Layer: 0
   m_Name: Player
@@ -1821,7 +1826,7 @@ Transform:
   - {fileID: 481062168}
   - {fileID: 224483634}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1582923931
 MonoBehaviour:
@@ -1895,7 +1900,8 @@ AudioSource:
   m_GameObject: {fileID: 1582923928}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: b034f917aa5b0254c81e1698d52c825d,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: 80d28371b9e51cea58bcbf2cbae4eeb4, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -1982,20 +1988,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &1582923933
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1582923928}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f723cc8e78a9e754eb2c6161e6e19ac8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerCamera: {fileID: 963194225}
-  target: {fileID: 0}
 --- !u!114 &1582923936
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2206,6 +2198,7 @@ MonoBehaviour:
   objectAmount: 1
   spawnCountPerObject: 
   terrainMaterial: {fileID: 2100000, guid: 1b20a390d157f314e8b9bb5dcd9a8c00, type: 2}
+  wallMaterial: {fileID: 2100000, guid: 7acf1bb27b0202d4197510ab8b1dbcd3, type: 2}
   heightCurve:
     serializedVersion: 2
     m_Curve:
@@ -2280,7 +2273,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &1939442655
 AudioSource:
@@ -2291,7 +2284,8 @@ AudioSource:
   m_GameObject: {fileID: 1939442652}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: b034f917aa5b0254c81e1698d52c825d,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 0.6
@@ -2504,7 +2498,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7935086198430867645, guid: 2a6391d09bc89eb4f9083307a026bb07, type: 3}
       propertyPath: m_RootOrder
-      value: 10
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 7935086198430867645, guid: 2a6391d09bc89eb4f9083307a026bb07, type: 3}
       propertyPath: m_AnchorMax.x
