@@ -24,6 +24,11 @@ public class PositionalData {
                $"{rotation.ToString().Trim(charsToTrim)}";
     }
 
+    public static string GetHeader()
+    {
+        return "Environment id;Date and Time;Position:X;Position:Y;Position:Z;Rotation:W;Rotation:X;Rotation:Y;Rotation:Z";
+    }
+
     public string ToCSV()
     {
         return $"{environment_id};{dateTime.ToString("dd-MM-yyyy HH:mm:ss")};{position.x};{position.y};{position.z};{rotation.w};{rotation.x};{rotation.y};{rotation.z}";

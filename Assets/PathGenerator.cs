@@ -216,6 +216,9 @@ public class PathGenerator : MonoBehaviour
 
                 vertice.y -= 3;
 //                Instantiate(objectToSpawn, vertice, Quaternion.Euler(new Vector3(-90, 0, 0)));
+                
+                objectToSpawn.AddComponent<AreaTracker>();
+
                 Instantiate(objectToSpawn, vertice, Quaternion.identity);
 
             }

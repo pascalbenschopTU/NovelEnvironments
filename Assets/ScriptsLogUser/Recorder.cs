@@ -1,13 +1,13 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
-using System.IO;
+using System.Linq;
 
 public class Recorder : MonoBehaviour
 {
     public static List<PositionalData> recording {get; private set;}
     public static List<TaskData> tasks { get; private set; }
+
+    private static bool isRecording = false;
 
     public static void ResetRecordings()
     {
@@ -22,33 +22,49 @@ public class Recorder : MonoBehaviour
         }
     }
 
+    public static void StartRecording()
+    {
+        isRecording = true;
+    }
+
+    public static void StopRecording()
+    {
+        isRecording = false;
+    }
+
     public static void RecordPlayerData(PositionalData data)
     {
-        if (recording != null) 
+        if (isRecording)
         {
-            recording.Add(data);
-        } else
-        {
-            recording = new List<PositionalData>
+            if (recording != null)
             {
-                data
-            };
+                recording.Add(data);
+            }
+            else
+            {
+                recording = new List<PositionalData>
+                {
+                    data
+                };
+            }
         }
     }
 
     public static void RecordTaskData(TaskData data)
     {
-        if (tasks == null)
+        if (isRecording)
         {
-            tasks = new List<TaskData>()
+            if (tasks != null && !tasks.Any(task => task.Equals(data)))
             {
-                data
-            };
+                tasks.Add(data);
+            }
+            else if (tasks == null)
+            {
+                tasks = new List<TaskData>()
+                {
+                    data
+                };
+            }
         }
-        else if (data != null && !tasks.Contains(data))
-        {
-            tasks.Add(data);
-        } 
-        
     }
 }
