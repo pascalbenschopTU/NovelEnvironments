@@ -229,7 +229,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Moving Objects:'
+  m_text: 'Complex Objects:'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
   m_sharedMaterial: {fileID: 2147374, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
@@ -5671,7 +5671,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EnvironmentTypeDropdown: {fileID: 6150200689444389163}
-  TextureToggleGroup: {fileID: 0}
   MovingObjectsToggleGroup: {fileID: 7319636027951959968}
   InteractionToggleGroup: {fileID: 7886469648726424932}
   RDToggleGroup: {fileID: 8720018641503317257}
