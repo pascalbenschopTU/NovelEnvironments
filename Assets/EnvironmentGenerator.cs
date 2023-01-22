@@ -65,10 +65,10 @@ public class EnvironmentGenerator : MonoBehaviour
         pathGenerator.Initialize(layer, landmarks, seed, terrainMaterial, size);
         objectGenerator = gameObject.AddComponent<ObjectGenerator>();
 
-        if(spawnCountPerObject != null && spawnCountPerObject.Length > 0 && environmentConfiguration.NumberObjectsConfig == ConfigType.High){
+        if(spawnCountPerObject != null && spawnCountPerObject.Length > 0 && environmentConfiguration.ComplexObjectConfig == ConfigType.High){
             objectGenerator.Initialize(layer, complexObjects, seed, spawnCountPerObject, gatherable);
         }
-        else if(environmentConfiguration.NumberObjectsConfig == ConfigType.Low) {
+        else if(environmentConfiguration.ComplexObjectConfig == ConfigType.Low) {
             objectGenerator.Initialize(layer, objects, seed, objectAmount, gatherable);
         }
         else

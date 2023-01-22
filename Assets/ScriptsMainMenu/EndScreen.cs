@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using ScriptsLogUser;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -32,6 +33,8 @@ namespace ScriptsMainMenu
         private int totalPages;
         private List<GameObject> imageContainers;
         private List<Image> imageObjects;
+
+        private RoamingEntropy roamingEntropy;
         
         public void LoadEndScreen()
         {
@@ -51,17 +54,16 @@ namespace ScriptsMainMenu
             var numLandmarks = CalculateLandmarksFound(directoryPath);
             var picturesTaken = CalculatePicturesTaken(directoryPath);
             var objectsPickedUp = CalculateObjectsPickedUp(directoryPath);
-            var roamingEntropy = CalculateRoamingEntropy(directoryPath);
+            // var roamingEntropy = this.roamingEntropy.CalculateRoamingEntropy(directoryPath);
+            this.roamingEntropy.CalculateRoamingEntropy(directoryPath);
             CsvUtils.SaveExperimentData(directoryPath, new ExperimentData
             {
                 DistanceWalked = distance,
                 LandmarksFound = numLandmarks,
-                LandmarksFoundMax = -1,
                 PicturesTaken = picturesTaken,
                 GameTime = gameTime.ToString(),
                 ObjectsPickedUp = objectsPickedUp,
-                ObjectsPickedUpMax = -1,
-                RoamingEntropy = roamingEntropy 
+                RoamingEntropy = 0.0f 
             });
             
             // hide or show data
@@ -159,6 +161,7 @@ namespace ScriptsMainMenu
         {
             if(ExperimentMetaData.ExperimentFinished)
             {
+                roamingEntropy = GetComponent<RoamingEntropy>();
                 LoadEndScreen();
             }
         }
@@ -252,10 +255,6 @@ namespace ScriptsMainMenu
 
             ResultsObjectsPickedUp.text = $"{count}";
             return count;
-        }
-        private int CalculateRoamingEntropy(string directoryName)
-        {
-            return -1;
         }
     }
 }
