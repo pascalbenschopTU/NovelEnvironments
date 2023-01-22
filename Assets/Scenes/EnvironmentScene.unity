@@ -284,6 +284,14 @@ MonoBehaviour:
   - {fileID: 1296198054963878, guid: f76595434879f634c8b88f3cc4f08b2c, type: 3}
   - {fileID: 1923948107188124, guid: f16d978b3d1fa984d82c01d30a1fb40a, type: 3}
   - {fileID: 1335726306580732, guid: 23f312332b5cd5542ba196450880e89b, type: 3}
+  - {fileID: 9154215057541871321, guid: 2554008d6447a2540b44e55f0c0b576e, type: 3}
+  - {fileID: 2636820298107493410, guid: a2bd798ea40c7e341aa61ad124d95342, type: 3}
+  - {fileID: 8123141273917358956, guid: 13dd10d6717971d4ea9125d158299b1e, type: 3}
+  - {fileID: 1439904337943108576, guid: ef62619642b0df743b22dd5120c6ac4d, type: 3}
+  - {fileID: 2304540294968618315, guid: b8217b9c1183a5144b666d1dd63980c4, type: 3}
+  - {fileID: 2954823824624447290, guid: 194e9111af0c33840a49d573f2b26952, type: 3}
+  - {fileID: 7570405467501425085, guid: 0ab22827d0f3f0b40a97e9430d684283, type: 3}
+  - {fileID: 8954726919292774957, guid: eae42a57b046b1a42a79ae6319bccca3, type: 3}
   landmarks:
   - {fileID: 2651489086107281793, guid: 5c3bd99615643bd4c93c3866cb13d40b, type: 3}
   - {fileID: 849216810289730125, guid: def968192fd81424483a976346f52b66, type: 3}
@@ -300,6 +308,7 @@ MonoBehaviour:
   gatherable: {fileID: 150698, guid: f4c62b1a746281e44800c9250dd3643c, type: 3}
   meshTag: GrassFloor
   objectAmount: 50
+  spawnCountPerObject: 320000003200000032000000320000003200000032000000320000003200000032000000320000003200000032000000320000003200000032000000320000003200000032000000320000003200000032000000320000003200000032000000
   terrainMaterial: {fileID: 2100000, guid: 1b20a390d157f314e8b9bb5dcd9a8c00, type: 2}
   wallMaterial: {fileID: 2100000, guid: 7acf1bb27b0202d4197510ab8b1dbcd3, type: 2}
   heightCurve:
@@ -376,7 +385,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &355603887
 AudioSource:
@@ -1022,6 +1031,12 @@ MonoBehaviour:
   - {fileID: 1004710975425532, guid: c0aa33e678586aa43a1a9254fdfdfb4d, type: 3}
   - {fileID: 1630287520782172, guid: 3b703535d10b66844a909b8cd4b12fc5, type: 3}
   - {fileID: 1879388732584624, guid: ba2b67dbc790eb74f8a401c592dd619f, type: 3}
+  - {fileID: 5696982446787012674, guid: bd3902d22e225d2418a3fb59004719d8, type: 3}
+  - {fileID: 3758798834431871148, guid: 7f1e2ae58c5972e4085a61b1acdedaff, type: 3}
+  - {fileID: 3865382735814379724, guid: 2f3e88a796323a24397f5548e432b93a, type: 3}
+  - {fileID: 6015733125515760780, guid: 0f2e0f4ee7964964d8ecedce134fc290, type: 3}
+  - {fileID: 4219418968890982302, guid: 524424643e0b6a94bb5365cf35b9b705, type: 3}
+  - {fileID: 1417342935832388888, guid: 037cabecf826b684ebed012479c2acc4, type: 3}
   landmarks:
   - {fileID: 6168357766534588000, guid: ee21998f11acbec418dff52eb5ecfde4, type: 3}
   - {fileID: 8252821846288497176, guid: 958ebaba05daaea408218354ec7b8995, type: 3}
@@ -1037,6 +1052,7 @@ MonoBehaviour:
   gatherable: {fileID: 150698, guid: f4c62b1a746281e44800c9250dd3643c, type: 3}
   meshTag: SnowFloor
   objectAmount: 20
+  spawnCountPerObject: 140000001e0000000a0000000a0000000a0000000a0000000a0000000a0000000a0000000a0000000a0000000a000000c8000000030000001400000014000000
   terrainMaterial: {fileID: 2100000, guid: 1b20a390d157f314e8b9bb5dcd9a8c00, type: 2}
   wallMaterial: {fileID: 2100000, guid: 7acf1bb27b0202d4197510ab8b1dbcd3, type: 2}
   heightCurve:
@@ -1526,6 +1542,7 @@ MonoBehaviour:
   gatherable: {fileID: 150698, guid: f4c62b1a746281e44800c9250dd3643c, type: 3}
   meshTag: SandFloor
   objectAmount: 10
+  spawnCountPerObject: 
   terrainMaterial: {fileID: 2100000, guid: 1b20a390d157f314e8b9bb5dcd9a8c00, type: 2}
   wallMaterial: {fileID: 2100000, guid: 7acf1bb27b0202d4197510ab8b1dbcd3, type: 2}
   heightCurve:
@@ -2055,7 +2072,9 @@ MonoBehaviour:
   - {fileID: 1876599732148902, guid: 6ebfc6898dc70814c86bb78d43e72a9c, type: 3}
   - {fileID: 1282495547358542, guid: fb63f2d87ad55dd42891f1e2dbfe660d, type: 3}
   - {fileID: 1060771982902304, guid: abc98a3329f924b4680c86edde08968d, type: 3}
-  - {fileID: 1276862051916332, guid: 1be61187b5d765449be824463642cb0f, type: 3}
+  - {fileID: 1173778661502458, guid: 110af0d3eee946d4d9ee0ca4e522611a, type: 3}
+  - {fileID: 1791774932667290, guid: 419d31cd2358c274b93f3ed5fac4773f, type: 3}
+  - {fileID: 1305419447455220, guid: 8983c8df5fb12ea4bb76cdf0ef2f9c1b, type: 3}
   landmarks:
   - {fileID: 8252821846288497176, guid: 958ebaba05daaea408218354ec7b8995, type: 3}
   - {fileID: 7190989728183158723, guid: 1b9e59d5bb6f48643b2067fd21e8c7b7, type: 3}
@@ -2072,6 +2091,7 @@ MonoBehaviour:
   gatherable: {fileID: 150698, guid: f4c62b1a746281e44800c9250dd3643c, type: 3}
   meshTag: ConcreteFloor
   objectAmount: 1
+  spawnCountPerObject: 05000000050000000a0000000a00000005000000050000000500000005000000050000000a00000005000000050000000a000000
   terrainMaterial: {fileID: 2100000, guid: 1b20a390d157f314e8b9bb5dcd9a8c00, type: 2}
   wallMaterial: {fileID: 2100000, guid: 7acf1bb27b0202d4197510ab8b1dbcd3, type: 2}
   heightCurve:
@@ -2379,7 +2399,7 @@ PrefabInstance:
     - target: {fileID: 7935086198430867645, guid: 2a6391d09bc89eb4f9083307a026bb07,
         type: 3}
       propertyPath: m_RootOrder
-      value: 9
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 7935086198430867645, guid: 2a6391d09bc89eb4f9083307a026bb07,
         type: 3}
