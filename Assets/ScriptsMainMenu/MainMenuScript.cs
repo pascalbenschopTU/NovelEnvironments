@@ -30,6 +30,7 @@ namespace ScriptsMainMenu
                 var script = FinishScreen.GetComponent<EndScreen>();
                 script.ShowEndScreen();
             }
+            
         }
         
         public void QuitGame()
