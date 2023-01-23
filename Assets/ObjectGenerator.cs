@@ -76,8 +76,9 @@ public class ObjectGenerator : MonoBehaviour
 
             int objectAmount = Mathf.Min((int)(300/(extents.x + extents.z)), amount);
 
+            int p = 0;
             int j = 0;
-            while (j < objectAmount)
+            while (j < objectAmount && p < 100)
             {
                 int verticeIndex = prng.Next(0, mesh.vertices.Length);
                 Vector3 vertice = mesh.vertices[verticeIndex];
@@ -88,6 +89,7 @@ public class ObjectGenerator : MonoBehaviour
                     
                     j++;
                 }
+                p++;
             }
         }
     }
