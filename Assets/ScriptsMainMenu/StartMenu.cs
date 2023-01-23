@@ -102,10 +102,10 @@ namespace ScriptsMainMenu
                 // start game
                 var list = _environmentConfigurations[_experimentId];
             
-                ExperimentMetaData.Seed = Convert.ToBoolean(PlayerPrefs.GetInt("SeedActiveSetting")) ? PlayerPrefs.GetInt("SeedSetting") : 100;
+                ExperimentMetaData.Seed = Convert.ToBoolean(PlayerPrefs.GetInt("SeedActiveSetting")) ? PlayerPrefs.GetInt("SeedSetting") : 1;
                 ExperimentMetaData.ParticipantNumber = _participantNumber;
                 ExperimentMetaData.Environments = list;
-                ExperimentMetaData.TimeInEnvironment = PlayerPrefs.GetInt("TimeSetting");
+                ExperimentMetaData.TimeInEnvironment = PlayerPrefs.GetInt("TimeSetting") > 180 && list.Any(env => env.InteractionConfig == ConfigType.Low) ? 180 : PlayerPrefs.GetInt("TimeSetting");
                 ExperimentMetaData.Index = 0;
                 GameTime.TotalGameTime = 0;
                 ExperimentMetaData.StartTime = DateTime.Now;

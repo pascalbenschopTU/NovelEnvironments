@@ -78,7 +78,7 @@ namespace ScriptsMainMenu
         }
         public void UpdateGameTime(string time)
         {
-            ExperimentMetaData.TimeInEnvironment = int.TryParse(time, out var outVal) ? outVal : 20;
+            ExperimentMetaData.TimeInEnvironment = int.TryParse(time, out var outVal) ? outVal : 180;
             PlayerPrefs.SetInt("TimeSetting", ExperimentMetaData.TimeInEnvironment);
         }
 
@@ -179,7 +179,7 @@ namespace ScriptsMainMenu
             if(!PlayerPrefs.HasKey("EndScreenActiveSetting")) PlayerPrefs.SetInt("EndScreenActiveSetting",1);
             if(!PlayerPrefs.HasKey("ModuloSetting")) PlayerPrefs.SetInt("ModuloSetting",10);
             if(!PlayerPrefs.HasKey("SeedActiveSetting")) PlayerPrefs.SetInt("SeedActiveSetting",0);
-            if(!PlayerPrefs.HasKey("SeedSetting")) PlayerPrefs.SetInt("SeedSetting",100);
+            if(!PlayerPrefs.HasKey("SeedSetting")) PlayerPrefs.SetInt("SeedSetting",1);
             if(!PlayerPrefs.HasKey("VolumeSetting")) PlayerPrefs.SetInt("VolumeSetting", -40);
             if(!PlayerPrefs.HasKey("TimeSetting")) PlayerPrefs.SetInt("TimeSetting", 20);
             if(!PlayerPrefs.HasKey("MouseSensitivitySetting")) PlayerPrefs.SetInt("MouseSensitivitySetting", 300);

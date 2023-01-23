@@ -33,6 +33,9 @@ public class PlayerMovementReplayController : MonoBehaviour
         // Disable player movement
         PlayerMovement playerMovementScript = transform.GetComponent<PlayerMovement>();
         playerMovementScript.enabled = false;
+        // Disable mouse input
+        Transform camera = transform.Find("Main Camera");
+        camera.GetComponent<MouseLook>().enabled = false;
     }
 
     private void MovePlayer()
