@@ -111,7 +111,7 @@ public class Gathering : MonoBehaviour
     {
         TaskData task = new TaskData(
             new PositionalData(
-                ExperimentMetaData.currentEnvironment.GetEnvironmentType(),
+                ExperimentMetaData.Index,
                 System.DateTime.Now,
                 gameObject.transform.position,
                 gameObject.transform.rotation

@@ -31,7 +31,7 @@ public class AreaTracker : MonoBehaviour
     {
         TaskData task = new TaskData(
             new PositionalData(
-                ExperimentMetaData.currentEnvironment.GetEnvironmentType(),
+                ExperimentMetaData.Index,
                 System.DateTime.Now,
                 transform.position,
                 transform.rotation
