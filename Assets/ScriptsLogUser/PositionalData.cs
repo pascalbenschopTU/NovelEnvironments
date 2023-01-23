@@ -42,16 +42,16 @@ public class PositionalData {
 
         var position = new Vector3()
         {
-            x = float.Parse(csvColumns[2]),
-            y = float.Parse(csvColumns[3]),
-            z = float.Parse(csvColumns[4])
+            x = float.Parse(csvColumns[2].Replace(",", ".")),
+            y = float.Parse(csvColumns[3].Replace(",", ".")),
+            z = float.Parse(csvColumns[4].Replace(",", "."))
         };
         var rotation = new Quaternion()
         {
-            w = float.Parse(csvColumns[5]),
-            x = float.Parse(csvColumns[6]),
-            y = float.Parse(csvColumns[7]),
-            z = float.Parse(csvColumns[8])
+            w = float.Parse(csvColumns[5].Replace(",", ".")),
+            x = float.Parse(csvColumns[6].Replace(",", ".")),
+            y = float.Parse(csvColumns[7].Replace(",", ".")),
+            z = float.Parse(csvColumns[8].Replace(",", "."))
         };
 
         return new PositionalData(experiment_id, dateTime, position, rotation);
