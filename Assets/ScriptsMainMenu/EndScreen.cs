@@ -44,7 +44,10 @@ namespace ScriptsMainMenu
             Cursor.visible = true;
             var showData = Convert.ToBoolean(PlayerPrefs.GetInt("EndScreenActiveSetting"));
             ExperimentMetaData.EndTime = DateTime.Now;
-
+            // hide or show data
+            EmptyEndScreen.SetActive(!showData);
+            DataEndScreen.SetActive(showData);
+            
             var directoryPath = ExperimentMetaData.LogDirectory;
             CsvUtils.SavePositionalDataToCsv(Recorder.recording, directoryPath);
             CsvUtils.SaveTaskDataToCsv(Recorder.tasks, directoryPath);
@@ -66,9 +69,7 @@ namespace ScriptsMainMenu
                 RoamingEntropy = 0.0f 
             });
             
-            // hide or show data
-            EmptyEndScreen.SetActive(!showData);
-            DataEndScreen.SetActive(showData);
+
             if (showData)
             {
                 ShowPicturesTaken(Path.Join(directoryPath, "pictures"));
@@ -124,7 +125,8 @@ namespace ScriptsMainMenu
                 }
             }
 
-            totalPages = Mathf.RoundToInt(Mathf.Floor(pictures.Count / 4f)) + 1;
+            var pages = Mathf.RoundToInt(Mathf.Floor(pictures.Count / 4f));
+            totalPages = pictures.Count % 4 == 0? pages : pages + 1 ;
             pageIndex = 0;
             for (int i = 0; i < totalPages; i++)
             {
