@@ -35,6 +35,7 @@ public class PathGenerator : MonoBehaviour
 
     List<Vector3> landMarkCoords;
     Material mat;
+    Color brown = new Color(0.4f, 0.3f, 0.0f, 0.5f);
 
     public void Initialize(string layer, GameObject[] landmarks, int seed, Material mat, int size)
     {
@@ -211,11 +212,18 @@ public class PathGenerator : MonoBehaviour
             for (int j = 0; j < landMarkCoords.Count; j++)
             {
                 Vector3 vertice = landMarkCoords[j];
+                vertice.y -= 3;
                 GameObject objectToSpawn = landmarks[j % landmarks.Length];
                 objectToSpawn.layer = LayerMask.NameToLayer(layer);
-
-                vertice.y -= 3;
-//                Instantiate(objectToSpawn, vertice, Quaternion.Euler(new Vector3(-90, 0, 0)));
+                
+                Bounds bounds = objectToSpawn.GetComponentInChildren<MeshFilter>().sharedMesh.bounds;
+                Vector3 extents = bounds.extents;
+                Vector3 center = bounds.center;
+                GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                cube.transform.localScale = extents*2;
+                cube.transform.position = vertice+Vector3.down*(extents.y*2+0.02f)+center;
+                cube.layer = LayerMask.NameToLayer(layer);
+                cube.GetComponent<Renderer>().material.color = brown;
                 
                 objectToSpawn.AddComponent<AreaTracker>();
 
@@ -284,7 +292,6 @@ public class PathGenerator : MonoBehaviour
         (Vector3 step, int len) = getStepAndLength(s, f);
 
         Vector3 perp = new Vector3(step.z, 0, -step.x);
-        Color brown = new Color(0.4f, 0.3f, 0.0f, 0.5f);
 
         Vector3 heightV, start;
 
