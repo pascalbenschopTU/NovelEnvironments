@@ -63,7 +63,6 @@ public class ObjectGenerator : MonoBehaviour
             RaycastHit[] hits = Physics.RaycastAll(points[i], Vector3.down*110, 110.0F);
 
             for (int j = 0; j < hits.Length; j++) {
-                System.Console.WriteLine("hit: {0}", hits[j].collider.name);
                 if (System.Array.Exists(objectNames, element => element == hits[j].collider.name))
                     return false;
             }
