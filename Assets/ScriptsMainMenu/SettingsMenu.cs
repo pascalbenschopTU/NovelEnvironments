@@ -181,7 +181,7 @@ namespace ScriptsMainMenu
             if(!PlayerPrefs.HasKey("SeedActiveSetting")) PlayerPrefs.SetInt("SeedActiveSetting",0);
             if(!PlayerPrefs.HasKey("SeedSetting")) PlayerPrefs.SetInt("SeedSetting",1);
             if(!PlayerPrefs.HasKey("VolumeSetting")) PlayerPrefs.SetInt("VolumeSetting", -40);
-            if(!PlayerPrefs.HasKey("TimeSetting")) PlayerPrefs.SetInt("TimeSetting", 20);
+            if(!PlayerPrefs.HasKey("TimeSetting")) PlayerPrefs.SetInt("TimeSetting", 180);
             if(!PlayerPrefs.HasKey("MouseSensitivitySetting")) PlayerPrefs.SetInt("MouseSensitivitySetting", 300);
 
             ToggleFullscreen(Convert.ToBoolean(PlayerPrefs.GetInt("FullScreenSetting")));
