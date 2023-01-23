@@ -38,7 +38,7 @@ public class PositionalData {
     {
         int experiment_id = int.Parse(csvColumns[0]);
 
-        DateTime dateTime = DateTime.ParseExact(csvColumns[1], "dd-MM-yyyy HH:mm:ss", CultureInfo.InvariantCulture);
+        DateTime dateTime = ParseDateTime(csvColumns[1]);
 
         var position = new Vector3()
         {
@@ -55,5 +55,24 @@ public class PositionalData {
         };
 
         return new PositionalData(experiment_id, dateTime, position, rotation);
+    }
+
+    private static DateTime ParseDateTime(string dateTime)
+    {
+        DateTime result;
+        string[] formats = { "dd-MM-yyyy HH:mm:ss", "d-MM-yyyy HH:mm:ss", "dd-M-yyyy HH:mm:ss", "d-M-yyyy HH:mm:ss" };
+        
+        if (DateTime.TryParseExact(dateTime, formats, CultureInfo.InvariantCulture, DateTimeStyles.None, out result))
+        {
+            return result;
+        }
+        else if (DateTime.TryParse(dateTime, out result))
+        {
+            return result;
+        }
+        else
+        {
+            return DateTime.Now;
+        }
     }
 }
