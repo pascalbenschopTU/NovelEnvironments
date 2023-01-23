@@ -50,6 +50,11 @@ public class EnvironmentConfiguration
         };
     }
 
+    public int GetEnvironmentType()
+    {
+        return (int)EnvironmentType;
+    }
+
     public EnvironmentConfiguration()
     {
         ExperimentId = 0;

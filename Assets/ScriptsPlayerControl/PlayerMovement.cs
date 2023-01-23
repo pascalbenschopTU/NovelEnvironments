@@ -54,7 +54,7 @@ public class PlayerMovement : MonoBehaviour
     {
         PositionalData data = new PositionalData
         (
-            ExperimentMetaData.Index, 
+            ExperimentMetaData.currentEnvironment.GetEnvironmentType(), 
             System.DateTime.Now,
             this.transform.position, 
             this.transform.rotation
