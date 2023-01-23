@@ -183,6 +183,8 @@ public class CsvUtils : MonoBehaviour
 
         var dict = new Dictionary<int, List<PositionalData>>();
         using var reader = new StreamReader(path);
+
+        reader.ReadLine(); // Header
         while (!reader.EndOfStream)
         {
             var line = reader.ReadLine();
