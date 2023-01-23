@@ -135,7 +135,6 @@ public class StartingPositionGenerator : MonoBehaviour
         chosenEnvironment = environments[(int)environmentConfiguration.EnvironmentType];
 
         script = chosenEnvironment.GetComponent<EnvironmentGenerator>();
-        script.objectAmount = environmentConfiguration.GetComplexObjectsConfigValue();
         ToggleGathering();
         script.createNewEnvironment();
 

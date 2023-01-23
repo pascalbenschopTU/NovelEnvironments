@@ -22,9 +22,6 @@ public class EnvironmentGenerator : MonoBehaviour
 
     public string meshTag;
 
-    public int objectAmount;
-    public int[] spawnCountPerObject;
-
     public Material terrainMaterial;
 
     public Material wallMaterial;
@@ -65,15 +62,11 @@ public class EnvironmentGenerator : MonoBehaviour
         pathGenerator.Initialize(layer, landmarks, seed, terrainMaterial, size);
         objectGenerator = gameObject.AddComponent<ObjectGenerator>();
 
-        if(spawnCountPerObject != null && spawnCountPerObject.Length > 0 && environmentConfiguration.ComplexObjectConfig == ConfigType.High){
-            objectGenerator.Initialize(layer, complexObjects, seed, spawnCountPerObject, gatherable);
+        if(environmentConfiguration.ComplexObjectConfig == ConfigType.High){
+            objectGenerator.Initialize(layer, complexObjects, seed, gatherable);
         }
-        else if(environmentConfiguration.ComplexObjectConfig == ConfigType.Low) {
-            objectGenerator.Initialize(layer, objects, seed, objectAmount, gatherable);
-        }
-        else
-        {
-            objectGenerator.Initialize(layer, complexObjects, seed, objectAmount, gatherable);
+        else {
+            objectGenerator.Initialize(layer, objects, seed, gatherable);
         }
 
         meshes = new Mesh[(size/200)*(size/200)];
@@ -100,13 +93,7 @@ public class EnvironmentGenerator : MonoBehaviour
 
         foreach(Mesh mesh in meshes)
         {
-            if(spawnCountPerObject != null && spawnCountPerObject.Length > 0) {
-                objectGenerator.GenerateObjectsWithSpawnCount(mesh, pathGenerator.getSpawn());
-                Debug.Log("SpawnCount per Object");
-            }
-            else {
-                objectGenerator.GenerateObjects(mesh, pathGenerator.getSpawn());
-            }
+            objectGenerator.GenerateObjects(mesh, pathGenerator.getSpawn());
         }
         
         if (generateGatherables)

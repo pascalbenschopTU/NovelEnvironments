@@ -223,6 +223,7 @@ public class PathGenerator : MonoBehaviour
                 cube.transform.localScale = extents*2;
                 cube.transform.position = vertice+Vector3.down*(extents.y*2+0.02f)+center;
                 cube.layer = LayerMask.NameToLayer(layer);
+                cube.GetComponent<Renderer>().material = mat;
                 cube.GetComponent<Renderer>().material.color = brown;
                 
                 objectToSpawn.AddComponent<AreaTracker>();
