@@ -15,14 +15,10 @@ public class SetText : MonoBehaviour
             switch (gameObject.name)
             {
                 case "Text (TMP) Instructions":
-                    string text = "";
-                    if (PlayerPrefs.HasKey("InstructionSetting"))
+                    string text = "Walk through the gate to go to the next environment";
+                    if (environmentConfiguration.InteractionConfig == ConfigType.Low)
                     {
-                        text += PlayerPrefs.GetString("InstructionSetting");
-                    }
-                    else
-                    {
-                        text += "Walk through the gate to go to the next environment";
+                        text += "\n\nIn the environment you do not have to control the player";
                     }
                     if (environmentConfiguration.CameraTask)
                     {
