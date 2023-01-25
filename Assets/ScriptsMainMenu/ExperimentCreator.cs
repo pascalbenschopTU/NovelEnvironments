@@ -184,6 +184,7 @@ namespace ScriptsMainMenu
                 }
                 Dropdown.value = 0;
                 UpdateExperimentSelection(0);
+                Scrollbar.gameObject.SetActive(true);
             }
         }
 
