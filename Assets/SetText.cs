@@ -18,7 +18,7 @@ public class SetText : MonoBehaviour
                     string text = "Walk through the gate to go to the next environment";
                     if (environmentConfiguration.InteractionConfig == ConfigType.Low)
                     {
-                        text += "\n\nIn the environment you do not have to control the player";
+                        text += "\n\nIn the environment you do not have to control the player (ignore the Controls once in the environment)";
                     }
                     if (environmentConfiguration.CameraTask)
                     {
@@ -49,8 +49,6 @@ public class SetText : MonoBehaviour
                     {
                         mText.enabled = false;
                     }
-                    break;
-                default:
                     break;
             }
         }

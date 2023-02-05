@@ -2476,7 +2476,7 @@ GameObject:
   - component: {fileID: 1233483970}
   - component: {fileID: 1233483969}
   m_Layer: 5
-  m_Name: Text (TMP) ControlsMovement (1)
+  m_Name: Text (TMP) ControlsMovement2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
