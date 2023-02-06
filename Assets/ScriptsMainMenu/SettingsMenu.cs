@@ -24,6 +24,7 @@ namespace ScriptsMainMenu
         [SerializeField] private Toggle ModuloToggle;
         [SerializeField] private TMP_InputField SeedInputField;
         [SerializeField] private Toggle SeedToggle;
+        [SerializeField] private Toggle DynamicObjectsToggle;
         [SerializeField] private Toggle EndScreenToggle;
     
         [SerializeField] private GameObject ButtonChooseFile;
@@ -89,6 +90,7 @@ namespace ScriptsMainMenu
                 PlayerPrefs.SetInt("SeedSetting", val);
             }
         }
+
         public void ChooseExperimentFileButtonCallback()
         {
             var a = FileBrowser.ShowLoadDialog(paths =>
@@ -177,6 +179,7 @@ namespace ScriptsMainMenu
             if(!PlayerPrefs.HasKey("FullScreenSetting")) PlayerPrefs.SetInt("FullScreenSetting",1);
             if(!PlayerPrefs.HasKey("ModuloActiveSetting")) PlayerPrefs.SetInt("ModuloActiveSetting",1);
             if(!PlayerPrefs.HasKey("EndScreenActiveSetting")) PlayerPrefs.SetInt("EndScreenActiveSetting",1);
+            if(!PlayerPrefs.HasKey("DynamicObjectSetting")) PlayerPrefs.SetInt("DynamicObjectSetting", 1);
             if(!PlayerPrefs.HasKey("ModuloSetting")) PlayerPrefs.SetInt("ModuloSetting",10);
             if(!PlayerPrefs.HasKey("SeedActiveSetting")) PlayerPrefs.SetInt("SeedActiveSetting",0);
             if(!PlayerPrefs.HasKey("SeedSetting")) PlayerPrefs.SetInt("SeedSetting",1);
@@ -191,7 +194,8 @@ namespace ScriptsMainMenu
             ToggleSeedActive(Convert.ToBoolean(PlayerPrefs.GetInt("SeedActiveSetting")));
             SeedToggle.isOn = Convert.ToBoolean(PlayerPrefs.GetInt("SeedActiveSetting"));
             EndScreenToggle.isOn = Convert.ToBoolean(PlayerPrefs.GetInt("EndScreenActiveSetting"));
-            
+            DynamicObjectsToggle.isOn = Convert.ToBoolean(PlayerPrefs.GetInt("DynamicObjectSetting"));
+
             TimeInput.text = $"{PlayerPrefs.GetInt("TimeSetting")}";
         
             if (!PlayerPrefs.HasKey("SelectedFile"))
@@ -227,6 +231,12 @@ namespace ScriptsMainMenu
         {
             PlayerPrefs.SetInt("EndScreenActiveSetting", Convert.ToInt32(active));
         }
+
+        public void ToggleDynamicObjects(bool active)
+        {
+            PlayerPrefs.SetInt("DynamicObjectSetting", Convert.ToInt32(active));
+        }
+
         public void ToggleModuloActive(bool active)
         {
             PlayerPrefs.SetInt("ModuloActiveSetting", Convert.ToInt32(active));

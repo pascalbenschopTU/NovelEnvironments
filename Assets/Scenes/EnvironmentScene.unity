@@ -257,58 +257,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   layer: Ground
-  objects:
-  - {fileID: 1250690161900600, guid: e6f343cc46467004f811ce2ba3a3841b, type: 3}
-  - {fileID: 1377331622712542, guid: b9eb627f7bb4c1748829f3f01ce72b68, type: 3}
-  - {fileID: 1550140418629916, guid: 3e07483cd9aa6a141bb9c8e2d2c2bdad, type: 3}
-  - {fileID: 1020380390186232, guid: a1dee65b7ef7c344a97ff258503f49e7, type: 3}
-  - {fileID: 1902742491923462, guid: b3d0e1c692a75b34d96fb84c9b431b64, type: 3}
-  - {fileID: 1086353713108280, guid: 10dcade9ef34ab642846c4b889ac76e7, type: 3}
-  - {fileID: 1643754901835350, guid: 8d8b11b2e2435cc4787335555d35714f, type: 3}
-  - {fileID: 1335726306580732, guid: 23f312332b5cd5542ba196450880e89b, type: 3}
-  - {fileID: 1004710975425532, guid: c0aa33e678586aa43a1a9254fdfdfb4d, type: 3}
-  complexObjects:
-  - {fileID: 1983694637467298, guid: be44d0243648ece459799ac0d5d4a2a6, type: 3}
-  - {fileID: 1879388732584624, guid: ba2b67dbc790eb74f8a401c592dd619f, type: 3}
-  - {fileID: 1086353713108280, guid: 10dcade9ef34ab642846c4b889ac76e7, type: 3}
-  - {fileID: 1643754901835350, guid: 8d8b11b2e2435cc4787335555d35714f, type: 3}
-  - {fileID: 1793648613423140, guid: 88cc729ed2bce0b458f679b575dab345, type: 3}
-  - {fileID: 1250690161900600, guid: e6f343cc46467004f811ce2ba3a3841b, type: 3}
-  - {fileID: 1983694637467298, guid: be44d0243648ece459799ac0d5d4a2a6, type: 3}
-  - {fileID: 1377331622712542, guid: b9eb627f7bb4c1748829f3f01ce72b68, type: 3}
-  - {fileID: 1630287520782172, guid: 3b703535d10b66844a909b8cd4b12fc5, type: 3}
-  - {fileID: 1550140418629916, guid: 3e07483cd9aa6a141bb9c8e2d2c2bdad, type: 3}
-  - {fileID: 1020380390186232, guid: a1dee65b7ef7c344a97ff258503f49e7, type: 3}
-  - {fileID: 1561439388646736, guid: db15def326817084cb719e1c5f999b99, type: 3}
-  - {fileID: 1902742491923462, guid: b3d0e1c692a75b34d96fb84c9b431b64, type: 3}
-  - {fileID: 1296198054963878, guid: f76595434879f634c8b88f3cc4f08b2c, type: 3}
-  - {fileID: 1923948107188124, guid: f16d978b3d1fa984d82c01d30a1fb40a, type: 3}
-  - {fileID: 1335726306580732, guid: 23f312332b5cd5542ba196450880e89b, type: 3}
-  - {fileID: 9154215057541871321, guid: 2554008d6447a2540b44e55f0c0b576e, type: 3}
-  - {fileID: 2636820298107493410, guid: a2bd798ea40c7e341aa61ad124d95342, type: 3}
-  - {fileID: 8123141273917358956, guid: 13dd10d6717971d4ea9125d158299b1e, type: 3}
-  - {fileID: 1439904337943108576, guid: ef62619642b0df743b22dd5120c6ac4d, type: 3}
-  - {fileID: 2304540294968618315, guid: b8217b9c1183a5144b666d1dd63980c4, type: 3}
-  - {fileID: 2954823824624447290, guid: 194e9111af0c33840a49d573f2b26952, type: 3}
-  - {fileID: 7570405467501425085, guid: 0ab22827d0f3f0b40a97e9430d684283, type: 3}
-  - {fileID: 8954726919292774957, guid: eae42a57b046b1a42a79ae6319bccca3, type: 3}
-  landmarks:
-  - {fileID: 2651489086107281793, guid: 5c3bd99615643bd4c93c3866cb13d40b, type: 3}
-  - {fileID: 849216810289730125, guid: def968192fd81424483a976346f52b66, type: 3}
-  - {fileID: 8252821846288497176, guid: 958ebaba05daaea408218354ec7b8995, type: 3}
-  - {fileID: 7190989728183158723, guid: 1b9e59d5bb6f48643b2067fd21e8c7b7, type: 3}
-  - {fileID: 5922884322662716909, guid: 0224e7bbe5b06f74fa47bed3adcde6cd, type: 3}
-  - {fileID: 3194572283127358436, guid: dadc5d356bf1d214bb2e29c57c636430, type: 3}
-  - {fileID: 2032747138085375153, guid: 9acd46bf5bf85774e88502a8be84d200, type: 3}
-  - {fileID: 6542989572093223389, guid: 7b49a02daa39e0041826bab1cd740999, type: 3}
-  - {fileID: 4017959717926633342, guid: 3ee41b4affb3dc94586979509002914b, type: 3}
-  - {fileID: 5288811301072493470, guid: f2a879fb0ab02e24091b2ade1c8d3ce8, type: 3}
-  - {fileID: 1591672877148277468, guid: f0f11450893997e4dbb6f01190fea511, type: 3}
-  - {fileID: 2317510794540066913, guid: 29ef9a712a6f84541a21a423a1e1bbd1, type: 3}
-  gatherable: {fileID: 150698, guid: f4c62b1a746281e44800c9250dd3643c, type: 3}
   meshTag: GrassFloor
-  objectAmount: 50
-  spawnCountPerObject: 320000003200000032000000320000003200000032000000320000003200000032000000320000003200000032000000320000003200000032000000320000003200000032000000320000003200000032000000320000003200000032000000
   terrainMaterial: {fileID: 2100000, guid: 1b20a390d157f314e8b9bb5dcd9a8c00, type: 2}
   wallMaterial: {fileID: 2100000, guid: 7acf1bb27b0202d4197510ab8b1dbcd3, type: 2}
   heightCurve:
@@ -651,7 +600,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba5a5f76114e2654f8c818862162ccd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  material: {fileID: 2100000, guid: 9483b6f0d06abe6498fa148a66c07b96, type: 2}
+  material: {fileID: 6151071871934886045, guid: 4eef36526cc8ab1ccab0c6aa903e0467,
+    type: 3}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -1013,46 +963,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   layer: Ground
-  objects:
-  - {fileID: 1000011914158716, guid: 78af3a7aad589fa49b8fb946c9e57362, type: 3}
-  - {fileID: 1000011147454354, guid: 01d2dd5255c308a4db25dbb77d9f65ea, type: 3}
-  - {fileID: 1086353713108280, guid: 10dcade9ef34ab642846c4b889ac76e7, type: 3}
-  - {fileID: 1983694637467298, guid: be44d0243648ece459799ac0d5d4a2a6, type: 3}
-  - {fileID: 1879388732584624, guid: ba2b67dbc790eb74f8a401c592dd619f, type: 3}
-  - {fileID: 1004710975425532, guid: c0aa33e678586aa43a1a9254fdfdfb4d, type: 3}
-  complexObjects:
-  - {fileID: 1000011914158716, guid: 78af3a7aad589fa49b8fb946c9e57362, type: 3}
-  - {fileID: 1000011147454354, guid: 01d2dd5255c308a4db25dbb77d9f65ea, type: 3}
-  - {fileID: 1000012936420096, guid: a6dbabfd6d3c8cb47b7243b0b8723af2, type: 3}
-  - {fileID: 1086353713108280, guid: 10dcade9ef34ab642846c4b889ac76e7, type: 3}
-  - {fileID: 1983694637467298, guid: be44d0243648ece459799ac0d5d4a2a6, type: 3}
-  - {fileID: 1630287520782172, guid: 3b703535d10b66844a909b8cd4b12fc5, type: 3}
-  - {fileID: 1643754901835350, guid: 8d8b11b2e2435cc4787335555d35714f, type: 3}
-  - {fileID: 1004710975425532, guid: c0aa33e678586aa43a1a9254fdfdfb4d, type: 3}
-  - {fileID: 1630287520782172, guid: 3b703535d10b66844a909b8cd4b12fc5, type: 3}
-  - {fileID: 1879388732584624, guid: ba2b67dbc790eb74f8a401c592dd619f, type: 3}
-  - {fileID: 5696982446787012674, guid: bd3902d22e225d2418a3fb59004719d8, type: 3}
-  - {fileID: 3758798834431871148, guid: 7f1e2ae58c5972e4085a61b1acdedaff, type: 3}
-  - {fileID: 3865382735814379724, guid: 2f3e88a796323a24397f5548e432b93a, type: 3}
-  - {fileID: 6015733125515760780, guid: 0f2e0f4ee7964964d8ecedce134fc290, type: 3}
-  - {fileID: 4219418968890982302, guid: 524424643e0b6a94bb5365cf35b9b705, type: 3}
-  - {fileID: 1417342935832388888, guid: 037cabecf826b684ebed012479c2acc4, type: 3}
-  landmarks:
-  - {fileID: 6168357766534588000, guid: ee21998f11acbec418dff52eb5ecfde4, type: 3}
-  - {fileID: 8252821846288497176, guid: 958ebaba05daaea408218354ec7b8995, type: 3}
-  - {fileID: 7190989728183158723, guid: 1b9e59d5bb6f48643b2067fd21e8c7b7, type: 3}
-  - {fileID: 5922884322662716909, guid: 0224e7bbe5b06f74fa47bed3adcde6cd, type: 3}
-  - {fileID: 3194572283127358436, guid: dadc5d356bf1d214bb2e29c57c636430, type: 3}
-  - {fileID: 2651489086107281793, guid: 5c3bd99615643bd4c93c3866cb13d40b, type: 3}
-  - {fileID: 2032747138085375153, guid: 9acd46bf5bf85774e88502a8be84d200, type: 3}
-  - {fileID: 4017959717926633342, guid: 3ee41b4affb3dc94586979509002914b, type: 3}
-  - {fileID: 6542989572093223389, guid: 7b49a02daa39e0041826bab1cd740999, type: 3}
-  - {fileID: 5788123003525832337, guid: 918ca8ce04e69de4c953d61ff03bd365, type: 3}
-  - {fileID: 1687696578583648148, guid: c357c9df5bbccec4b829a6e9dc3759c9, type: 3}
-  gatherable: {fileID: 150698, guid: f4c62b1a746281e44800c9250dd3643c, type: 3}
   meshTag: SnowFloor
-  objectAmount: 20
-  spawnCountPerObject: 140000001e0000000a0000000a0000000a0000000a0000000a0000000a0000000a0000000a0000000a0000000a000000c8000000030000001400000014000000
   terrainMaterial: {fileID: 2100000, guid: 1b20a390d157f314e8b9bb5dcd9a8c00, type: 2}
   wallMaterial: {fileID: 2100000, guid: 7acf1bb27b0202d4197510ab8b1dbcd3, type: 2}
   heightCurve:
@@ -1131,7 +1042,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -1496,53 +1407,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   layer: Ground
-  objects:
-  - {fileID: 1864972976023934, guid: c4a173ae0083fee4db746ecdf20ba032, type: 3}
-  - {fileID: 1187100871979764, guid: b8ca6433e7a78e346904aef72892f856, type: 3}
-  - {fileID: 1065655044243356, guid: 20f64b4081161ef43b320aa975519fdc, type: 3}
-  - {fileID: 1092110070509382, guid: 7f370a51edc99c440819f87ec0f00e2c, type: 3}
-  - {fileID: 1891266665448334, guid: 67a0360629c18d741ac237d5197935cd, type: 3}
-  - {fileID: 1960440776389710, guid: 0450d19464994a4439f6c7dea52104b2, type: 3}
-  - {fileID: 1203660441109236, guid: 07aab42f1eca6ef4887a7fa93ad8282b, type: 3}
-  - {fileID: 1866083037941774, guid: 7fe8fb23b001d994f92ccc500f281cf8, type: 3}
-  - {fileID: 1786732080692216, guid: 46aa8b6d013691a43a624b2200d4519a, type: 3}
-  - {fileID: 1786647392387880, guid: 21006dba7e3f90042b36bf9b5f6af51e, type: 3}
-  complexObjects:
-  - {fileID: 1986308318195784, guid: f6045a15e1065124680c92c504c8d7ea, type: 3}
-  - {fileID: 1175661577396104, guid: 9b2afb2de81f7fa4bb4c6c9533ff3e7f, type: 3}
-  - {fileID: 1864972976023934, guid: c4a173ae0083fee4db746ecdf20ba032, type: 3}
-  - {fileID: 1187100871979764, guid: b8ca6433e7a78e346904aef72892f856, type: 3}
-  - {fileID: 1960440776389710, guid: 0450d19464994a4439f6c7dea52104b2, type: 3}
-  - {fileID: 1977925246162678, guid: 8b7b6b45c88df22498a9e20b7d7a34de, type: 3}
-  - {fileID: 1891266665448334, guid: 67a0360629c18d741ac237d5197935cd, type: 3}
-  - {fileID: 1065655044243356, guid: 20f64b4081161ef43b320aa975519fdc, type: 3}
-  - {fileID: 1649925079310092, guid: 736e50b5fd21b1240b02444bc774d83e, type: 3}
-  - {fileID: 1092110070509382, guid: 7f370a51edc99c440819f87ec0f00e2c, type: 3}
-  - {fileID: 1203660441109236, guid: 07aab42f1eca6ef4887a7fa93ad8282b, type: 3}
-  - {fileID: 1721112587459618, guid: 2ed80e4af24778742a16837f6b64d172, type: 3}
-  - {fileID: 1866083037941774, guid: 7fe8fb23b001d994f92ccc500f281cf8, type: 3}
-  - {fileID: 1209769021331456, guid: 715b325acd44dfd42a1b236411075c6f, type: 3}
-  - {fileID: 1209769021331456, guid: 715b325acd44dfd42a1b236411075c6f, type: 3}
-  - {fileID: 1786732080692216, guid: 46aa8b6d013691a43a624b2200d4519a, type: 3}
-  - {fileID: 1786647392387880, guid: 21006dba7e3f90042b36bf9b5f6af51e, type: 3}
-  - {fileID: 1814914059941812, guid: c7c726d17347cd44a8b6a3d3600f37b9, type: 3}
-  landmarks:
-  - {fileID: 8915715655105720591, guid: 5693a57c90ef40744848833e4aa5eff8, type: 3}
-  - {fileID: 4127458443936199739, guid: 8ac33b2347e9f3c44b5343e4d23173f9, type: 3}
-  - {fileID: 1311534305500079584, guid: 1850815f38acaab4085c2fb6a7ca2928, type: 3}
-  - {fileID: 5614180682871777939, guid: 2196e66c52d25ac469e55fb8f4d54d4a, type: 3}
-  - {fileID: 2241011749658261812, guid: be7d324adfdcc204aaecbde339973775, type: 3}
-  - {fileID: 2836201952261829258, guid: 9ec9a389e33c64a418c1a821a228a8b5, type: 3}
-  - {fileID: 3132205762495341217, guid: 72604a75170e28a4d9d293a3b853864c, type: 3}
-  - {fileID: 7566858372805507505, guid: 2014f532e36a21e4fa7048bc7e4b60e8, type: 3}
-  - {fileID: 4674286094358643832, guid: 27e25e3bc7ba5f640aea250f9a3842bd, type: 3}
-  - {fileID: 7190989728183158723, guid: 1b9e59d5bb6f48643b2067fd21e8c7b7, type: 3}
-  - {fileID: 8252821846288497176, guid: 958ebaba05daaea408218354ec7b8995, type: 3}
-  - {fileID: 3194572283127358436, guid: dadc5d356bf1d214bb2e29c57c636430, type: 3}
-  gatherable: {fileID: 150698, guid: f4c62b1a746281e44800c9250dd3643c, type: 3}
   meshTag: SandFloor
-  objectAmount: 10
-  spawnCountPerObject: 
   terrainMaterial: {fileID: 2100000, guid: 1b20a390d157f314e8b9bb5dcd9a8c00, type: 2}
   wallMaterial: {fileID: 2100000, guid: 7acf1bb27b0202d4197510ab8b1dbcd3, type: 2}
   heightCurve:
@@ -2053,45 +1918,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   layer: Ground
-  objects:
-  - {fileID: 1785044199738478, guid: a6cd0c657da915144bd367d385c0fc31, type: 3}
-  - {fileID: 1378370071209536, guid: a60988b24f8ff094ba511054edf48a9d, type: 3}
-  - {fileID: 1879644038180034, guid: 3744e668ae9047e4b9590c326355161c, type: 3}
-  - {fileID: 1228088659953116, guid: 80c5916b9606ce646be16611d9a06d13, type: 3}
-  - {fileID: 1742271052185720, guid: 30916da9dd66da74d8e831f29c0b250f, type: 3}
-  - {fileID: 1876599732148902, guid: 6ebfc6898dc70814c86bb78d43e72a9c, type: 3}
-  - {fileID: 1276862051916332, guid: 1be61187b5d765449be824463642cb0f, type: 3}
-  complexObjects:
-  - {fileID: 1378370071209536, guid: a60988b24f8ff094ba511054edf48a9d, type: 3}
-  - {fileID: 1646639913439324, guid: ac16a24c584766f4e905adc7db85b93d, type: 3}
-  - {fileID: 1785044199738478, guid: a6cd0c657da915144bd367d385c0fc31, type: 3}
-  - {fileID: 1350961368450940, guid: c6e50eec7153f5b45ac3917fb6cfd06a, type: 3}
-  - {fileID: 1228088659953116, guid: 80c5916b9606ce646be16611d9a06d13, type: 3}
-  - {fileID: 1520711273483040, guid: 331560f2206dc024cb084301a19c05ad, type: 3}
-  - {fileID: 1742271052185720, guid: 30916da9dd66da74d8e831f29c0b250f, type: 3}
-  - {fileID: 1876599732148902, guid: 6ebfc6898dc70814c86bb78d43e72a9c, type: 3}
-  - {fileID: 1282495547358542, guid: fb63f2d87ad55dd42891f1e2dbfe660d, type: 3}
-  - {fileID: 1060771982902304, guid: abc98a3329f924b4680c86edde08968d, type: 3}
-  - {fileID: 1173778661502458, guid: 110af0d3eee946d4d9ee0ca4e522611a, type: 3}
-  - {fileID: 1791774932667290, guid: 419d31cd2358c274b93f3ed5fac4773f, type: 3}
-  - {fileID: 1305419447455220, guid: 8983c8df5fb12ea4bb76cdf0ef2f9c1b, type: 3}
-  landmarks:
-  - {fileID: 8252821846288497176, guid: 958ebaba05daaea408218354ec7b8995, type: 3}
-  - {fileID: 7190989728183158723, guid: 1b9e59d5bb6f48643b2067fd21e8c7b7, type: 3}
-  - {fileID: 3194572283127358436, guid: dadc5d356bf1d214bb2e29c57c636430, type: 3}
-  - {fileID: 5922884322662716909, guid: 0224e7bbe5b06f74fa47bed3adcde6cd, type: 3}
-  - {fileID: 6168357766534588000, guid: ee21998f11acbec418dff52eb5ecfde4, type: 3}
-  - {fileID: 3132205762495341217, guid: 72604a75170e28a4d9d293a3b853864c, type: 3}
-  - {fileID: 2241011749658261812, guid: be7d324adfdcc204aaecbde339973775, type: 3}
-  - {fileID: 8915715655105720591, guid: 5693a57c90ef40744848833e4aa5eff8, type: 3}
-  - {fileID: 4127458443936199739, guid: 8ac33b2347e9f3c44b5343e4d23173f9, type: 3}
-  - {fileID: 1311534305500079584, guid: 1850815f38acaab4085c2fb6a7ca2928, type: 3}
-  - {fileID: 5614180682871777939, guid: 2196e66c52d25ac469e55fb8f4d54d4a, type: 3}
-  - {fileID: 4674286094358643832, guid: 27e25e3bc7ba5f640aea250f9a3842bd, type: 3}
-  gatherable: {fileID: 150698, guid: f4c62b1a746281e44800c9250dd3643c, type: 3}
   meshTag: ConcreteFloor
-  objectAmount: 1
-  spawnCountPerObject: 05000000050000000a0000000a00000005000000050000000500000005000000050000000a00000005000000050000000a000000
   terrainMaterial: {fileID: 2100000, guid: 1b20a390d157f314e8b9bb5dcd9a8c00, type: 2}
   wallMaterial: {fileID: 2100000, guid: 7acf1bb27b0202d4197510ab8b1dbcd3, type: 2}
   heightCurve:

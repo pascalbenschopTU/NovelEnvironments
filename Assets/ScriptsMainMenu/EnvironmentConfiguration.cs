@@ -35,8 +35,8 @@ public class EnvironmentConfiguration
     {
         return ComplexObjectConfig switch
         {
-            ConfigType.Low => 10,
-            ConfigType.High => 50,
+            ConfigType.Low => 70,
+            ConfigType.High => 100,
             _ => 0
         };
     }

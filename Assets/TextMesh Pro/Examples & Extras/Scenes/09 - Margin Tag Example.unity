@@ -841,12 +841,12 @@ MonoBehaviour:
   m_margin: {x: 2, y: 1, z: 2, w: 1}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
-  m_renderer: {fileID: 1562965278}
-  m_maskType: 0
   _SortingLayer: 0
   _SortingLayerID: 0
   _SortingOrder: 0
+  m_hasFontAssetChanged: 0
+  m_renderer: {fileID: 1562965278}
+  m_maskType: 0
 --- !u!33 &1562965277
 MeshFilter:
   m_ObjectHideFlags: 2
