@@ -11,37 +11,29 @@ namespace ScriptsMainMenu
 {
     public class SettingsMenu : MonoBehaviour
     {
-        [SerializeField]
-        private TextMeshProUGUI VolumeText;
-        [SerializeField]
-        private TextMeshProUGUI MouseSensitivityText;
+        [SerializeField] private TextMeshProUGUI VolumeText;
+        [SerializeField] private TextMeshProUGUI MouseSensitivityText;
 
         [SerializeField] private Slider VolumeSlider;
         [SerializeField] private Slider MouseSensitivitySlider;
-        [SerializeField]
-        private AudioMixer AudioMixer;
-        [SerializeField]
-        private TMP_InputField ModuloInput;
-        [SerializeField]
-        private TMP_InputField TimeInput;
-        [SerializeField]
-        private Toggle ModuloToggle;
-        [SerializeField]
-        private TMP_Dropdown ResolutionDropdown;
-        [SerializeField]
-        private Toggle FullscreenToggle;
+        [SerializeField] private AudioMixer AudioMixer;
+        [SerializeField] private TMP_InputField TimeInput;
+        [SerializeField] private TMP_Dropdown ResolutionDropdown;
+        [SerializeField] private Toggle FullscreenToggle;
+        [SerializeField] private TMP_InputField ModuloInput;
+        [SerializeField] private Toggle ModuloToggle;
+        [SerializeField] private TMP_InputField SeedInputField;
+        [SerializeField] private Toggle SeedToggle;
+        [SerializeField] private Toggle DynamicObjectsToggle;
+        [SerializeField] private Toggle EndScreenToggle;
     
-        [SerializeField]
-        private GameObject ButtonChooseFile;
-        [SerializeField]
-        private GameObject ButtonChangeFile;
-        [SerializeField]
-        private GameObject ExperimentSelection;
-        [SerializeField]
-        private TextMeshProUGUI TextFilename;
-        [SerializeField]
-        private TMP_Dropdown experimentSelectionDropdown;
+        [SerializeField] private GameObject ButtonChooseFile;
+        [SerializeField] private GameObject ButtonChangeFile;
+        [SerializeField] private GameObject ExperimentSelection;
+        [SerializeField] private TextMeshProUGUI TextFilename;
+        [SerializeField] private TMP_Dropdown experimentSelectionDropdown;
 
+        
         public static int MinVolume = -80;
         public static int MaxVolume = 0;
         public static int MinMouseSensitivity = 50;
@@ -78,6 +70,27 @@ namespace ScriptsMainMenu
             ExperimentId = index;
             PlayerPrefs.SetInt("LastExperimentId", ExperimentId);
         }
+        public void UpdateModuloValue(string value)
+        {
+            if (int.TryParse(value, out var val))
+            {
+                PlayerPrefs.SetInt("ModuloSetting", val);
+            }
+        }
+        public void UpdateGameTime(string time)
+        {
+            ExperimentMetaData.TimeInEnvironment = int.TryParse(time, out var outVal) ? outVal : 180;
+            PlayerPrefs.SetInt("TimeSetting", ExperimentMetaData.TimeInEnvironment);
+        }
+
+        public void UpdateSeed(string seed)
+        {
+            if (int.TryParse(seed, out var val))
+            {
+                PlayerPrefs.SetInt("SeedSetting", val);
+            }
+        }
+
         public void ChooseExperimentFileButtonCallback()
         {
             var a = FileBrowser.ShowLoadDialog(paths =>
@@ -108,13 +121,27 @@ namespace ScriptsMainMenu
             PlayerPrefs.SetString("SelectedFile", path);
             LoadExperimentsFromFile();
         }
-    
+
+        private void ClearExperimentFile()
+        {
+            ButtonChangeFile.SetActive(false);
+            ButtonChooseFile.SetActive(true);
+            TextFilename.gameObject.SetActive(false);
+            ExperimentSelection.SetActive(false);
+        }
+        
         public void LoadExperimentsFromFile()
         {
             experimentSelectionDropdown.ClearOptions();
             if (PlayerPrefs.HasKey("SelectedFile"))
             {
-                EnvironmentConfigurations = CsvUtils.EnvironmentConfigsFromCsv(PlayerPrefs.GetString("SelectedFile"));
+                EnvironmentConfigurations = CsvUtils.LoadEnvironmentConfigsFromCsv(PlayerPrefs.GetString("SelectedFile"));
+                if (EnvironmentConfigurations.Count == 0)
+                {
+                    ClearExperimentFile();
+                    Debug.Log($"Loading data from: {PlayerPrefs.GetString("SelectedFile")} failed!");
+                    return;
+                }
                 Debug.Log($"Loaded data from: {PlayerPrefs.GetString("SelectedFile")}");
                 experimentSelectionDropdown.AddOptions(EnvironmentConfigurations.Keys.ToList().ConvertAll(k => k.ToString()));
                 ExperimentId = PlayerPrefs.HasKey("LastExperimentId") && EnvironmentConfigurations.Keys.Contains(PlayerPrefs.GetInt("LastExperimentId"))? PlayerPrefs.GetInt("LastExperimentId"): 0;
@@ -123,17 +150,12 @@ namespace ScriptsMainMenu
                 ExperimentSelection.SetActive(!ModuloToggle.isOn && EnvironmentConfigurations != null && EnvironmentConfigurations.Count > 0);
             }
         }
-        public void UpdateGameTime(string time)
-        {
-            ExperimentMetaData.TimeInEnvironment = int.TryParse(time, out var outVal) ? outVal : 20;
-            PlayerPrefs.SetInt("TimeSetting", ExperimentMetaData.TimeInEnvironment);
-        }
-
+        
         public void LoadSettingsMenu()
         {
             ExperimentSelection.SetActive(!ModuloToggle.isOn && EnvironmentConfigurations != null && EnvironmentConfigurations.Count > 0);
         }
-
+        
         void Awake()
         {
             _screenResolutions = Screen.resolutions;
@@ -156,16 +178,24 @@ namespace ScriptsMainMenu
             
             if(!PlayerPrefs.HasKey("FullScreenSetting")) PlayerPrefs.SetInt("FullScreenSetting",1);
             if(!PlayerPrefs.HasKey("ModuloActiveSetting")) PlayerPrefs.SetInt("ModuloActiveSetting",1);
+            if(!PlayerPrefs.HasKey("EndScreenActiveSetting")) PlayerPrefs.SetInt("EndScreenActiveSetting",1);
+            if(!PlayerPrefs.HasKey("DynamicObjectSetting")) PlayerPrefs.SetInt("DynamicObjectSetting", 1);
             if(!PlayerPrefs.HasKey("ModuloSetting")) PlayerPrefs.SetInt("ModuloSetting",10);
-            if (!PlayerPrefs.HasKey("VolumeSetting")) PlayerPrefs.SetInt("VolumeSetting", -40);
-            if(!PlayerPrefs.HasKey("TimeSetting")) PlayerPrefs.SetInt("TimeSetting", 20);
-            if (!PlayerPrefs.HasKey("MouseSensitivitySetting")) PlayerPrefs.SetInt("MouseSensitivitySetting", 300);
+            if(!PlayerPrefs.HasKey("SeedActiveSetting")) PlayerPrefs.SetInt("SeedActiveSetting",0);
+            if(!PlayerPrefs.HasKey("SeedSetting")) PlayerPrefs.SetInt("SeedSetting",1);
+            if(!PlayerPrefs.HasKey("VolumeSetting")) PlayerPrefs.SetInt("VolumeSetting", -40);
+            if(!PlayerPrefs.HasKey("TimeSetting")) PlayerPrefs.SetInt("TimeSetting", 180);
+            if(!PlayerPrefs.HasKey("MouseSensitivitySetting")) PlayerPrefs.SetInt("MouseSensitivitySetting", 300);
 
             ToggleFullscreen(Convert.ToBoolean(PlayerPrefs.GetInt("FullScreenSetting")));
             FullscreenToggle.isOn = Convert.ToBoolean(PlayerPrefs.GetInt("FullScreenSetting"));
             ToggleModuloActive(Convert.ToBoolean(PlayerPrefs.GetInt("ModuloActiveSetting")));
             ModuloToggle.isOn = Convert.ToBoolean(PlayerPrefs.GetInt("ModuloActiveSetting"));
-            ModuloInput.text = $"{PlayerPrefs.GetInt("ModuloSetting")}";
+            ToggleSeedActive(Convert.ToBoolean(PlayerPrefs.GetInt("SeedActiveSetting")));
+            SeedToggle.isOn = Convert.ToBoolean(PlayerPrefs.GetInt("SeedActiveSetting"));
+            EndScreenToggle.isOn = Convert.ToBoolean(PlayerPrefs.GetInt("EndScreenActiveSetting"));
+            DynamicObjectsToggle.isOn = Convert.ToBoolean(PlayerPrefs.GetInt("DynamicObjectSetting"));
+
             TimeInput.text = $"{PlayerPrefs.GetInt("TimeSetting")}";
         
             if (!PlayerPrefs.HasKey("SelectedFile"))
@@ -197,17 +227,48 @@ namespace ScriptsMainMenu
             Screen.fullScreen = value;
             PlayerPrefs.SetInt("FullScreenSetting", Convert.ToInt32(value));
         }
+        public void ToggleShowEndScreenData(bool active)
+        {
+            PlayerPrefs.SetInt("EndScreenActiveSetting", Convert.ToInt32(active));
+        }
+
+        public void ToggleDynamicObjects(bool active)
+        {
+            PlayerPrefs.SetInt("DynamicObjectSetting", Convert.ToInt32(active));
+        }
+
         public void ToggleModuloActive(bool active)
         {
             PlayerPrefs.SetInt("ModuloActiveSetting", Convert.ToInt32(active));
             ExperimentSelection.SetActive(!ModuloToggle.isOn && EnvironmentConfigurations != null && EnvironmentConfigurations.Count > 0);
-        }
-        public void SaveModuloValue(string value)
-        {
-            if (int.TryParse(value, out var val))
+            if (active)
             {
-                PlayerPrefs.SetInt("ModuloSetting", val);
+                ModuloInput.gameObject.SetActive(true);
+                ModuloInput.text = $"{PlayerPrefs.GetInt("ModuloSetting")}";
             }
+            else
+            {
+                ModuloInput.gameObject.SetActive(false);
+            }
+        }
+
+        public void ToggleSeedActive(bool active)
+        {
+            PlayerPrefs.SetInt("SeedActiveSetting", Convert.ToInt32(active));
+            if (active)
+            {
+                SeedInputField.gameObject.SetActive(true);
+                SeedInputField.text = $"{PlayerPrefs.GetInt("SeedSetting")}";
+            }
+            else
+            {
+                SeedInputField.gameObject.SetActive(false);
+            }
+        }
+
+        public void SaveInstructionValue(string value)
+        {
+            PlayerPrefs.SetString("InstructionSetting", value);
         }
 
         public void SaveConfigs()

@@ -13,7 +13,6 @@
 .idea
 *.csproj
 *.sln
-*.png
 *.png.meta
 *.csv
 *.csv.meta
@@ -21,12 +20,7 @@
 /Assets/44.1 General Library (Free Sample Pack)
 /Assets/Nature Sound FX/
 /Assets/Plugins/
-/Assets/experiment_log.db
-/Assets/experiment_log.db.meta
-/Assets/experiment_log.db-journal.meta
-
-
-!/Assets/Plugins/sqlite3.def
-!/Assets/Plugins/sqlite3.dll
-
 /Assets/TextMesh Pro/
+!/Assets/ReplayData/movement.csv
+/Assets/landmarks/BasAssetStore/LowPolyVillage/Meshes/Other_Objects/watch_tower.fbx
+/Assets/landmarks/Low_Poly_Mini_Village/Art/Meshes/road_sign1.fbx

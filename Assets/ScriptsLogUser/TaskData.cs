@@ -7,24 +7,29 @@ using UnityEngine;
 
 public class TaskData : PositionalData{
 
+    public PositionalData positionalData { get; private set; }
     public string task { get; private set; }
 
     public TaskData(PositionalData positionalData, string task)
-        : base(positionalData.environment_id, positionalData.position, positionalData.rotation)
+        : base(positionalData.environment_id, positionalData.dateTime, positionalData.position, positionalData.rotation)
     {
+        this.positionalData = positionalData;
         this.task = task;
     }
 
+    public new static string GetHeader()
+    {
+        return PositionalData.GetHeader() + ";Task";
+    }
 
     public new string ToCSV()
     {
-        return $"{this.environment_id};{position.x};{position.y};{position.z};{rotation.w};{rotation.x};{rotation.y};{rotation.z};{task}";
+        return $"{positionalData.ToCSV()};{task}";
     }
 
     public new static TaskData FromCSV(string[] csvColumns)
     {
-        PositionalData positionalData = PositionalData.FromCSV(csvColumns);
-        return new TaskData(positionalData, csvColumns[8]);
+        return new TaskData(PositionalData.FromCSV(csvColumns), csvColumns[9]);
     }
 
     public override bool Equals(object obj)

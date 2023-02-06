@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.IO;
+using ScriptsLogUser;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -16,6 +17,8 @@ namespace ScriptsMainMenu
         private TextMeshProUGUI ErrorText;
         [SerializeField]
         private SettingsMenu SettingsMenu;
+        
+        [SerializeField] private LoadingScreenManager LoadingScreenManager;
 
         [SerializeField]
         private float ErrorTextTimeout;
@@ -76,7 +79,7 @@ namespace ScriptsMainMenu
             _fileSelected = _environmentConfigurations != null && _environmentConfigurations.Keys.Count > 0;
             if (!_fileSelected)
             {
-                ShowErrorMessage("Check experiment file in settings menu!");
+                ShowErrorMessage("Check if selected experiment file really exists!");
             }
             if (!_moduloActive)
             {
@@ -99,19 +102,21 @@ namespace ScriptsMainMenu
                 // start game
                 var list = _environmentConfigurations[_experimentId];
             
-                //TODO generate seed or get it from somewhere
-                ExperimentMetaData.Seed = 100;
+                ExperimentMetaData.Seed = Convert.ToBoolean(PlayerPrefs.GetInt("SeedActiveSetting")) ? PlayerPrefs.GetInt("SeedSetting") : 1;
                 ExperimentMetaData.ParticipantNumber = _participantNumber;
                 ExperimentMetaData.Environments = list;
-                ExperimentMetaData.TimeInEnvironment = PlayerPrefs.GetInt("TimeSetting");
-                ExperimentMetaData.StartTime = DateTime.Now;
+                ExperimentMetaData.TimeInEnvironment = PlayerPrefs.GetInt("TimeSetting") > 180 && list.Any(env => env.InteractionConfig == ConfigType.Low) ? 180 : PlayerPrefs.GetInt("TimeSetting");
                 ExperimentMetaData.Index = 0;
-                
-                DeleteLogsOnStartNewGame(_participantNumber);
+                GameTime.TotalGameTime = 0;
+                ExperimentMetaData.StartTime = DateTime.Now;
+                var directoryPath = Path.Join(Application.dataPath, $"ExperimentLogs_{ExperimentMetaData.ParticipantNumber}");
+                ExperimentMetaData.LogDirectory = Path.Join(directoryPath, $"{ExperimentMetaData.StartTime:dd-MM-yyyy_hh-mm-ss}");
 
+                Recorder.ResetRecordings();
+                
                 Debug.Log($"Starting with id: {_experimentId}");
                 Cursor.lockState = CursorLockMode.Locked;
-                SceneManager.LoadScene(1);
+                LoadingScreenManager.LoadSceneWait("DefaultScene", 1.5f);
             }
             else
             {
@@ -139,18 +144,13 @@ namespace ScriptsMainMenu
 
         private void DeleteLogsOnStartNewGame(int participantNumber)
         {
-            var dirPath = Application.dataPath + $"/ExperimentLogs_{participantNumber}/";
+            var dirPath = Path.Join(Application.dataPath , $"ExperimentLogs_{participantNumber}");
             if (Directory.Exists(dirPath))
             {
                 Directory.Delete(dirPath, true);
             }
 
             Recorder.ResetRecordings();
-        }
-
-        public void QuitGame()
-        {
-            Application.Quit();
         }
     }
 }

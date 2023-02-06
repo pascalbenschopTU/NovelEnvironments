@@ -151,7 +151,7 @@ namespace ScriptsMainMenu
                 var list = exp.Value.Select(tab => tab.GetEnvironmentConfig()).ToList();
                 configs.Add(exp.Key, list);
             }
-            CsvUtils.EnvironmentConfigsToCsv(configs, path);
+            CsvUtils.SaveEnvironmentConfigsToCsv(configs, path);
         }
     
         public void LoadExperimentButtonCallback()
@@ -167,7 +167,7 @@ namespace ScriptsMainMenu
             Debug.Log($"Loading data from {path}");
             ClearExperimentCreator();
         
-            _environmentConfigurations = CsvUtils.EnvironmentConfigsFromCsv(path);
+            _environmentConfigurations = CsvUtils.LoadEnvironmentConfigsFromCsv(path);
             if (_environmentConfigurations.Keys.Count > 0)
             {
                 _experimentId = 0;
@@ -184,6 +184,7 @@ namespace ScriptsMainMenu
                 }
                 Dropdown.value = 0;
                 UpdateExperimentSelection(0);
+                Scrollbar.gameObject.SetActive(true);
             }
         }
 
