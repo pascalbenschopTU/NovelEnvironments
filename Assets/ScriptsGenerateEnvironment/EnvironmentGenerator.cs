@@ -43,11 +43,17 @@ public class EnvironmentGenerator : MonoBehaviour
     private NavMeshSurface[] navMeshes;
     private Mesh[] meshes;
 
-    [SerializeField] private AudioSource AudioSrc = default;
-    [SerializeField] private AudioClip Environment1 = default;
-    [SerializeField] private AudioClip Environment2 = default;
-    [SerializeField] private AudioClip Environment3 = default;
-    [SerializeField] private AudioClip Environment4 = default;
+    public void InitializeEnvironmentFromSetup(EnvironmentSetup environmentSetup)
+    {
+        meshTag = environmentSetup.meshTag;
+        terrainMaterial= environmentSetup.terrainMaterial;
+        wallMaterial = environmentSetup.wallMaterial;
+        heightCurve = environmentSetup.animationCurve;
+        scale = environmentSetup.scale;
+        octaves = environmentSetup.octaves;
+        lacunarity = environmentSetup.lacunarity;
+        gradient = environmentSetup.gradient;
+    }
 
     public void Initialize()
     {
@@ -82,7 +88,7 @@ public class EnvironmentGenerator : MonoBehaviour
         gatherable = (GameObject)Resources.Load("Gathering/Prefabs/SM_Item_Lantern_01", typeof(GameObject));
     }
 
-    public void createNewEnvironment()
+    public void CreateNewEnvironment()
     {
         Initialize();
 
@@ -108,7 +114,6 @@ public class EnvironmentGenerator : MonoBehaviour
 
         GenerateGatherablesIfTaskOn();
         SpawnDynamicObjectsIfComplexityHigh();
-        PlaySound();
     }
 
     private void GenerateGatherablesIfTaskOn()
@@ -126,27 +131,6 @@ public class EnvironmentGenerator : MonoBehaviour
             dynamicObjects = Resources.LoadAll("polyperfect/Prefabs", typeof(GameObject)).Cast<GameObject>().ToArray();
             objectGenerator.SpawnDynamicObjects(meshes, dynamicObjects);
             
-        }
-    }
-
-    private void PlaySound()
-    {
-        switch (gameObject.tag)
-        {
-            case "Environment1":
-                AudioSrc.PlayOneShot(Environment1);
-                break;
-            case "Environment2":
-                AudioSrc.PlayOneShot(Environment2);
-                break;
-            case "Environment3":
-                AudioSrc.PlayOneShot(Environment3);
-                break;
-            case "Environment4":
-                AudioSrc.PlayOneShot(Environment4);
-                break;
-            default:
-                break;
         }
     }
 
@@ -181,7 +165,7 @@ public class EnvironmentGenerator : MonoBehaviour
 
             border.GetComponent<Renderer>().material = wallMaterial;
             border.transform.name = "Width border " + (i + 1);
-            border.transform.parent = transform;
+            //border.transform.parent = transform;
         }
 
         // Create length borders
@@ -201,7 +185,7 @@ public class EnvironmentGenerator : MonoBehaviour
 
             border.GetComponent<Renderer>().material = wallMaterial;
             border.transform.name = "Length border " + (i + 1);
-            border.transform.parent = transform;
+            //border.transform.parent = transform;
         }
     }
 }

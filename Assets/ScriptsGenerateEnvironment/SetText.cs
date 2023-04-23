@@ -7,7 +7,7 @@ public class SetText : MonoBehaviour
     public TMP_Text mText;
     
     // Set text for instructions in Default Environment
-    void Start()
+    void OnEnable()
     {
         if (ExperimentMetaData.Index < ExperimentMetaData.Environments.Count)
         {
@@ -20,6 +20,10 @@ public class SetText : MonoBehaviour
                     {
                         text += "\n\nIn the environment you do not have to control the player (ignore the Controls once in the environment)";
                     }
+                    if (environmentConfiguration.MapConfig == ConfigType.High)
+                    {
+                        text += "\n\nYou can view a map of the environment on your left";
+                    }
                     if (environmentConfiguration.CameraTask)
                     {
                         text += "\n\nIn the environment you can take pictures"; 
@@ -27,7 +31,6 @@ public class SetText : MonoBehaviour
                     if (environmentConfiguration.PickupTask)
                     {
                         text += "\n\nIn the environment you can pick up lanterns, in the corner one is placed as example";
-                        PlaceLantern();
                     }
                     mText.text = text;
                     break;
@@ -65,17 +68,5 @@ public class SetText : MonoBehaviour
                 mText.enabled = false;
             }
         }
-    }
-
-    private void PlaceLantern()
-    {
-        GameObject lantern = (GameObject) Resources.Load("Gathering/Prefabs/SM_Item_Lantern_01", typeof(GameObject));
-        lantern.tag = "Gather";
-        lantern.transform.localScale = new Vector3(4, 4, 4);
-        lantern.layer = LayerMask.NameToLayer("Ground");
-        GameObject player = GameObject.Find("Player");
-        player.AddComponent<Gathering>();
-
-        Instantiate(lantern, new Vector3(10f, 0.5f,-10f), Quaternion.identity);
     }
 }

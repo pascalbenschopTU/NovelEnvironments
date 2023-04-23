@@ -34,6 +34,27 @@ public class LoadingScreenManager : MonoBehaviour
         LoadingScreenPanel.SetActive(true);
         StartCoroutine(LoadSceneAsyncWait(sceneName, waitFor));
     }
+
+    public bool Loading()
+    {
+        LoadingScreenPanel.SetActive(true);
+
+        if (LoadingScreenPanel != null && LoadingScreenPanel.activeSelf == true)
+        {
+            loading = true;
+            return true;
+        } else
+        {
+            return false;
+        }
+    }
+
+    public void StopLoading()
+    {
+        LoadingScreenPanel.SetActive(false);
+        loading = false;
+    }
+
     private IEnumerator LoadSceneAsync(AsyncOperation loadingOperation, float waitFor=0.0f)
     {
         loading = true;

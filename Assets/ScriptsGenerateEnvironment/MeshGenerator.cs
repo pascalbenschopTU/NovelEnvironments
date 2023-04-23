@@ -82,7 +82,7 @@ public class MeshGenerator : MonoBehaviour
 
         go.layer = LayerMask.NameToLayer(layer);
 
-        go.transform.parent = transform;
+        //go.transform.parent = transform;
         go.tag = meshTag;
 
         return mesh;
