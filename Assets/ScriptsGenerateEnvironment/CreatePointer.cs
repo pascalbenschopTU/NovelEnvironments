@@ -7,7 +7,7 @@ public class CreatePointer : MonoBehaviour
     public Material material;
 
     // Start is called before the first frame update
-    void Start()
+    public void AddPointer()
     {
         player = transform.parent.gameObject;
         AddPointerToPlayer(5, 31, Color.white);

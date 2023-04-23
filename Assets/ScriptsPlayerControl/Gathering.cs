@@ -26,8 +26,7 @@ public class Gathering : MonoBehaviour
         arial = (Font)Resources.GetBuiltinResource(typeof(Font), "Arial.ttf");
 
         // Create Canvas GameObject.
-        GameObject canvasGO = new GameObject();
-        canvasGO.name = "Canvas";
+        GameObject canvasGO = new GameObject("GatherCounterCanvas");
         canvasGO.AddComponent<Canvas>();
         canvasGO.AddComponent<CanvasScaler>();
         canvasGO.AddComponent<GraphicRaycaster>();
@@ -38,7 +37,7 @@ public class Gathering : MonoBehaviour
         canvas.renderMode = RenderMode.ScreenSpaceOverlay;
 
         // Create the Text GameObject.
-        GameObject textGO = new GameObject();
+        GameObject textGO = new GameObject("GatherCounter");
         textGO.transform.parent = canvasGO.transform;
         textGO.AddComponent<Text>();
 
@@ -57,7 +56,7 @@ public class Gathering : MonoBehaviour
         rectTransform.sizeDelta = new Vector2(600, 200);
 
         // Create the Text GameObject.
-        GameObject text2GO = new GameObject();
+        GameObject text2GO = new GameObject("GatherCounter");
         text2GO.transform.parent = canvasGO.transform;
         text2GO.AddComponent<Text>();
 
@@ -89,7 +88,8 @@ public class Gathering : MonoBehaviour
                     text2.text = baseText2 + itemsCollected.ToString();
                     Destroy(hit.collider.gameObject);
 
-                    if (SceneManager.GetActiveScene().name != "DefaultScene")
+                    // If player is in the environment
+                    if (transform.position.y < 200)
                         LogGathering();
                 }
                 text.text = shownText;

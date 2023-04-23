@@ -14,19 +14,14 @@ public class GameTime : MonoBehaviour
     {
         scene = SceneManager.GetActiveScene();
 
-        if (scene.name != "DefaultScene")
-        {
-            TotalGameTime += (int)(DateTime.Now - StartTime).TotalSeconds;
-        }
+        TotalGameTime += (int)(DateTime.Now - StartTime).TotalSeconds;
+        
     }
 
     public static void RestartGameTime()
     {
         scene = SceneManager.GetActiveScene();
 
-        if (scene.name != "DefaultScene")
-        {
-            StartTime = DateTime.Now;
-        }
+        StartTime = DateTime.Now;
     }
 }

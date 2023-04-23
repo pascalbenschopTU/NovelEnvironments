@@ -38,28 +38,33 @@ public class PlayerMovement : MonoBehaviour
         environmentConfiguration = ExperimentMetaData.currentEnvironment;
         player = GameObject.Find("Player");
 
-        Scene scene = SceneManager.GetActiveScene();
-        if (scene.name != "DefaultScene")
-        {
-            // Log data 40 times per second.
-            InvokeRepeating("LogData", 0f, 0.025f);
-        } else
-        {
-            player.transform.position = new Vector3(0, 1, 0);
-            player.transform.rotation = new Quaternion(0, 180, 0, 0);
-        }
+        InvokeRepeating("LogData", 0f, 0.025f);
+
+        //Scene scene = SceneManager.GetActiveScene();
+        //if (scene.name != "DefaultScene")
+        //{
+        //    // Log data 40 times per second.
+        //    InvokeRepeating("LogData", 0f, 0.025f);
+        //} else
+        //{
+        //    player.transform.position = new Vector3(0, 1, 0);
+        //    player.transform.rotation = new Quaternion(0, 180, 0, 0);
+        //}
     }
 
     private void LogData()
     {
-        PositionalData data = new PositionalData
-        (
-            ExperimentMetaData.Index, 
-            System.DateTime.Now,
-            this.transform.position, 
-            this.transform.rotation
-        );
-        Recorder.RecordPlayerData(data);
+        if (player.transform.position.y < 200)
+        {
+            PositionalData data = new PositionalData
+            (
+                ExperimentMetaData.Index,
+                System.DateTime.Now,
+                this.transform.position,
+                this.transform.rotation
+            );
+            Recorder.RecordPlayerData(data);
+        }
     }
 
     private void HandleFootSteps()

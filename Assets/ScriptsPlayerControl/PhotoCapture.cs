@@ -9,7 +9,7 @@ public class PhotoCapture : MonoBehaviour
 {
     private EnvironmentConfiguration environmentConfiguration;
 
-    public AudioSource soundFX;
+    private AudioSource soundFX;
 
     public static bool isActive = true;
 
@@ -27,6 +27,7 @@ public class PhotoCapture : MonoBehaviour
 
         environmentConfiguration = ExperimentMetaData.currentEnvironment;
         player = gameObject;
+        soundFX = gameObject.GetComponent<AudioSource>();
 
         CreateCameraFlash();
         AddOverLay();
@@ -98,7 +99,8 @@ public class PhotoCapture : MonoBehaviour
     {
         if (UnityEngine.Input.GetMouseButtonDown(0) && isActive)
         {
-            soundFX.Play();
+            AudioClip shutterSound = (AudioClip)Resources.Load("Sounds/camera-shutter-click", typeof(AudioClip));
+            soundFX.PlayOneShot(shutterSound);
             StartCoroutine(CapturePhoto());
         }
     }

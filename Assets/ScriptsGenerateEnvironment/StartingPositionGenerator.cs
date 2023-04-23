@@ -10,21 +10,31 @@ public class StartingPositionGenerator : MonoBehaviour
     public EnvironmentConfiguration environmentConfiguration;
 
     [SerializeField] private LoadingScreenManager LoadingScreenManager;
-    private GameObject chosenEnvironment;
+    private EnvironmentSetup chosenEnvironment;
 
-    private GameObject[] environments;
+    private EnvironmentSetup[] environments;
+    private AudioClip[] sounds;
 
     private GameObject player;
+    private GameObject startingHall;
 
     private Vector3 startingPosition;
 
     private EnvironmentGenerator script;
 
+    private int StartingHallHeight = 202;
+
     // Start is called before the first frame update
     void OnEnable()
     {
+        startingHall = GameObject.Find("StartingHall");
+        InitializeEnvironment();
+    }
+
+    // Updates the environment with the next one or finishes the game.
+    public void InitializeEnvironment()
+    {
         if (ExperimentMetaData.Index >= ExperimentMetaData.Environments.Count)
-        // if (ExperimentMetaData.Index >= 0)
         {
             Debug.Log("Experiment finished");
             Cursor.lockState = CursorLockMode.None;
@@ -42,39 +52,84 @@ public class StartingPositionGenerator : MonoBehaviour
             return;
         }
 
-        ExperimentMetaData.currentEnvironment = environmentConfiguration;
+        StartCoroutine(LoadEnvironment());
+    }
 
+    // This is to make sure that the loading screen is shown before it starts to load the environment
+    IEnumerator LoadEnvironment()
+    {
+        yield return new WaitUntil(() => LoadingScreenManager.Loading());
+
+        ExperimentMetaData.currentEnvironment = environmentConfiguration;
         InitializePlayer();
         InitializeEnvironments();
         SelectNextEnvironment();
+        LoadingScreenManager.StopLoading();
+        // Make sure player at correct position
+        CharacterController cc = player.GetComponent<CharacterController>();
+        cc.enabled = false;
+        player.transform.SetPositionAndRotation(new Vector3(0, StartingHallHeight, 0), Quaternion.Euler(new Vector3(0, 180, 0)));
+        cc.enabled = true;
+    }
+
+    // Teleports player to environment and makes sure correct settings are applied
+    public void TeleportPlayerToEnvironment()
+    {
+        CharacterController cc = player.GetComponent<CharacterController>();
+        cc.enabled = false;
+        player.transform.SetPositionAndRotation(startingPosition, Quaternion.identity);
+        cc.enabled = true;
+
+        startingHall.SetActive(false);
+
+        SetPlayerMiniMap();
+        ToggleLowInvolvement();
         StartTimer();
+        PlayEnvironmentSound();
     }
 
     private void InitializeEnvironments()
     {
-        environments = new GameObject[4];
+        environments = new EnvironmentSetup[4];
 
-        environments[0] = GameObject.Find("Environment1");
-        environments[1] = GameObject.Find("Environment2");
-        environments[2] = GameObject.Find("Environment3");
-        environments[3] = GameObject.Find("Environment4");
+        environments[0] = Forest.GetEnvironmentSetup();
+        environments[1] = Desert.GetEnvironmentSetup();
+        environments[2] = City.GetEnvironmentSetup();
+        environments[3] = Snow.GetEnvironmentSetup();
+        
+        sounds = new AudioClip[4];
+
+        sounds[0] = (AudioClip)Resources.Load("Sounds/forest", typeof(AudioClip));
+        sounds[1] = (AudioClip)Resources.Load("Sounds/desert", typeof(AudioClip));
+        sounds[2] = (AudioClip)Resources.Load("Sounds/city", typeof(AudioClip));
+        sounds[3] = (AudioClip)Resources.Load("Sounds/snow", typeof(AudioClip));
     }
 
-    private void InitializePlayer()
+    private void PlayEnvironmentSound()
+    {
+        player.GetComponent<AudioSource>().PlayOneShot(sounds[(int)environmentConfiguration.EnvironmentType]);
+    }
+
+    public void InitializePlayer()
     {
         player = GameObject.Find("Player");
-        setPlayerMiniMap();
-        setPlayerFOV();
+        SetPlayerFOV();
         TogglePlayerCamera();
-        ToggleLowInvolvement();
+        player.transform.Find("Canvas").Find("RawImage").gameObject.SetActive(false);
     }
 
-    private void setPlayerMiniMap()
+    private void SetPlayerMiniMap()
     {
         Transform canvas = player.transform.Find("Canvas");
         if (canvas != null)
         {
             GameObject minimap = canvas.Find("RawImage").gameObject;
+            Transform minimapCamera = player.transform.Find("MiniMapCamera");
+            if (minimapCamera != null)
+            {
+                minimapCamera.position = new Vector3(0, 450, 0);
+                minimapCamera.GetComponent<CreatePointer>().AddPointer();
+            }
             if (environmentConfiguration.MapConfig == ConfigType.Low)
             {
                 minimap.SetActive(false);
@@ -90,7 +145,7 @@ public class StartingPositionGenerator : MonoBehaviour
         }
     }
 
-    private void setPlayerFOV()
+    private void SetPlayerFOV()
     {
         if (player.transform.Find("Main Camera") != null)
         {
@@ -106,19 +161,11 @@ public class StartingPositionGenerator : MonoBehaviour
 
     private void TogglePlayerCamera()
     {
-        PhotoCapture photoCaptureScript = player.GetComponent<PhotoCapture>();
-
-        if (photoCaptureScript != null)
+        if (environmentConfiguration.CameraTask)
         {
-            if (environmentConfiguration.CameraTask)
-            {
-                photoCaptureScript.enabled = true;
-            } 
-            else
-            {
-                photoCaptureScript.enabled = false;
-            }
-        }
+            player.AddComponent<PhotoCapture>();
+        } 
+  
     }
 
 
@@ -134,16 +181,13 @@ public class StartingPositionGenerator : MonoBehaviour
     {
         chosenEnvironment = environments[(int)environmentConfiguration.EnvironmentType];
 
-        script = chosenEnvironment.GetComponent<EnvironmentGenerator>();
+        script = gameObject.AddComponent<EnvironmentGenerator>();
+        script.InitializeEnvironmentFromSetup(chosenEnvironment);
+
         ToggleGathering();
-        script.createNewEnvironment();
+        script.CreateNewEnvironment();
 
-        startingPosition = script.getSpawnPoint();
-
-        CharacterController cc = player.GetComponent<CharacterController>();
-        cc.enabled = false;
-        player.transform.SetPositionAndRotation(startingPosition, Quaternion.identity);
-        cc.enabled = true;
+        startingPosition = script.getSpawnPoint(); 
     }
 
     private void ToggleGathering()
@@ -172,7 +216,89 @@ public class StartingPositionGenerator : MonoBehaviour
 
         ExperimentMetaData.Index++;
 
-        LoadingScreenManager.LoadSceneWait("DefaultScene", 1.5f);
+        ResetEnvironment();
+
+        LoadingScreenManager.Loading();
+        InitializeEnvironment();
     }
 
+    private void ResetEnvironment()
+    {
+        startingHall.SetActive(true);
+
+        PurgePreviousEnvironment();
+        ResetTextInstructions();
+
+        player.GetComponent<AudioSource>().Stop();
+        if (player.GetComponent<PlayerMovementReplayController>() != null)
+        {
+            Destroy(player.GetComponent<PlayerMovementReplayController>());
+            EnableMovement();
+        }
+        if (player.GetComponent<Gathering>() != null)
+        {
+            Destroy(player.GetComponent<Gathering>());
+        }
+        if (player.GetComponent<PhotoCapture>() != null)
+        {
+            Destroy(player.GetComponent<PhotoCapture>());
+        }
+    }
+
+    private void PurgePreviousEnvironment()
+    {
+        var allGameObjects = FindObjectsOfType<GameObject>();
+        var gameObjectsToDestroy = new ArrayList();
+        for (var i = 0; i < allGameObjects.Length; i++)
+        {
+            if (allGameObjects[i].name.Contains("Clone") 
+                || allGameObjects[i].name == "Mesh"
+                || allGameObjects[i].name == "PathMesh"
+                || allGameObjects[i].name == "Cube"
+                || allGameObjects[i].name == "Pointer"
+                || allGameObjects[i].name.Contains("Sprite")
+                || allGameObjects[i].name.Contains("Gather")
+            )
+            {
+                gameObjectsToDestroy.Add(allGameObjects[i]);
+            }
+        }
+
+        foreach (GameObject obj in gameObjectsToDestroy)
+        {
+            Destroy(obj);
+        }
+    }
+
+    private void ResetTextInstructions()
+    {
+        var allGameObjects = FindObjectsOfType<GameObject>();
+        for (var i = 0; i < allGameObjects.Length; i++)
+        {
+            if (allGameObjects[i].name.Contains("Text (TMP)"))
+            {
+                GameObject text = allGameObjects[i];
+                if (text.GetComponent<SetText>() != null)
+                {
+                    // Refresh text
+                    text.GetComponent<SetText>().enabled = false;
+                    text.GetComponent<SetText>().enabled = true;
+                }
+            }
+        }
+    }
+
+    private void EnableMovement()
+    {
+        // Disable character controller
+        CharacterController cc = player.GetComponent<CharacterController>();
+        cc.enabled = true;
+        // Disable player movement
+        PlayerMovement playerMovementScript = player.GetComponent<PlayerMovement>();
+        playerMovementScript.enabled = true;
+        // Disable mouse input
+        Transform camera = player.transform.Find("Main Camera");
+        camera.GetComponent<MouseLook>().enabled = true;
+        
+    }
 }

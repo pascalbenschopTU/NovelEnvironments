@@ -127,6 +127,12 @@ public class ObjectGenerator : MonoBehaviour
             gatherableCopy.tag = "Gather";
             Instantiate(gatherableCopy, spawn, Quaternion.identity);
         }
+
+        GameObject gatherableExample = gatherable;
+        gatherableExample.layer = LayerMask.NameToLayer(layer);
+        gatherableExample.transform.localScale = new Vector3(4, 4, 4);
+        gatherableExample.tag = "Gather";
+        Instantiate(gatherableExample, new Vector3(15, 200.5f, -16), Quaternion.identity);
     }
 
     public void SpawnDynamicObjects(Mesh[] meshes, GameObject[] dynamicObjects)
