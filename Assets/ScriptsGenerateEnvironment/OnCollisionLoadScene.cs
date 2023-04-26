@@ -8,7 +8,7 @@ public class OnCollisionLoadScene : MonoBehaviour
 {
     void OnTriggerEnter(Collider other) {
 		if(other.gameObject.CompareTag("Player")) {
-			GameObject.Find("CreateEnvironment").GetComponent<StartingPositionGenerator>().TeleportPlayerToEnvironment();
+			GameObject.Find("StartGame").GetComponent<StartGame>().TeleportPlayerToEnvironment();
 		}
 	}
 }
