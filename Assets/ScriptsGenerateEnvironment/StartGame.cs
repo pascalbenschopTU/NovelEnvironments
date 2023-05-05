@@ -1,11 +1,7 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.Events;
-using System.IO;
 
-public class StartingPositionGenerator : MonoBehaviour
+public class StartGame : MonoBehaviour
 {
     public EnvironmentConfiguration environmentConfiguration;
 
@@ -17,6 +13,7 @@ public class StartingPositionGenerator : MonoBehaviour
 
     private GameObject player;
     private GameObject startingHall;
+    private GameObject MiniMapScreen;
 
     private Vector3 startingPosition;
 
@@ -62,6 +59,7 @@ public class StartingPositionGenerator : MonoBehaviour
 
         ExperimentMetaData.currentEnvironment = environmentConfiguration;
         InitializePlayer();
+        InitializeMiniMapScreen();
         InitializeEnvironments();
         SelectNextEnvironment();
         LoadingScreenManager.StopLoading();
@@ -88,6 +86,33 @@ public class StartingPositionGenerator : MonoBehaviour
         PlayEnvironmentSound();
     }
 
+    public void InitializePlayer()
+    {
+        player = GameObject.Find("Player");
+        SetPlayerFOV();
+        TogglePlayerCamera();
+        player.transform.Find("Canvas").Find("RawImage").gameObject.SetActive(false);
+    }
+
+    private void InitializeMiniMapScreen()
+    {
+        if (MiniMapScreen == null)
+        {
+            MiniMapScreen = GameObject.Find("MiniMapScreen");
+        }
+        if (MiniMapScreen != null)
+        {
+            if (environmentConfiguration.MapConfig == ConfigType.Low)
+            {
+                MiniMapScreen.SetActive(false);
+            }
+            else
+            {
+                MiniMapScreen.SetActive(true);
+            }
+        }
+    }
+
     private void InitializeEnvironments()
     {
         environments = new EnvironmentSetup[4];
@@ -108,14 +133,6 @@ public class StartingPositionGenerator : MonoBehaviour
     private void PlayEnvironmentSound()
     {
         player.GetComponent<AudioSource>().PlayOneShot(sounds[(int)environmentConfiguration.EnvironmentType]);
-    }
-
-    public void InitializePlayer()
-    {
-        player = GameObject.Find("Player");
-        SetPlayerFOV();
-        TogglePlayerCamera();
-        player.transform.Find("Canvas").Find("RawImage").gameObject.SetActive(false);
     }
 
     private void SetPlayerMiniMap()

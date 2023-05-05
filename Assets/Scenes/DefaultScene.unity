@@ -688,7 +688,7 @@ GameObject:
   - component: {fileID: 178878675}
   - component: {fileID: 178878674}
   m_Layer: 0
-  m_Name: CreateEnvironment
+  m_Name: StartGame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -703,7 +703,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 178878673}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0467ec0ee33170743a940f72499c5921, type: 3}
+  m_Script: {fileID: 11500000, guid: 781c97772de3bc542b94421080c14d86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   LoadingScreenManager: {fileID: 1351304423}
